@@ -12,7 +12,7 @@ class dataUsulanMemberCtl extends Controller
 {
     function index()
     {
-        $dataUsulanPD = UsulanKegiatanModel::where('id_member', getDataMember()->id)->get();
+        $dataUsulan = UsulanKegiatanModel::where('id_member', getDataMember()->id)->get();
 
 
 
@@ -20,11 +20,11 @@ class dataUsulanMemberCtl extends Controller
         if (getDataMember()->level == 'pd') {
 
             return view('member.datausulan.pd', [
-                'dataUsulan' => $dataUsulanPD
+                'dataUsulan' => $dataUsulan
             ]);
         } elseif (getDataMember()->level == 'cp') {
             return view('member.datausulan.cp', [
-                'dataUsulan' => $dataUsulanPD
+                'dataUsulan' => $dataUsulan
             ]);
         }
     }
@@ -87,7 +87,7 @@ class dataUsulanMemberCtl extends Controller
     function viewEdit()
     {
         if (!$dataGet = _get('i')) {
-            return redirect('/admin/master/kelurahan')->with(session()->flash('error', 'Terjadi Kesalahan'));
+            return redirect('/member')->with(session()->flash('error', 'Terjadi Kesalahan'));
         }
         return view('member.datausulan.edit');
     }

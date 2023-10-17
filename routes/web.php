@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminBeritaCtl;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminDataUsulanCtl;
 use App\Http\Controllers\AdminFaqCtl;
 use App\Http\Controllers\AdminGaleriCtl;
 use App\Http\Controllers\AdminMasterCtl;
@@ -111,6 +112,11 @@ Route::middleware(['admin.auth'])->group(function () {
 
     Route::get('/admin/profile', [AdminController::class, 'viewProfile']);
 
+    Route::get('/admin/data-usulan', [AdminDataUsulanCtl::class, 'index']);
+    Route::get('/admin/data-usulan/tambah', [AdminDataUsulanCtl::class, 'viewTambah']);
+    Route::delete('/admin/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
+    Route::get('/admin/data-usulan/edit', [AdminDataUsulanCtl::class, 'viewEdit']);
+    Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
 
 
 

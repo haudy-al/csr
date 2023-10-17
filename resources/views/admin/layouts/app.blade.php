@@ -12,27 +12,33 @@
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>TJSLP</title>
-    
+
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img') }}/logo.png">
     <!-- Custom CSS -->
     <link href="{{ asset('TemplateAdmin') }}/assets/libs/flot/css/float-chart.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('TemplateAdmin') }}/dist/css/style.min.css" rel="stylesheet">
-    
-    <link href="{{ asset('TemplateAdmin') }}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+
+    <link href="{{ asset('TemplateAdmin') }}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
     @yield('cdn')
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{ asset('TemplateAdmin') }}/assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
     <script src="{{ asset('TemplateAdmin') }}/assets/extra-libs/multicheck/jquery.multicheck.js"></script>
     <script src="{{ asset('TemplateAdmin') }}/assets/extra-libs/DataTables/datatables.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     @livewireStyles
     @livewireScripts
@@ -61,7 +67,7 @@
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header" data-logobg="skin5">
-                    
+
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
@@ -77,7 +83,8 @@
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="{{ asset('img') }}/logoPutih.png" alt="homepage" width="120px" class="light-logo" />
+                            <img src="{{ asset('img') }}/logoPutih.png" alt="homepage" width="120px"
+                                class="light-logo" />
 
                         </span>
                         <!-- Logo icon -->
@@ -109,7 +116,7 @@
                         <li class="nav-item d-none d-lg-block"><a
                                 class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
                                 data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                       
+
                     </ul>
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
@@ -118,14 +125,14 @@
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        
+
                         <!-- ============================================================== -->
                         <!-- End Comment -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                      
+
                         <!-- ============================================================== -->
                         <!-- End Messages -->
                         <!-- ============================================================== -->
@@ -134,13 +141,17 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{ asset('img') }}/logo2.png" alt="user" class="rounded-circle" width="31">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+                                href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="{{ asset('img') }}/logo2.png" alt="user" class="rounded-circle"
+                                    width="31">
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                                
-                                <a class="dropdown-item" href="/admin/logout"><i
-                                        class="fa fa-power-off me-1 ms-1"></i> Logout</a>
+                            <ul class="dropdown-menu dropdown-menu-end user-dd animated"
+                                aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="/admin/logout"><i class="fa fa-power-off me-1 ms-1"></i>
+                                    Logout</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="ps-4 p-10"><a href="/admin/profile"
                                         class="btn btn-sm btn-success btn-rounded text-white">View Profile</a></div>
@@ -171,7 +182,7 @@
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb">
-               @yield('breadcrumb')
+                @yield('breadcrumb')
             </div>
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
@@ -179,7 +190,7 @@
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
-           @yield('content')
+            @yield('content')
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
@@ -204,7 +215,7 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
 
-    
+
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{{ asset('TemplateAdmin') }}/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('TemplateAdmin') }}/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>

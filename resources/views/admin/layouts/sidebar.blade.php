@@ -10,9 +10,9 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                         href="/admin/berita" aria-expanded="false"><i class="mdi mdi-newspaper"></i><span
                             class="hide-menu">Berita Mitra CSR</span></a></li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="/admin/faq" aria-expanded="false"><i class="mdi mdi-cellphone"></i><span
-                            class="hide-menu">FAQ</span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/faq"
+                        aria-expanded="false"><i class="mdi mdi-cellphone"></i><span class="hide-menu">FAQ</span></a>
+                </li>
 
 
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
@@ -32,6 +32,10 @@
                         href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-database"></i><span
                             class="hide-menu">Data TJSLP </span></a>
                     <ul aria-expanded="false" class="collapse  first-level">
+
+                        <li class="sidebar-item"><a href="/admin/data-usulan" class="sidebar-link"><i
+                                    class="mdi mdi-file-account"></i><span class="hide-menu"> Usulan Kegiatan </span></a>
+                        </li>
                         <li class="sidebar-item"><a href="/admin/master/bidang" class="sidebar-link"><i
                                     class="mdi mdi-file-account"></i><span class="hide-menu"> Bidang </span></a>
                         </li>

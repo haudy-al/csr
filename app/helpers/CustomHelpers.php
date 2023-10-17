@@ -72,3 +72,15 @@ function getUrlSaatIni()
 {
   return request()->getPathInfo();
 }
+
+function cekLevelUsulanByMemberId($id)
+{
+  $cek = MemberModel::find($id);
+  if ($cek->level == 'pd') {
+    return 'Perangkat Daerah '.'('.$cek->nama_perusahaan.')';
+  } elseif ($cek->level == 'cp') {
+    return 'Perusahaan '.'('.$cek->nama_perusahaan.')';
+  } else {
+    return '-';
+  }
+}

@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Livewire\Member;
+namespace App\Livewire\Admin\Datausulan;
 
 use App\Models\BidangModel;
 use App\Models\KelurahanModel;
+use App\Models\MemberModel;
 use App\Models\UsulanKegiatanModel;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class TambahUsulanKegiatan extends Component
 {
+
     use WithFileUploads;
+
 
     public $nama_kegiatan;
     public $bidang;
@@ -23,26 +26,23 @@ class TambahUsulanKegiatan extends Component
     public $kelurahan;
     public $userId;
 
-    public function mount()
-    {
-
-        $this->userId = getDataMember()->id;
-    }
-
     public function render()
     {
-        $bidang = BidangModel::all();
-        $kelurahan = KelurahanModel::all();
+        $dataBidang = BidangModel::all();
+        $dataKelurahan = KelurahanModel::all();
+        $dataMember = MemberModel::all();
 
-        return view('livewire.member.tambah-usulan-kegiatan', [
-            'dataBidang' => $bidang,
-            'datakelurahan' => $kelurahan,
+        return view('livewire.admin.datausulan.tambah-usulan-kegiatan',[
+            'dataBidang'=>$dataBidang,
+            'datakelurahan'=>$dataKelurahan,
+            'dataMember'=>$dataMember,
         ]);
     }
 
     function TambahUsulanKegiatan()
     {
         $this->validate([
+            'userId' => 'required',
             'nama_kegiatan' => 'required',
             'bidang' => 'required',
             'proposal' => 'required|mimes:pdf',
@@ -53,6 +53,7 @@ class TambahUsulanKegiatan extends Component
             'lokasi_kegiatan' => 'required',
             'kelurahan' => 'required',
         ], [
+            'userId.required' => 'Member Wajib di Isi',
             'nama_kegiatan.required' => 'Nama Kegiatan Wajib di Isi',
             'bidang.required' => 'Bidang Wajib di Isi',
             'proposal.required' => 'Proposal Wajib di Isi',
