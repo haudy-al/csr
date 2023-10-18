@@ -1,13 +1,20 @@
 <div>
     <div class="card mt-5 border-0 p-0 m-0">
         <div class="card-header">
-            <div class="col-3">
-                <select class="form-control" wire:model='type'>
-                    <option selected value="all">Semua</option>
-                    <option value="pd">Perangkat Daerah</option>
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <select class="form-control-custom" wire:model.live='type'>
+                        <option value="all">Semua</option>
+                        <option value="pd">Perangkat Daerah</option>
+                        <option value="cp">Pengusaha</option>
 
-                </select>
-                           
+                    </select>
+
+                </div>
+
+                <div class="col-md-3 col-6">
+                    <input class="form-control-custom" type="text" wire:model.live.debounce.300ms="search" placeholder="Cari Kegiatan...">
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -25,16 +32,18 @@
                     <tbody>
                         @foreach ($dataKegiatan as $key => $item)
                             <tr>
-                                <td>{{ ++$key }}</td>
+                                <td>{{ ($dataKegiatan->currentPage() - 1) * $dataKegiatan->perPage() + $key + 1 }}</td>
                                 <td>{{ $item->nama_kegiatan }}</td>
                                 <td>{{ $item->member->nama_perusahaan }}</td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-primary">Lihat</a>
+                                    <a href="/proyek-csr/kegiatan/detail?i={{ $item->id }}" class="btn btn-sm btn-primary">Lihat</a>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
+                {{ $dataKegiatan->links() }}
             </div>
         </div>
     </div>

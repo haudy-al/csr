@@ -4,13 +4,13 @@
             <div class="col-md-5">
                 <div class="mb-3">
                     <label for="">Username</label>
-                    <input class="form-control" type="text" wire:model="username" disabled>
+                    <input class="form-control" type="text" wire:model.live="username" disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="">Password <span style="font-size: 10px; color: red">Masukan Password Jika Ingin
                             Merubah!</span></label>
-                    <input class="form-control" type="password" wire:model="password">
+                    <input class="form-control" type="password" wire:model.live="password">
                 </div>
 
 

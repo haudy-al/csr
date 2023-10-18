@@ -98,3 +98,9 @@ function getDataBidang($id) {
     $data = BidangModel::find($id);
     return $data;
 }
+
+function getDataUsulan($id) {
+  $data = UsulanKegiatanModel::find($id);
+  return $data;
+}
+

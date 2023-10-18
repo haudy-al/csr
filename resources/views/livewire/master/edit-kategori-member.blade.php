@@ -5,7 +5,7 @@
             <div class="mb-3">
                 <label for="">Nama</label>
 
-                <input type="text" wire:model="nama" class="form-control  @error('nama') is-invalid @enderror"
+                <input type="text" wire:model.live="nama" class="form-control  @error('nama') is-invalid @enderror"
                     name="nama" id="">
                 @error('nama')
                     <span class="text-danger">{{ $message }}</span>

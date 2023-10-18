@@ -4,7 +4,7 @@
 
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                    <form wire:submit.prevent="ProsesLogin">
+                    <form wire:submit="ProsesLogin">
                         <div class="text-center mb-3">
 
                             <h3>Login</h3>
@@ -15,7 +15,7 @@
                             @error('username')
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
-                            <input type="text" id="loginName" wire:model="username" class="form-control" />
+                            <input type="text" id="loginName" wire:model.live="username" class="form-control" />
                             <label class="form-label" for="loginName">username</label>
 
                         </div>
@@ -25,7 +25,7 @@
                             @error('password')
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
-                            <input type="password" wire:model="password" id="loginPassword" class="form-control" />
+                            <input type="password" wire:model.live="password" id="loginPassword" class="form-control" />
                             <label class="form-label" for="loginPassword">Password</label>
 
                         </div>
@@ -81,7 +81,7 @@
 
                     <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 
-                        <form style="width: 23rem;" wire:submit.prevent="ProsesLogin">
+                        <form style="width: 23rem;" wire:submit="ProsesLogin">
 
 
                             <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log in</h3>
@@ -134,7 +134,7 @@
 
                             <div class="form-outline mb-4">
 
-                                <input type="text" id="loginName" wire:model="username"
+                                <input type="text" id="loginName" wire:model.live="username"
                                     class="form-control form-control-lg" />
 
                                 <label class="form-label" for="form2Example18">Username</label>
@@ -142,7 +142,7 @@
 
                             <div class="form-outline mb-3">
 
-                                <input type="password" wire:model="password" id="password"
+                                <input type="password" wire:model.live="password" id="password"
                                     class="form-control form-control-lg" />
 
                                 <label class="form-label" for="form2Example28">Password</label>

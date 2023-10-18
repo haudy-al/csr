@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="">Nama Kegiatan</label>
 
-                <input type="text" disabled wire:model="nama_kegiatan"
+                <input type="text" disabled wire:model.live="nama_kegiatan"
                     class="form-control  @error('nama_kegiatan') is-invalid @enderror" name="nama_kegiatan" id="">
                 @error('nama_kegiatan')
                     <span class="text-danger">{{ $message }}</span>
@@ -16,7 +16,7 @@
 
                 <div class="input-group">
                     <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model="anggaran"
+                    <input type="number" wire:model.live="anggaran"
                     class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
                 </div>
                 @error('anggaran')
@@ -31,7 +31,7 @@
                 @error('dokumen')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model="dokumen" class="form-control " name="dokumen" id="iniImage">
+                <input type="file" wire:model.live="dokumen" class="form-control " name="dokumen" id="iniImage">
             </div>
 
             <div class="mb-3">
@@ -40,7 +40,7 @@
                 @error('foto')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model="foto" class="form-control " name="foto" id="iniImage">
+                <input type="file" wire:model.live="foto" class="form-control " name="foto" id="iniImage">
             </div>
 
                    
@@ -52,7 +52,7 @@
 
                 <label for="">Keterangan</label>
                 <div wire:ignore>
-                    <textarea wire:model="keterangan" class="" name="keterangan" id="keterangan"></textarea>
+                    <textarea wire:model.live="keterangan" class="" name="keterangan" id="keterangan"></textarea>
                 </div>
 
                 @error('keterangan')

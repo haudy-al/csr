@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="">Judul</label>
                     
-                <input type="text" wire:model="judul" class="form-control  @error('judul') is-invalid @enderror"
+                <input type="text" wire:model.live="judul" class="form-control  @error('judul') is-invalid @enderror"
                     name="judul" id="">
                 @error('judul')
                     <span class="text-danger">{{ $message }}</span>
@@ -17,7 +17,7 @@
         <div class="col-md-7">
 
             <div wire:ignore>
-                <textarea wire:model="deskripsi" class="" name="deskripsi" id="deskripsi"></textarea>
+                <textarea wire:model.live="deskripsi" class="" name="deskripsi" id="deskripsi"></textarea>
             </div>
             
             @error('deskripsi')

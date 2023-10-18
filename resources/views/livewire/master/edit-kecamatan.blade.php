@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="">id Kecamatan</label>
 
-                <input type="text" wire:model="id_kecamatan"
+                <input type="text" wire:model.live="id_kecamatan"
                     class="form-control  @error('id_kecamatan') is-invalid @enderror" name="id_kecamatan" id="">
                 @error('id_kecamatan')
                     <span class="text-danger">{{ $message }}</span>
@@ -13,7 +13,7 @@
             <div class="mb-3">
                 <label for="">Nama Kecamatan</label>
 
-                <input type="text" wire:model="nama" class="form-control  @error('nama') is-invalid @enderror"
+                <input type="text" wire:model.live="nama" class="form-control  @error('nama') is-invalid @enderror"
                     name="nama" id="">
                 @error('nama')
                     <span class="text-danger">{{ $message }}</span>

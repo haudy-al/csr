@@ -19,7 +19,7 @@
 
                             <div class="mb-3">
                                 <label for="" class="float-left mb-2">Nama Perusahaan :</label>
-                                <input type="text" id="nama_perusahaan" wire:model="nama_perusahaan"
+                                <input type="text" id="nama_perusahaan" wire:model.live="nama_perusahaan"
                                     name="nama_perusahaan" class="form-control" required>
                                 @error('nama_perusahaan')
                                     <span class="text-danger"
@@ -30,7 +30,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="float-left mb-2">Email Perusahaan :</label>
-                                <input type="email" id="email_perusahaan" wire:model="email_perusahaan"
+                                <input type="email" id="email_perusahaan" wire:model.live="email_perusahaan"
                                     name="email_perusahaan" class="form-control" required>
                                 @error('email_perusahaan')
                                     <span class="text-danger"
@@ -43,7 +43,7 @@
                                 <label for="" class="float-left mb-2">Nama Kontak Person
                                     :</label>
                                 <input type="text" id="nama_kontak_person" name="nama_kontak_person"
-                                    wire:model="nama_kontak_person" class="form-control" required>
+                                    wire:model.live="nama_kontak_person" class="form-control" required>
                                 @error('nama_kontak_person')
                                     <span class="text-danger"
                                         style="color: red; font-size: 12px;">{{ $message }}</span>
@@ -55,7 +55,7 @@
                                 <label for="" class="float-left mb-2">Nomor Telepon Person
                                     :</label>
                                 <input type="number" id="no_telepon_person" name="no_telepon_person"
-                                    class="form-control" required wire:model="no_telepon_person">
+                                    class="form-control" required wire:model.live="no_telepon_person">
                                 @error('no_telepon_person')
                                     <span class="text-danger"
                                         style="color: red; font-size: 12px;">{{ $message }}</span>
@@ -67,7 +67,7 @@
                                 <label for="" class="float-left mb-2">Nomor Telepon Perusahaan
                                     :</label>
                                 <input type="number" id="no_telepon_perusahaan" name="no_telepon_perusahaan"
-                                    class="form-control" required wire:model="no_telepon_perusahaan">
+                                    class="form-control" required wire:model.live="no_telepon_perusahaan">
                                 @error('no_telepon_perusahaan')
                                     <span class="text-danger"
                                         style="color: red; font-size: 12px;">{{ $message }}</span>
@@ -80,7 +80,7 @@
                                     :</label>
 
                                 <select name="" id="kategori_perusahaan" class="form-control"
-                                    wire:model="kategori_perusahaan">
+                                    wire:model.live="kategori_perusahaan">
                                     <option value="">Pilih Kategori Perusahaan</option>
                                     @foreach (getKategoriPerusahaan() as $item)
                                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -97,7 +97,7 @@
                             <div class="mb-3">
                                 <label for="" class="float-left mb-2">Alamat Perusahaan
                                     :</label>
-                                <textarea name="" id="alamat_perusahaan" wire:model="alamat_perusahaan" name="alamat_perusahaan"
+                                <textarea name="" id="alamat_perusahaan" wire:model.live="alamat_perusahaan" name="alamat_perusahaan"
                                     class="form-control" cols="30" rows="5" required></textarea>
                                 @error('alamat_perusahaan')
                                     <span class="text-danger"
@@ -117,7 +117,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="" class="float-left mb-2">Latitude :</label>
-                                <input type="text" class="form-control" wire:model="latitude" name="latitude"
+                                <input type="text" class="form-control" wire:model.live="latitude" name="latitude"
                                     id="latitude" required>
                                 @error('latitude')
                                     <span class="text-danger"
@@ -129,7 +129,7 @@
                             <div class="mb-3">
                                 <label for="" class="float-left mb-2">longitude :</label>
                                 <input type="text" class="form-control" name="longitude" id="longitude" required
-                                    wire:model="longitude">
+                                    wire:model.live="longitude">
                                 @error('longitude')
                                     <span class="text-danger"
                                         style="color: red; font-size: 12px;">{{ $message }}</span>
@@ -144,7 +144,7 @@
                                 <label for="" class="float-left mb-2">Level member</label>
 
                                 <select name="" id="level" class="form-control"
-                                    wire:model="level">
+                                    wire:model.live="level">
                                     <option value="">Pilih Level Member</option>
                                     <option value="pd">Perangkat Daerah</option>
                                     <option value="cp">Perusahaan</option>
@@ -170,7 +170,7 @@
                                 <label for="gambar_perusahaan"
                                     style="background-color: blue; padding: 5px; color: #fff; border-radius: 10px">Upload
                                     Gambar Perusahaan</label>
-                                <input type="file" id="gambar_perusahaan" wire:model="gambar_perusahaan"
+                                <input type="file" id="gambar_perusahaan" wire:model.live="gambar_perusahaan"
                                     class="d-none" name="gambar" accept="image/*">
                                 @error('gambar_perusahaan')
                                     <span class="text-danger"

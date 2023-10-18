@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="">Nama Kegiatan</label>
 
-                <input type="text" wire:model="nama_kegiatan"
+                <input type="text" wire:model.live="nama_kegiatan"
                     class="form-control  @error('nama_kegiatan') is-invalid @enderror" name="nama_kegiatan" id="">
                 @error('nama_kegiatan')
                     <span class="text-danger">{{ $message }}</span>
@@ -14,7 +14,7 @@
             <div class="mb-3">
                 <label for="">Bidang</label>
 
-                <select name="" wire:model="bidang" class="form-control @error('bidang') is-invalid @enderror"
+                <select name="" wire:model.live="bidang" class="form-control @error('bidang') is-invalid @enderror"
                     id="">
                     <option value="">Pilih Bidang Kegiatan</option>
                     @foreach ($dataBidang as $item)
@@ -33,13 +33,13 @@
                 @error('proposal')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model="proposal" class="form-control " name="proposal" id="iniImage">
+                <input type="file" wire:model.live="proposal" class="form-control " name="proposal" id="iniImage">
             </div>
 
             <div class="mb-3">
                 <label for="">Penerima Manfaat</label>
 
-                <input type="text" wire:model="penerima_manfaat"
+                <input type="text" wire:model.live="penerima_manfaat"
                     class="form-control  @error('penerima_manfaat') is-invalid @enderror" name="penerima_manfaat"
                     id="">
                 @error('penerima_manfaat')
@@ -51,7 +51,7 @@
 
                 <label for="">Waktu Pelaksanaan</label>
 
-                <input type="date" wire:model="waktu_pelaksanaan"
+                <input type="date" wire:model.live="waktu_pelaksanaan"
                     class="form-control  @error('waktu_pelaksanaan') is-invalid @enderror" name="waktu_pelaksanaan"
                     id="">
                 @error('waktu_pelaksanaan')
@@ -65,7 +65,7 @@
 
                 <div class="input-group">
                     <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model="anggaran"
+                    <input type="number" wire:model.live="anggaran"
                         class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
                 </div>
                 @error('anggaran')
@@ -80,7 +80,7 @@
 
                 <label for="">Deskripsi</label>
                 <div wire:ignore>
-                    <textarea wire:model="bentuk_kegiatan" class="" name="bentuk_kegiatan" id="bentuk_kegiatan"></textarea>
+                    <textarea wire:model.live="bentuk_kegiatan" class="" name="bentuk_kegiatan" id="bentuk_kegiatan"></textarea>
                 </div>
 
                 @error('bentuk_kegiatan')
@@ -92,7 +92,7 @@
             <div class="mb-3">
                 <label for="">Lokasi Kegiatan</label>
                 <div wire:ignore>
-                    <textarea wire:model="lokasi_kegiatan" class="form-control" name="lokasi_kegiatan"></textarea>
+                    <textarea wire:model.live="lokasi_kegiatan" class="form-control" name="lokasi_kegiatan"></textarea>
                 </div>
 
                 @error('lokasi_kegiatan')
@@ -103,7 +103,7 @@
             <div class="mb-3">
                 <label for="">Kelurahan</label>
 
-                <select name="" wire:model="kelurahan"
+                <select name="" wire:model.live="kelurahan"
                     class="form-control @error('kelurahan') is-invalid @enderror" id="">
                     <option value="">Pilih kelurahan</option>
                     @foreach ($datakelurahan as $item)
@@ -119,7 +119,7 @@
             <div class="mb-3">
                 <label for="">Pk / Cp</label>
 
-                <select wire:model="userId"
+                <select wire:model.live="userId"
                     class="form-control js-example-basic-multiple @error('userId') is-invalid @enderror" id="">
                     <option value="">Pilih</option>
                     @foreach ($dataMember as $item)

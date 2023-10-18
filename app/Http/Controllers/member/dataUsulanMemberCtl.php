@@ -13,10 +13,7 @@ class dataUsulanMemberCtl extends Controller
     function index()
     {
         $dataUsulan = UsulanKegiatanModel::where('id_member', getDataMember()->id)->get();
-
-
-
-
+        
         if (getDataMember()->level == 'pd') {
 
             return view('member.datausulan.pd', [

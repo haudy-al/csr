@@ -9,9 +9,12 @@ use App\Models\GaleriFotoModel;
 use App\Models\GaleriVideoModel;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class FrontEndCtl extends Controller
 {
+
     function index()
     {
         $dataGaleriVideo = GaleriVideoModel::take(5)->get();
@@ -103,5 +106,35 @@ class FrontEndCtl extends Controller
             return redirect('/proyek-csr');
         }
         return view('proyekcsr.kegiatan', []);
+    }
+
+    function viewProyekCsrKegiatanDetail()
+    {
+        if (!_get('i')) {
+            return redirect('/proyek-csr');
+        }
+
+        return view('proyekcsr.detail', []);
+    }
+
+    function viewProposal($id)
+    {
+        $cek = UsulanKegiatanModel::find($id);
+
+        if (!$cek) {
+            abort(404, 'File not found');
+        }
+        
+        $filePath = storage_path('app/pdf/'.$cek->proposal);
+
+        if (file_exists($filePath)) {
+            $headers = [
+                'Content-Type' => 'application/pdf',
+            ];
+
+            return response()->file($filePath, $headers);
+        } else {
+            abort(404, 'File not found');
+        }
     }
 }

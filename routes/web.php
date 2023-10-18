@@ -30,6 +30,11 @@ Route::get('/', [FrontEndCtl::class, 'index']);
 Route::get('/proyek-csr', [FrontEndCtl::class, 'viewProyekCsr']);
 Route::get('/proyek-csr/kegiatan', [FrontEndCtl::class, 'viewProyekCsrKegiatan']);
 
+Route::get('/proyek-csr/kegiatan/detail', [FrontEndCtl::class, 'viewProyekCsrKegiatanDetail']);
+Route::get('/proyek-csr/kegiatan/proposal/{id}', [FrontEndCtl::class, 'viewProposal']);
+
+
+
 
 Route::get('/berita', [FrontEndCtl::class, 'viewBerita']);
 Route::get('/berita/detail/{id}', [FrontEndCtl::class, 'detailBerita']);

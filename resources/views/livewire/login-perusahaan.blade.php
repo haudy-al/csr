@@ -10,7 +10,7 @@
         <div class="col-md-5">
             <div class="d-flex align-items-center h-custom-2 mt-md-5 px-5 ms-xl-4 pt-5 pt-xl-0 mt-xl-n5">
 
-                <form style="width: 23rem;" wire:submit.prevent="ProsesLogin">
+                <form style="width: 23rem;" wire:submit="ProsesLogin">
 
                     <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log in 
 
@@ -22,7 +22,7 @@
                     <div class="form-outline mb-4" style="text-align: left">
 
                         <label class="" style="color: black" for="form2Example18">Username :</label>
-                        <input type="text" id="loginName" wire:model="username"
+                        <input type="text" id="loginName" wire:model.live="username"
                             class="form-control form-control-lg @error('username') is-invalid @enderror" />
                             @error('username')
                             <small style="color: red">{{ $message }}</small>
@@ -33,7 +33,7 @@
                     <div class="form-outline mb-3" style="text-align: left">
 
                         <label class="" style="color: black" for="form2Example28">Password :</label>
-                        <input type="password" wire:model="password" id="password"
+                        <input type="password" wire:model.live="password" id="password"
                             class="form-control form-control-lg @error('password') is-invalid @enderror" />
                         @error('password')
                             <small style="color: red">{{ $message }}</small>

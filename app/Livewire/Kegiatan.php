@@ -10,8 +10,8 @@ class Kegiatan extends Component
 {
     use WithPagination;
     public $id;
-    public $type;
-    public $nama;
+    public $type = 'all';
+    public $search = '';
 
     function mount()
     {
@@ -24,12 +24,24 @@ class Kegiatan extends Component
         $dataKegiatan = UsulanKegiatanModel::where('id_bidang', $this->id);
 
         if ($this->type === 'all') {
-            $dataKegiatan = $dataKegiatan->get();
-           
-        } else {
-        //    dd('ok');
+            $dataKegiatan = $dataKegiatan;
+        } elseif ($this->type === 'cp') {
+
+            $dataKegiatan = $dataKegiatan->whereHas('member', function ($query) {
+                $query->where('level', 'cp');
+            });
+        } elseif ($this->type === 'pd') {
+
+            $dataKegiatan = $dataKegiatan->whereHas('member', function ($query) {
+                $query->where('level', 'pd');
+            });
         }
 
+        if (!empty($this->search)) {
+            $dataKegiatan->where('nama_kegiatan', 'like', '%' . $this->search . '%');
+        }
+
+        $dataKegiatan = $dataKegiatan->paginate(10);
 
         return view('livewire.kegiatan', [
             'dataKegiatan' => $dataKegiatan,

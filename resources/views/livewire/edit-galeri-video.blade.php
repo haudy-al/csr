@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="">Judul</label>
 
-                <input type="text" wire:model="judul" class="form-control  @error('judul') is-invalid @enderror"
+                <input type="text" wire:model.live="judul" class="form-control  @error('judul') is-invalid @enderror"
                     name="judul" id="">
                 @error('judul')
                     <span class="text-danger">{{ $message }}</span>
@@ -17,7 +17,7 @@
                 @error('gambar')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model="gambar" class="form-control d-none" name="gambar" id="iniImage">
+                <input type="file" wire:model.live="gambar" class="form-control d-none" name="gambar" id="iniImage">
             </div>
             @if ($gambar)
                 <div class="mb-3">
@@ -36,7 +36,7 @@
             <div class="mb-3">
                 <label for="">Embed</label>
 
-                <input type="text" wire:model="embed" class="form-control  @error('embed') is-invalid @enderror"
+                <input type="text" wire:model.live="embed" class="form-control  @error('embed') is-invalid @enderror"
                     name="embed" id="">
                 @error('embed')
                     <span class="text-danger">{{ $message }}</span>
@@ -50,7 +50,7 @@
 
             <div class="mb-3">
                 <div wire:ignore>
-                    <textarea wire:model="deskripsi" class="" name="deskripsi" id="deskripsi">{{ $deskripsi }}</textarea>
+                    <textarea wire:model.live="deskripsi" class="" name="deskripsi" id="deskripsi">{{ $deskripsi }}</textarea>
                 </div>
 
                 @error('deskripsi')
