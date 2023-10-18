@@ -1,7 +1,7 @@
 @extends('member.layouts.app')
 
 
-@section('content')
+@section('content_member')
     <div class="container-fluid">
 
         <div class="card">

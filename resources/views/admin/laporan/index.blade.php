@@ -1,41 +1,13 @@
-@extends('member.layouts.app')
+@extends('admin.layouts.app')
 
-@section('content_member')
+@section('content')
     <div class="container-fluid">
 
         <div class="card">
 
             <div class="card-header">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#TambahLaporan" class="btn btn-primary btn-sm"><span
-                        class="mdi mdi-plus"></span> Tambah</a>
-                <div class="modal fade" id="TambahLaporan" tabindex="-1" aria-labelledby="TambahLaporanLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="TambahLaporanLabel">Pilih Usulan Kegiatan</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/member/laporan/tambah">
+                {{-- <a href="#" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span> Tambah</a> --}}
 
-                                    <select name="usulan" class="form-control"
-                                        onchange="$(event.target).parents('form').submit()">
-                                        <option value="">Pilih</option>
-
-                                        @foreach ($dataUsulanKegiatan as $item)
-                                            <option value="{{ $item->id }}" {!! _get('usulan') == '{{ $item->id }}' ? 'selected' : '' !!}>{{ $item->nama_kegiatan }}</option>
-                                        @endforeach
-
-
-                                    </select>
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="card-body">
@@ -52,8 +24,7 @@
                                 <th>Keterangan</th>
                                 <th>Dokumen Laporan</th>
                                 <th>Foto Kegiatan</th>
-
-
+                                <th>Level</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -75,13 +46,17 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ asset('storage/img/'.$item->foto) }}">
-                                            <img src="{{ asset('storage/img/'.$item->foto) }}" width="50px" alt="">
-                                           </a>
+                                        <a href="{{ asset('storage/img/' . $item->foto) }}">
+                                            <img src="{{ asset('storage/img/' . $item->foto) }}" width="50px"
+                                                alt="">
+                                        </a>
                                     </td>
 
-                                    <td>
-                                        <form class="" action="/member/laporan/hapus/{{ $item->id }}"
+                                    <td>{{ cekLevelUsulanByMemberId($item->id_member) }}</td>
+
+
+                                    <td class="d-inline">
+                                        <form class="" action="/admin/laporan/hapus/{{ $item->id }}"
                                             method="POST">
                                             @csrf
                                             @method('delete')
@@ -89,10 +64,9 @@
                                                 class="btn btn-sm btn-danger text-light"><span
                                                     class="mdi mdi-delete"></span> Hapus</button>
                                         </form>
-                                        <a class="btn btn-warning btn-sm"
-                                            href="/membar/laporan/edit?i={{ $item->id }}">
+                                        {{-- <a class="btn btn-warning btn-sm" href="/membar/laporan/edit?i={{ $item->id }}">
                                             <span class="mdi mdi-file"></span> Ubah
-                                        </a>
+                                        </a> --}}
                                     </td>
 
                                 </tr>
@@ -127,7 +101,6 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Laporan</li>
-                        <li class="breadcrumb-item active" aria-current="page">Perusahaan</li>
                     </ol>
                 </nav>
             </div>

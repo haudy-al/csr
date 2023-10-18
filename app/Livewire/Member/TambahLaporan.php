@@ -31,7 +31,6 @@ class TambahLaporan extends Component
 
         $this->nama_kegiatan = $cek->nama_kegiatan;
         $this->idKegiatan = _get('usulan');
-        
     }
 
     public function render()
@@ -39,7 +38,8 @@ class TambahLaporan extends Component
         return view('livewire.member.tambah-laporan');
     }
 
-    function TambahLaporan() {
+    function TambahLaporan()
+    {
         $this->validate([
             'dokumen' => 'required|mimes:pdf',
             'keterangan' => 'required',
@@ -51,17 +51,28 @@ class TambahLaporan extends Component
         $namaFoto = 'foto-laporan-' . uniqid() . date('ymdhis') . '.' . $this->foto->getClientOriginalExtension();
 
         LaporanModel::create([
-            'id_member'=>getDataMember()->id,
-            'id_usulan_kegiatan'=>$this->idKegiatan,
-            'anggaran'=>$this->anggaran,
-            'keterangan'=>$this->keterangan,
-            'dokumen'=>$namaPdf,
-            'foto'=>$namaFoto,
+            'id_member' => getDataMember()->id,
+            'id_usulan_kegiatan' => $this->idKegiatan,
+            'anggaran' => $this->anggaran,
+            'keterangan' => $this->keterangan,
+            'dokumen' => $namaPdf,
+            'foto' => $namaFoto,
         ]);
 
         $this->dokumen->storeAs('pdf/', $namaPdf);
         $this->foto->storeAs('public/img/', $namaFoto);
 
+        $this->clearInput();
+
         $this->dispatch('TambahBerhasil');
+    }
+
+    function clearInput()
+    {
+        $this->nama_kegiatan = "";
+        $this->keterangan = "";
+        $this->anggaran = "";
+        $this->dokumen = "";
+        $this->foto = "";
     }
 }

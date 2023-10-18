@@ -1,10 +1,12 @@
 <?php
 
 use App\Models\AdminModel;
+use App\Models\BidangModel;
 use App\Models\KategoriMemberModel;
 use App\Models\KelurahanModel;
 use App\Models\MemberModel;
 use App\Models\TransaksiUsulan;
+use App\Models\UsulanKegiatanModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,10 +79,22 @@ function cekLevelUsulanByMemberId($id)
 {
   $cek = MemberModel::find($id);
   if ($cek->level == 'pd') {
-    return 'Perangkat Daerah '.'('.$cek->nama_perusahaan.')';
+    return 'Perangkat Daerah ' . '(' . $cek->nama_perusahaan . ')';
   } elseif ($cek->level == 'cp') {
-    return 'Perusahaan '.'('.$cek->nama_perusahaan.')';
+    return 'Perusahaan ' . '(' . $cek->nama_perusahaan . ')';
   } else {
     return '-';
   }
+}
+
+function getJumlahKegiatanByBidang($id)
+{
+  $data = UsulanKegiatanModel::where('id_bidang', $id)->count();
+
+  return $data;
+}
+
+function getDataBidang($id) {
+    $data = BidangModel::find($id);
+    return $data;
 }

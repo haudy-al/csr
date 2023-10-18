@@ -11,7 +11,6 @@
     
     <link rel="icon" href="https://fileshaudy.000webhostapp.com/files/logokotabogor.gif" type="image/x-icon">
     <!-- Stylesheets-->
-    @livewireStyles
     <link rel="stylesheet" type="text/css"
         href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500">
     <link rel="stylesheet" href="{{ asset('site') }}/css/bootstrap.css">
@@ -46,6 +45,8 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/bundle.min.js" integrity="sha512-x8n5sU+7HmKzbIlFYoPgy40I80YSLf95TLUK1OxYuhtBKZOkD+oh0Y4UtLy6UyFE3XBEb40/O/tyJA3HaVa5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @yield('custom_cdn')
+
+    @livewireStyles
 
 </head>
 

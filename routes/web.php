@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDataUsulanCtl;
 use App\Http\Controllers\AdminFaqCtl;
 use App\Http\Controllers\AdminGaleriCtl;
+use App\Http\Controllers\AdminLaaporanCtl;
 use App\Http\Controllers\AdminMasterCtl;
 use App\Http\Controllers\FrontEndCtl;
 use App\Http\Controllers\MemberCtl;
@@ -27,7 +28,14 @@ use App\Http\Middleware\ThrottleLogin;
 
 Route::get('/', [FrontEndCtl::class, 'index']);
 Route::get('/proyek-csr', [FrontEndCtl::class, 'viewProyekCsr']);
+Route::get('/proyek-csr/kegiatan', [FrontEndCtl::class, 'viewProyekCsrKegiatan']);
+
+
+Route::get('/berita', [FrontEndCtl::class, 'viewBerita']);
 Route::get('/berita/detail/{id}', [FrontEndCtl::class, 'detailBerita']);
+Route::get('/galeri', [FrontEndCtl::class, 'viewGaleri']);
+Route::get('/galeri/foto/detail/{id}', [FrontEndCtl::class, 'detailGaleriFoto']);
+Route::get('/galeri/video/detail/{id}', [FrontEndCtl::class, 'detailGaleriVideo']);
 
 Route::get('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'viewLogin']);
@@ -118,6 +126,11 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/data-usulan/edit', [AdminDataUsulanCtl::class, 'viewEdit']);
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
 
+
+    Route::get('/admin/laporan', [AdminLaaporanCtl::class, 'index']);
+    Route::get('/admin/laporan/tambah', [AdminLaaporanCtl::class, 'viewTambah']);
+    Route::delete('/admin/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
+    Route::get('/admin/laporan/edit', [AdminLaaporanCtl::class, 'viewEdit']);
 
 
     Route::get('/admin/galeri/video', [AdminGaleriCtl::class, 'viewVideo']);

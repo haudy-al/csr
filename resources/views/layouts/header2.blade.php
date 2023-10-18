@@ -67,11 +67,11 @@
                                 <li class="rd-nav-item"><a class="rd-nav-link" href="/#Publikasi">Publikasi</a>
                                 </li>
 
-                                <li class="rd-nav-item"><a class="rd-nav-link" href="/#berita">Berita</a></li>
-                                <li class="rd-nav-item"><a class="rd-nav-link" href="/#galeri">Galeri</a>
+                                <li class="rd-nav-item @if(getUrlSaatIni() == '/berita') active @endif"><a class="rd-nav-link" href="/#berita">Berita</a></li>
+                                <li class="rd-nav-item @if(getUrlSaatIni() == '/galeri') active @endif"><a class="rd-nav-link" href="/#galeri">Galeri</a>
                                 </li>
                                 {{-- <li class="rd-nav-item"><a class="rd-nav-link" href="#news">News</a></li> --}}
-                                <li class="rd-nav-item"><a class="rd-nav-link" href="/#contacts">Kontak</a>
+                                <li class="rd-nav-item "><a class="rd-nav-link" href="/#contacts">Kontak</a>
                                 </li>
                             </ul>
                         </div>

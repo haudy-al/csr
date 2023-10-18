@@ -34,7 +34,12 @@
                     <ul aria-expanded="false" class="collapse  first-level">
 
                         <li class="sidebar-item"><a href="/admin/data-usulan" class="sidebar-link"><i
-                                    class="mdi mdi-file-account"></i><span class="hide-menu"> Usulan Kegiatan </span></a>
+                                    class="mdi mdi-file-account"></i><span class="hide-menu"> Usulan Kegiatan
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"><a href="/admin/laporan" class="sidebar-link"><i
+                                    class="mdi mdi-file-account"></i><span class="hide-menu"> Laporan
+                                </span></a>
                         </li>
                         <li class="sidebar-item"><a href="/admin/master/bidang" class="sidebar-link"><i
                                     class="mdi mdi-file-account"></i><span class="hide-menu"> Bidang </span></a>

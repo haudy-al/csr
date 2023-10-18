@@ -127,7 +127,7 @@
 
             </div>
 
-            <a href="" class="button button-primary button-pipaluk">Selengkapnya</a>
+            <a href="/berita" class="button button-primary button-pipaluk">Selengkapnya</a>
 
         </div>
     </section>
@@ -138,10 +138,10 @@
             <h2 class="wow fadeInLeft">Galeri</h2>
 
             <div class="isotope-filters isotope-filters-horizontal">
-                {{-- <button
+                <button
                     class="isotope-filters-toggle button button-md button-icon button-icon-right button-default-outline button-wapasha"
                     data-custom-toggle="#isotope-3" data-custom-toggle-hide-on-blur="true"
-                    data-custom-toggle-disable-on-blur="true"><span class="icon fa fa-caret-down"></span>Filter</button> --}}
+                    data-custom-toggle-disable-on-blur="true"><span class="icon fa fa-caret-down"></span>Filter</button>
                 <ul class="isotope-filters-list" id="isotope-3">
                     <li>
                         <a class="active" href="#" data-isotope-filter="*" data-isotope-group="gallery">Semua</a>
@@ -173,7 +173,8 @@
                                         href="images/grid-gallery-2-1200x800-original.jpg" data-lightgallery="item"><img
                                             src="{{ asset('storage/img/' . $galeriFoto->gambar) }}" alt=""
                                             width="420" height="350" /></a>
-                                    <h5 class="thumbnail-classic-title"><a href="#">{{ $galeriFoto->judul }}</a>
+                                    <h5 class="thumbnail-classic-title"><a
+                                            href="/galeri/foto/detail/{{ $galeriFoto->id }}">{{ $galeriFoto->judul }}</a>
                                     </h5>
                                 </div>
                                 <p class="thumbnail-classic-text">{{ Str::substr($galeriFoto->judul, 0, 60) }}...</p>
@@ -196,7 +197,7 @@
                                         href="images/grid-gallery-3-1200x800-original.jpg" data-lightgallery="item"><img
                                             src="{{ asset('storage/img/' . $galeriVideo->gambar) }}" alt=""
                                             width="420" height="350" /></a>
-                                    <h5 class="thumbnail-classic-title"><a href="#">{{ $galeriVideo->judul }}</a>
+                                    <h5 class="thumbnail-classic-title"><a href="/galeri/video/detail/{{ $galeriVideo->id }}">{{ $galeriVideo->judul }}</a>
                                     </h5>
                                 </div>
                                 <p class="thumbnail-classic-text">{{ Str::substr($galeriVideo->judul, 0, 60) }}</p>
@@ -207,7 +208,7 @@
 
 
             </div>
-            <a href="" class="button button-primary button-pipaluk">Selengkapnya</a>
+            <a href="/galeri" class="button button-primary button-pipaluk">Selengkapnya</a>
         </div>
     </section>
 
