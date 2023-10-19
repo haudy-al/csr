@@ -50,16 +50,17 @@
                                     <td>{{ cekLevelUsulanByMemberId($item->id_member) }}</td>
 
 
-                                    <td>
-                                        <form class="" action="/admin/data-usulan/hapus/{{ $item->id }}"
+                                    <td class="d-flex">
+                                        <a href="/admin/data-usulan/word/{{ $item->id }}" class="btn badge btn-info"><span class="mdi mdi-file-word"></span> Word</a>
+                                        <form class="d-inline" action="/admin/data-usulan/hapus/{{ $item->id }}"
                                             method="POST">
                                             @csrf
                                             @method('delete')
                                             <button onclick="return confirm('Yakin Ingin Mengapus ?')" type="submit"
-                                                class="btn btn-sm btn-danger text-light"><span
+                                                class="btn badge btn-danger text-light"><span
                                                     class="mdi mdi-delete"></span> Hapus</button>
                                         </form>
-                                        <a class="btn btn-warning btn-sm"
+                                        <a class="btn btn-warning badge"
                                             href="/admin/data-usulan/edit?i={{ $item->id }}">
                                             <span class="mdi mdi-file"></span> Ubah
                                         </a>

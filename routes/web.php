@@ -38,6 +38,7 @@ Route::get('/statistik', [FrontEndCtl::class, 'viewStatistik']);
 
 
 
+
 Route::get('/berita', [FrontEndCtl::class, 'viewBerita']);
 Route::get('/berita/detail/{id}', [FrontEndCtl::class, 'detailBerita']);
 Route::get('/galeri', [FrontEndCtl::class, 'viewGaleri']);
@@ -66,8 +67,6 @@ Route::middleware(['member.auth'])->group(function () {
     Route::post('/member/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/laporan/edit', [LaporanMemberCtl::class, 'viewEdit']);
-
-
 });
 // admin rote
 
@@ -119,7 +118,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::delete('/admin/master/member/hapus/{id}', [AdminMasterCtl::class, 'ProsesHapusMember']);
     Route::get('/admin/master/member/edit', [AdminMasterCtl::class, 'viewMemberEdit']);
 
-   
+
     Route::get('/admin/faq', [AdminFaqCtl::class, 'viewFaq']);
     Route::get('/admin/faq/tambah', [AdminFaqCtl::class, 'viewFaqTambah']);
     Route::get('/admin/faq/edit', [AdminFaqCtl::class, 'viewFaqEdit']);
@@ -132,6 +131,8 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::delete('/admin/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/admin/data-usulan/edit', [AdminDataUsulanCtl::class, 'viewEdit']);
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
+    Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
+
 
 
     Route::get('/admin/laporan', [AdminLaaporanCtl::class, 'index']);
