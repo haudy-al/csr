@@ -21,14 +21,14 @@
                                 <div>
                                     <h3 class="box-icon-modern-big-title">Laporan</h3>
                                     <div class="box-icon-modern-decor"></div><a class="button button-primary button-ujarak"
-                                        href="#">Lapor</a>
+                                        href="/member/laporan">Lapor</a>
                                 </div>
                             </article>
                         </div>
                         <div class="col-sm-6 wow fadeInRight" data-wow-delay=".1s">
                             <article class="box-icon-modern box-icon-modern-2">
                                 <div class="box-icon-modern-icon linearicons-phone-in-out"></div>
-                                <h5 class="box-icon-modern-title"><a href="#">Berita CSR</a>
+                                <h5 class="box-icon-modern-title"><a href="/berita">Berita CSR</a>
                                 </h5>
                                 <div class="box-icon-modern-decor"></div>
                                 <p class="box-icon-modern-text">Dapatkan Berita Terbaru Mengenai CSR.</p>
@@ -37,7 +37,7 @@
                         <div class="col-sm-6 wow fadeInRight" data-wow-delay=".2s">
                             <article class="box-icon-modern box-icon-modern-2">
                                 <div class="box-icon-modern-icon linearicons-headset"></div>
-                                <h5 class="box-icon-modern-title"><a href="#">Statistik</a>
+                                <h5 class="box-icon-modern-title"><a href="/statistik">Statistik</a>
                                 </h5>
                                 <div class="box-icon-modern-decor"></div>
                                 <p class="box-icon-modern-text">Dapatkan Data Statistik Realisasi CSR Dengan Akurat.</p>

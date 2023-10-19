@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FrontEndCtl extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('counterview');
+    }
 
     function index()
     {
@@ -136,5 +140,41 @@ class FrontEndCtl extends Controller
         } else {
             abort(404, 'File not found');
         }
+    }
+
+    function viewStatistik() {
+
+        $tahunSelect =  date('Y');
+        
+        if (_get('t')) {
+            $tahunSelect = _get('t');
+        }
+
+        $Kegiatan = [];
+
+        for ($month = 1; $month <= 12; $month++) {
+            $count = UsulanKegiatanModel::whereYear('created_at', $tahunSelect)
+                ->whereMonth('created_at', $month)
+                ->count();
+
+            $Kegiatan[date('F', mktime(0, 0, 0, $month, 1))] = $count;
+        }
+
+        
+        return view('statistik',[
+            'UsulanKegiatan' => $Kegiatan,
+            'tahunData'=>$this->dataTahun()
+        ]);
+    }
+
+    function dataTahun() {
+        $tahunSekarang = date('Y');
+        $tahun = [$tahunSekarang];
+
+        for ($i = 1; $i <= 5; $i++) {
+            $tahun[] = $tahunSekarang - $i;
+        }
+
+        return $tahun;
     }
 }

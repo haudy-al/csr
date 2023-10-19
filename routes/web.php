@@ -33,6 +33,8 @@ Route::get('/proyek-csr/kegiatan', [FrontEndCtl::class, 'viewProyekCsrKegiatan']
 Route::get('/proyek-csr/kegiatan/detail', [FrontEndCtl::class, 'viewProyekCsrKegiatanDetail']);
 Route::get('/proyek-csr/kegiatan/proposal/{id}', [FrontEndCtl::class, 'viewProposal']);
 
+Route::get('/statistik', [FrontEndCtl::class, 'viewStatistik']);
+
 
 
 
