@@ -67,6 +67,9 @@
                                         {{-- <a class="btn btn-warning btn-sm" href="/membar/laporan/edit?i={{ $item->id }}">
                                             <span class="mdi mdi-file"></span> Ubah
                                         </a> --}}
+
+                                        <a href="/admin/laporan/word/{{ $item->id }}" class="btn btn-sm btn-info"><span class="mdi mdi-file-word"></span> Word</a>
+
                                     </td>
 
                                 </tr>
