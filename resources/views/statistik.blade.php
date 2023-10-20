@@ -13,13 +13,13 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-3 col-6">
-                                
+                                                        
                                 <form action="">
                                     <select name="t" onchange="$(event.target).parents('form').submit()" class="form-control-custom" >
 
-                                        <option selected value="">Pilih Tahun</option>
+                                        <option value="">Pilih Tahun</option>
                                         @foreach ($tahunData as $tahun)
-                                            <option value="{{ $tahun }}" {!! _get('t') == '{{ $tahun }}' ? 'selected' : '' !!}>{{ $tahun }}</option>
+                                            <option value="{{ $tahun }}" {!! _get('t') == $tahun ? 'selected' : '' !!}>{{ $tahun }}</option>
                                         @endforeach
     
                                     </select>

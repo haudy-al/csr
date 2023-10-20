@@ -139,6 +139,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/laporan/tambah', [AdminLaaporanCtl::class, 'viewTambah']);
     Route::delete('/admin/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
     Route::get('/admin/laporan/edit', [AdminLaaporanCtl::class, 'viewEdit']);
+    Route::get('/admin/laporan/word/{id}', [AdminLaaporanCtl::class, 'exportWord']);
 
 
     Route::get('/admin/galeri/video', [AdminGaleriCtl::class, 'viewVideo']);

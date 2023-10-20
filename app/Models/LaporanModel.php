@@ -22,4 +22,8 @@ class LaporanModel extends Model
     {
         return $this->hasOne(UsulanKegiatanModel::class, 'id', 'id_usulan_kegiatan');
     }
+    public function member()
+    {
+        return $this->belongsTo(MemberModel::class, 'id_member');
+    }
 }
