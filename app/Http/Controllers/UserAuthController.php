@@ -28,4 +28,8 @@ class UserAuthController extends Controller
 
         return redirect('/login')->with(session()->flash('success','Logout Berhasil'));
     }
+
+    function LupaPassword() {
+        return view('auth.reset-password');
+    }
 }

@@ -59,7 +59,7 @@
                     </div>
 
                     <div class=" mb-4">
-                        <a class="btn w-100" href="/">Kembali</a>
+                        <a class="btn w-100" href="/lupa-password">Lupa Password ?</a>
                     </div>
 
 

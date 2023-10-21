@@ -49,6 +49,7 @@ Route::get('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'viewLogin']);
 
 Route::get('/logout', [UserAuthController::class, 'Logout']);
+Route::get('/lupa-password', [UserAuthController::class, 'LupaPassword']);
 
 Route::middleware(['member.auth'])->group(function () {
     Route::get('/member', [MemberCtl::class, 'index']);
