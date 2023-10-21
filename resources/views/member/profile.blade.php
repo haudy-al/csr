@@ -7,7 +7,7 @@
         <div class="card">
 
             <div class="card-header">
-                <a href="/admin" class="btn btn-sm"><span class="mdi mdi-keyboard-backspace"></span> Home</a>
+                <a href="/member" class="btn btn-sm"><span class="mdi mdi-keyboard-backspace"></span> Home</a>
             </div>
 
             <div class="card-body">

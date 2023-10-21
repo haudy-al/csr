@@ -8,18 +8,28 @@
                     <p>Anggaran : Rp.{{ $data->anggaran }}</p>
 
                     <p>
-                        Bentuk Kegiatan : 
+                        Bentuk Kegiatan :
                         <br>
-                        {!! $data->bentuk_kegiatan  !!}
+                        {!! $data->bentuk_kegiatan !!}
 
                     </p>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
-            <h4 class="mb-3">Proposal kegiatan</h4>
+           <div class="card">
+                <div class="card-body" style="max-height: 400px; overflow: auto">
+                    <h4 class="mb-3">Proposal kegiatan</h4>
 
-            <embed src="/proyek-csr/kegiatan/proposal/{{ $data->id }}" type="application/pdf" width="100%" height="600px">
+                    {{-- <img src="{{ route('pdf.image', ['id' => $data->id]) }}" alt="None"> --}}
+                    <div>
+        
+                        @foreach ($imageUrl as $imagePath)
+                            <img src="{{ asset('storage/pdf-image/' . $imagePath) }}" alt="Page Image">
+                        @endforeach
+                    </div>
+                </div>
+           </div>
 
         </div>
     </div>
