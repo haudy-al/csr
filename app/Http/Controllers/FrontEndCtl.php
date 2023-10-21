@@ -9,8 +9,10 @@ use App\Models\GaleriFotoModel;
 use App\Models\GaleriVideoModel;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
+use Svg\Surface\SurfacePDFLib;
+use Spatie\PdfToImage\Pdf;
+
 
 class FrontEndCtl extends Controller
 {
@@ -94,6 +96,31 @@ class FrontEndCtl extends Controller
     }
 
 
+    public function viewProposalImage($id)
+    {
+        $cek = UsulanKegiatanModel::find($id);
+
+        if (!$cek) {
+            abort(404, 'File not found');
+        }
+
+        $pdfPath = storage_path('app/pdf/' . $cek->proposal);
+        $imagePath = storage_path('app/pdf/' . $cek->id . '.png'); // Path untuk menyimpan gambar hasil konversi
+
+        // Periksa apakah file PDF sudah ada
+        if (!file_exists($pdfPath)) {
+            abort(404, 'File not found');
+        }
+
+        // Konversi PDF ke Gambar (PNG)
+        $pdf = new Pdf($pdfPath);
+
+        $pdf->saveImage($imagePath);
+
+        // Mengembalikan URL gambar hasil konversi
+        return response()->file($imagePath, ['Content-Type' => 'image/png']);
+    }
+
     function viewProyekCsr()
     {
 
@@ -121,31 +148,13 @@ class FrontEndCtl extends Controller
         return view('proyekcsr.detail', []);
     }
 
-    function viewProposal($id)
+
+
+    function viewStatistik()
     {
-        $cek = UsulanKegiatanModel::find($id);
-
-        if (!$cek) {
-            abort(404, 'File not found');
-        }
-        
-        $filePath = storage_path('app/pdf/'.$cek->proposal);
-
-        if (file_exists($filePath)) {
-            $headers = [
-                'Content-Type' => 'application/pdf',
-            ];
-
-            return response()->file($filePath, $headers);
-        } else {
-            abort(404, 'File not found');
-        }
-    }
-
-    function viewStatistik() {
 
         $tahunSelect =  date('Y');
-        
+
         if (_get('t')) {
             $tahunSelect = _get('t');
         }
@@ -160,14 +169,15 @@ class FrontEndCtl extends Controller
             $Kegiatan[date('F', mktime(0, 0, 0, $month, 1))] = $count;
         }
 
-        
-        return view('statistik',[
+
+        return view('statistik', [
             'UsulanKegiatan' => $Kegiatan,
-            'tahunData'=>$this->dataTahun()
+            'tahunData' => $this->dataTahun()
         ]);
     }
 
-    function dataTahun() {
+    function dataTahun()
+    {
         $tahunSekarang = date('Y');
         $tahun = [$tahunSekarang];
 

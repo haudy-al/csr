@@ -7,13 +7,14 @@ use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class dataUsulanMemberCtl extends Controller
 {
     function index()
     {
         $dataUsulan = UsulanKegiatanModel::where('id_member', getDataMember()->id)->get();
-        
+
         if (getDataMember()->level == 'pd') {
 
             return view('member.datausulan.pd', [
@@ -67,10 +68,23 @@ class dataUsulanMemberCtl extends Controller
 
         if ($cek) {
 
-            $path = storage_path('app/pdf/' . $cek->proposal); // Tentukan path file di folder storage
+            $path = storage_path('app/pdf/' . $cek->proposal); 
 
             if (file_exists($path)) {
                 unlink($path);
+            }
+
+            $awalan_nama = $cek->id; 
+            $direktori = storage_path('app/public/pdf-image'); 
+
+            $files = scandir($direktori);
+
+            foreach ($files as $file) {
+                if (strpos($file, $awalan_nama) === 0 && pathinfo($file, PATHINFO_EXTENSION) === 'png') {
+                    Storage::delete('app/public/pdf-image/' . $file); 
+                    unlink($direktori . '/' . $file);
+                   
+                }
             }
 
             $cek->delete();
@@ -97,10 +111,9 @@ class dataUsulanMemberCtl extends Controller
                 'id_usulan_kegiatan' => $id,
             ]);
 
-            return redirect('/member/laporan/tambah?usulan='.$id);
+            return redirect('/member/laporan/tambah?usulan=' . $id);
         }
 
-        return redirect('/member/laporan/tambah?usulan='.$id);
-
+        return redirect('/member/laporan/tambah?usulan=' . $id);
     }
 }
