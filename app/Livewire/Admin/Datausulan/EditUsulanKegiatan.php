@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Datausulan;
 use App\Models\BidangModel;
 use App\Models\KelurahanModel;
 use App\Models\UsulanKegiatanModel;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -105,6 +106,19 @@ class EditUsulanKegiatan extends Component
 
 
             $this->proposal->storeAs('pdf/', $namaproposal);
+
+            $awalan_nama = $cek->id; 
+            $direktori = storage_path('app/public/pdf-image'); 
+
+            $files = scandir($direktori);
+
+            foreach ($files as $file) {
+                if (strpos($file, $awalan_nama) === 0 && pathinfo($file, PATHINFO_EXTENSION) === 'png') {
+                    Storage::delete('app/public/pdf-image/' . $file); 
+                    unlink($direktori . '/' . $file);
+                   
+                }
+            }
         }
 
         $cek->save();
