@@ -7,6 +7,7 @@ use App\Models\BidangModel;
 use App\Models\FaqModel;
 use App\Models\GaleriFotoModel;
 use App\Models\GaleriVideoModel;
+use App\Models\MemberModel;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -186,5 +187,23 @@ class FrontEndCtl extends Controller
         }
 
         return $tahun;
+    }
+
+    function viewMitraCsr() {
+        return view('mitracsr.index');
+    }
+
+
+    function viewDetailMitraCsr() {
+        if (!_get('i')) {
+           abort('404');
+        }
+
+        $dataUser = MemberModel::find(_get('i'));
+
+        return view('mitracsr.detail',[
+            'data'=>$dataUser
+        ]);
+
     }
 }

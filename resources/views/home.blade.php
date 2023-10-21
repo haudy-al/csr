@@ -46,7 +46,7 @@
                         <div class="col-sm-6 wow fadeInRight" data-wow-delay=".3s">
                             <article class="box-icon-modern box-icon-modern-2">
                                 <div class="box-icon-modern-icon linearicons-outbox"></div>
-                                <h5 class="box-icon-modern-title"><a href="#">MITRA CSR</a></h5>
+                                <h5 class="box-icon-modern-title"><a href="/mitra-csr">MITRA CSR</a></h5>
                                 <div class="box-icon-modern-decor"></div>
                                 <p class="box-icon-modern-text">Dapatkan Data Mitra CSR.</p>
                             </article>

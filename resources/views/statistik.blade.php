@@ -31,7 +31,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <div wire:ignore id="chartUsulanKegiatan"></div>
+                            <div id="chartUsulanKegiatan"></div>
                         </div>
 
                     </div>
@@ -53,7 +53,7 @@
 
         }
         chartG();
-        window.addEventListener('ReloadChartUsulan', () => {
+        window.addEventListener('turbolinks:load', () => {
             chartG();
 
         })

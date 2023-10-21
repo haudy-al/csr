@@ -44,6 +44,8 @@ Route::get('/berita/detail/{id}', [FrontEndCtl::class, 'detailBerita']);
 Route::get('/galeri', [FrontEndCtl::class, 'viewGaleri']);
 Route::get('/galeri/foto/detail/{id}', [FrontEndCtl::class, 'detailGaleriFoto']);
 Route::get('/galeri/video/detail/{id}', [FrontEndCtl::class, 'detailGaleriVideo']);
+Route::get('/mitra-csr', [FrontEndCtl::class, 'viewMitraCsr']);
+Route::get('/mitra-csr/detail', [FrontEndCtl::class, 'viewDetailMitraCsr']);
 
 Route::get('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'viewLogin']);

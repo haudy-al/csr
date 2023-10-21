@@ -94,13 +94,23 @@ function getJumlahKegiatanByBidang($id)
   return $data;
 }
 
-function getDataBidang($id) {
-    $data = BidangModel::find($id);
-    return $data;
+function getDataBidang($id)
+{
+  $data = BidangModel::find($id);
+  return $data;
 }
 
-function getDataUsulan($id) {
+function getDataUsulan($id)
+{
   $data = UsulanKegiatanModel::find($id);
   return $data;
 }
 
+function cekGambarMember($namaFile)
+{
+  if (file_exists(storage_path('app/public/img/' . $namaFile))) {
+    return asset('storage/img/' . $namaFile);
+  } else {
+    return asset('storage/img/none.png');
+  }
+}
