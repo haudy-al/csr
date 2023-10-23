@@ -19,9 +19,9 @@
                         <div class="col-sm-6 wow fadeInRight">
                             <article class="box-icon-modern box-icon-modern-custom">
                                 <div>
-                                    <h3 class="box-icon-modern-big-title">Laporan</h3>
+                                    <h3 class="box-icon-modern-big-title">DOKUMEN TJSLP</h3>
                                     <div class="box-icon-modern-decor"></div><a class="button button-primary button-ujarak"
-                                        href="/member/laporan">Lapor</a>
+                                        href="/dokumen">Dokumen</a>
                                 </div>
                             </article>
                         </div>

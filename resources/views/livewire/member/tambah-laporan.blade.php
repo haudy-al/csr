@@ -1,4 +1,20 @@
 <div>
+    <div class="card mb-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Anggaran Yang dibutuhkan</th>
+                    <th>Sasaran Yang Tersedia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rp. {{ $batasAnggaran }}</td>
+                    <td>{{ $jumlahPenerimaManfaat }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="col-md-5">
             <div class="mb-3">
@@ -20,6 +36,18 @@
                     class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
                 </div>
                 @error('anggaran')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="">Target Sasaran</label>
+
+                <div class="input-group">
+                    <input type="number" wire:model="target_sasaran"
+                    class="form-control  @error('target_sasaran') is-invalid @enderror" name="target_sasaran" id="">
+                </div>
+                @error('target_sasaran')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
@@ -78,6 +106,9 @@
                 window.location.href = "/member/laporan";
             }, 2000);
 
+        })
+        window.addEventListener('jumlahLebihBesar', (message) => {
+            toastr.error(message.detail[0], 'Warning !');
         })
     </script>
 

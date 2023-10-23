@@ -16,10 +16,28 @@ class DetailProyek extends Component
     public $id;
     public $data;
 
+    public $anggaranTersedia;
+    public $penerimaManfaat;
+
     function mount()
     {
         $this->id = _get('i');
         $this->data = getDataUsulan($this->id);
+
+        $query = "SELECT laporan.* 
+          FROM usulan_kegiatan 
+          JOIN laporan ON usulan_kegiatan.id = laporan.id_usulan_kegiatan 
+          WHERE usulan_kegiatan.id = :idUsulanKegiatan";
+
+        $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $this->data->id]);
+
+        
+
+        foreach ($dataLaporan as $item) {
+            $this->anggaranTersedia += $item->anggaran;
+            $this->penerimaManfaat += $item->target_sasaran;
+        }
+
     }
 
     public function render()

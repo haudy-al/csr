@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminBeritaCtl;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDataUsulanCtl;
+use App\Http\Controllers\AdminDokumenCtl;
 use App\Http\Controllers\AdminFaqCtl;
 use App\Http\Controllers\AdminGaleriCtl;
 use App\Http\Controllers\AdminLaaporanCtl;
@@ -136,6 +137,10 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
 
+    Route::get('/admin/master/dokumen', [AdminDokumenCtl::class, 'index']);
+    Route::get('/admin/master/dokumen/tambah', [AdminDokumenCtl::class, 'viewTambah']);
+    Route::delete('/admin/master/dokumen/hapus/{id}', [AdminDokumenCtl::class, 'ProsesHapus']);
+    Route::get('/admin/master/dokumen/edit', [AdminDokumenCtl::class, 'viewEdit']);
 
 
     Route::get('/admin/laporan', [AdminLaaporanCtl::class, 'index']);

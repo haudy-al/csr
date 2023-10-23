@@ -55,6 +55,9 @@
                         href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-database"></i><span
                             class="hide-menu">Master </span></a>
                     <ul aria-expanded="false" class="collapse  first-level">
+                        <li class="sidebar-item"><a href="/admin/master/dokumen" class="sidebar-link"><i
+                                    class="mdi mdi-map-file"></i><span class="hide-menu"> Dokumen </span></a>
+                        </li>
                         <li class="sidebar-item"><a href="/admin/master/kecamatan" class="sidebar-link"><i
                                     class="mdi mdi-map-marker"></i><span class="hide-menu"> Kecamatan </span></a>
                         </li>

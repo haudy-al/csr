@@ -16,9 +16,7 @@
                             <div class="card-body">
                                 <p>Silahkan Cek Email Anda Password Berhasil Terkirim !</p>
                             </div>
-                            <div class="card-footer border-0" style="background-color: #fff">
-                                <button wire:click="KirimPassword" class="btn btn-sm btn-secondary">Kirim</button>
-                            </div>
+                           
                         </div>
                     @else
                         <div class="card">
@@ -33,6 +31,9 @@
                                         <small style="color: red">{{ $message }}</small>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="card-footer border-0" style="background-color: #fff">
+                                <button wire:click="KirimPassword" class="btn btn-sm btn-secondary">Kirim</button>
                             </div>
                            
                         </div>

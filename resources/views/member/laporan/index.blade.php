@@ -49,6 +49,7 @@
                                 <th>No</th>
                                 <th>Kegiatan</th>
                                 <th>Anggaran</th>
+                                <th>Target Sasaran</th>
                                 <th>Keterangan</th>
                                 <th>Dokumen Laporan</th>
                                 <th>Foto Kegiatan</th>
@@ -64,6 +65,7 @@
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan Telah Dihapus...' }}</td>
                                     <td>{{ $item->anggaran }}</td>
+                                    <td>{{ $item->target_sasaran }}</td>
                                     <td>{!! $item->keterangan !!}</td>
 
                                     <td>

@@ -5,6 +5,7 @@ namespace App\Livewire\Member;
 use App\Models\BidangModel;
 use App\Models\KelurahanModel;
 use App\Models\UsulanKegiatanModel;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class EditUsulanKegiatan extends Component

@@ -4,9 +4,9 @@
             <div class="card">
                 <div class="card-body">
                     <p>Penerima Manfaat : {{ $data->penerima_manfaat }}</p>
-                    <p>Jumlah Penerima Manfaat : {{ $data->jumlah_penerima_manfaat }}</p>
+                    <p>Jumlah Penerima Manfaat : {{ $penerimaManfaat }} / {{ $data->jumlah_penerima_manfaat }}</p>
 
-                    <p>Anggaran : Rp.{{ $data->anggaran }}</p>
+                    <p>Anggaran : Rp. {{ $anggaranTersedia }} / Rp.{{ $data->anggaran }}</p>
 
                     <p>
                         Bentuk Kegiatan :
@@ -34,7 +34,7 @@
                             @foreach ($dataMemberPartisipasi as $item)
                                 <tr>
                                     <td>{{ $item->username }}</td>
-                                    <td>-</td>
+                                    <td>{{ $item->target_sasaran }}</td>
                                     <td>Rp. {{ $item->anggaran }}</td>
                                 </tr>
                             @endforeach
