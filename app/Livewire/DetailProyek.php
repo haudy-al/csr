@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\LaporanModel;
+use App\Models\MemberModel;
 use App\Models\UsulanKegiatanModel;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\PdfToImage\Pdf;
@@ -31,7 +34,6 @@ class DetailProyek extends Component
         $pdfPath = storage_path('app/pdf/' . $cek->proposal);
         $imagePath = storage_path('app/public/pdf-image/' . $cek->id . '_page_'); // Nama file akan ditambahi dengan nomor halaman
 
-        // Periksa apakah file PDF sudah ada
         if (!file_exists($pdfPath)) {
             abort(404, 'File not found');
         }
@@ -41,7 +43,7 @@ class DetailProyek extends Component
 
 
         $imageUrl = [];
-        
+
 
         for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
             $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
@@ -50,15 +52,17 @@ class DetailProyek extends Component
             if (!file_exists($imageFilePath)) {
                 $pdf->setPage($pageNumber)->saveImage($imageFilePath);
             }
-
         }
 
-        // for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
-        //     $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
-        //     $imageUrl[] = $cek->id . '_page_' . $pageNumberString . '.png';
-        //     $pdf->setPage($pageNumber)->saveImage($imagePath . $pageNumberString . '.png');
-        // }
+        $dataMemberPartisipasi = DB::table('member')
+            ->join('laporan', 'member.id', '=', 'laporan.id_member')
+            ->where('laporan.id_usulan_kegiatan', $this->id)
+            ->select('member.*', 'laporan.*') 
+            ->get();
 
-        return view('livewire.detail-proyek', ['imageUrl' => $imageUrl]);
+
+        // dd($dataMemberPartisipasi);
+
+        return view('livewire.detail-proyek', ['imageUrl' => $imageUrl, 'dataMemberPartisipasi' => $dataMemberPartisipasi]);
     }
 }

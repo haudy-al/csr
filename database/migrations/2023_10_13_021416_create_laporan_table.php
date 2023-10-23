@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('keterangan');
             $table->string('dokumen');
             $table->string('foto');
+            $table->bigInteger('target_sasaran');
             $table->timestamps();
         });
     }

@@ -16,4 +16,10 @@ class MemberModel extends Authenticatable
     protected $table = 'member';
 
     protected $guarded = [];
+    
+
+    public function laporan()
+    {
+        return $this->hasMany(LaporanModel::class, 'id_member', 'id');
+    }
 }
