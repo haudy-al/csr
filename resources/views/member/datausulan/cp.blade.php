@@ -19,6 +19,7 @@
                                 <th>Nama Kegiatan</th>
                                 <th>Bidang</th>
                                 <th>Penerima Manfaat</th>
+                                <th>Jumlah Penerima Manfaat</th>
                                 <th>Deskripsi</th>
                                 <th>Lokasi</th>
                                 <th>Kelurahan</th>
@@ -36,6 +37,7 @@
                                     <td>{{ $item->nama_kegiatan }}</td>
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
+                                    <td>{{ $item->jumlah_penerima_manfaat }}</td>
                                     <td>{!! $item->bentuk_kegiatan !!}</td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
                                     <td>{{ $item->kelurahan->nama }}</td>

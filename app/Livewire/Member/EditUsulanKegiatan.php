@@ -21,6 +21,7 @@ class EditUsulanKegiatan extends Component
     public $kelurahan;
     public $id;
     public $proposalLama;
+    public $jumlah_penerima_manfaat;
 
 
     public function mount()
@@ -38,6 +39,7 @@ class EditUsulanKegiatan extends Component
         $this->lokasi_kegiatan = $kegiatan->lokasi_kegiatan;
         $this->kelurahan = $kegiatan->id_kelurahan;
         $this->proposalLama = $kegiatan->proposal;
+        $this->jumlah_penerima_manfaat = $kegiatan->jumlah_penerima_manfaat;
 
         if ($kegiatan->id_member != getDataMember()->id) {
             return redirect('/member');
@@ -67,6 +69,7 @@ class EditUsulanKegiatan extends Component
             'bentuk_kegiatan' => 'required',
             'lokasi_kegiatan' => 'required',
             'kelurahan' => 'required',
+            'jumlah_penerima_manfaat' => 'required',
         ], [
             'nama_kegiatan.required' => 'Nama Kegiatan Wajib di Isi',
             'bidang.required' => 'Bidang Wajib di Isi',
@@ -77,17 +80,9 @@ class EditUsulanKegiatan extends Component
             'bentuk_kegiatan.required' => 'Deskripsi Wajib di Isi',
             'lokasi_kegiatan.required' => 'Lokasi Kegiatan Wajib di Isi',
             'kelurahan.required' => 'Kelurahan Wajib di Isi',
+            'jumlah_penerima_manfaat.required' => 'Jumlah Penerima Wajib di Isi',
         ]);
 
-        $this->nama_kegiatan;
-        $this->bidang;
-
-        $this->penerima_manfaat;
-        $this->waktu_pelaksanaan;
-        $this->anggaran;
-        $this->bentuk_kegiatan;
-        $this->lokasi_kegiatan;
-        $this->kelurahan;
 
         $cek->nama_kegiatan = $this->nama_kegiatan;
         $cek->id_bidang = $this->bidang;
@@ -97,6 +92,7 @@ class EditUsulanKegiatan extends Component
         $cek->bentuk_kegiatan = $this->bentuk_kegiatan;
         $cek->lokasi_kegiatan = $this->lokasi_kegiatan;
         $cek->id_kelurahan = $this->kelurahan;
+        $cek->jumlah_penerima_manfaat = $this->jumlah_penerima_manfaat;
 
 
 
@@ -113,6 +109,19 @@ class EditUsulanKegiatan extends Component
 
 
             $this->proposal->storeAs('pdf/', $namaproposal);
+
+            $awalan_nama = $cek->id; 
+            $direktori = storage_path('app/public/pdf-image'); 
+
+            $files = scandir($direktori);
+
+            foreach ($files as $file) {
+                if (strpos($file, $awalan_nama) === 0 && pathinfo($file, PATHINFO_EXTENSION) === 'png') {
+                    Storage::delete('app/public/pdf-image/' . $file); 
+                    unlink($direktori . '/' . $file);
+                   
+                }
+            }
         }
 
         $cek->save();

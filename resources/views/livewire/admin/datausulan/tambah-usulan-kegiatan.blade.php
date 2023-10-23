@@ -48,6 +48,16 @@
             </div>
 
             <div class="mb-3">
+                <label for="">Jumlah Penerima Manfaat</label>
+
+                <input type="number" wire:model.live="jumlah_penerima_manfaat"
+                    class="form-control  @error('jumlah_penerima_manfaat') is-invalid @enderror" name="jumlah_penerima_manfaat" id="">
+                @error('jumlah_penerima_manfaat')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-3">
 
                 <label for="">Waktu Pelaksanaan</label>
 

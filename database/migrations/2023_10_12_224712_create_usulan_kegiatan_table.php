@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('waktu_pelaksanaan');
             $table->string('anggaran');
             $table->string('proposal');
+            $table->bigInteger('jumlah_penerima_manfaat');
             $table->timestamps();
         });
     }

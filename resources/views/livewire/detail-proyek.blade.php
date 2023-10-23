@@ -4,6 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <p>Penerima Manfaat : {{ $data->penerima_manfaat }}</p>
+                    <p>Jumlah Penerima Manfaat : {{ $data->jumlah_penerima_manfaat }}</p>
 
                     <p>Anggaran : Rp.{{ $data->anggaran }}</p>
 

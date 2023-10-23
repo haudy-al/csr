@@ -80,4 +80,10 @@ class LaporanMemberCtl extends Controller
             abort(404, 'Page not found');
         }
     }
+
+    function viewEdit() {
+        return view('member.laporan.edit', [
+           
+        ]);
+    }
 }

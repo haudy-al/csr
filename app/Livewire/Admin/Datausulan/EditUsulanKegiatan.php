@@ -24,6 +24,7 @@ class EditUsulanKegiatan extends Component
     public $kelurahan;
     public $id;
     public $proposalLama;
+    public $jumlah_penerima_manfaat;
 
 
     public function mount()
@@ -41,6 +42,7 @@ class EditUsulanKegiatan extends Component
         $this->lokasi_kegiatan = $kegiatan->lokasi_kegiatan;
         $this->kelurahan = $kegiatan->id_kelurahan;
         $this->proposalLama = $kegiatan->proposal;
+        $this->jumlah_penerima_manfaat = $kegiatan->jumlah_penerima_manfaat;
 
     }
     public function render()
@@ -68,6 +70,7 @@ class EditUsulanKegiatan extends Component
             'bentuk_kegiatan' => 'required',
             'lokasi_kegiatan' => 'required',
             'kelurahan' => 'required',
+            'jumlah_penerima_manfaat' => 'required',
         ], [
             'nama_kegiatan.required' => 'Nama Kegiatan Wajib di Isi',
             'bidang.required' => 'Bidang Wajib di Isi',
@@ -78,6 +81,7 @@ class EditUsulanKegiatan extends Component
             'bentuk_kegiatan.required' => 'Deskripsi Wajib di Isi',
             'lokasi_kegiatan.required' => 'Lokasi Kegiatan Wajib di Isi',
             'kelurahan.required' => 'Kelurahan Wajib di Isi',
+            'jumlah_penerima_manfaat.required' => 'Jumlah Penerima Wajib di Isi',
         ]);
 
        
@@ -90,6 +94,7 @@ class EditUsulanKegiatan extends Component
         $cek->bentuk_kegiatan = $this->bentuk_kegiatan;
         $cek->lokasi_kegiatan = $this->lokasi_kegiatan;
         $cek->id_kelurahan = $this->kelurahan;
+        $cek->jumlah_penerima_manfaat = $this->jumlah_penerima_manfaat;
 
 
 

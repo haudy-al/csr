@@ -24,6 +24,7 @@ class TambahUsulanKegiatan extends Component
     public $bentuk_kegiatan;
     public $lokasi_kegiatan;
     public $kelurahan;
+    public $jumlah_penerima_manfaat;
     public $userId;
 
     public function render()
@@ -52,6 +53,7 @@ class TambahUsulanKegiatan extends Component
             'bentuk_kegiatan' => 'required',
             'lokasi_kegiatan' => 'required',
             'kelurahan' => 'required',
+            'jumlah_penerima_manfaat' => 'required',
         ], [
             'userId.required' => 'Member Wajib di Isi',
             'nama_kegiatan.required' => 'Nama Kegiatan Wajib di Isi',
@@ -63,6 +65,7 @@ class TambahUsulanKegiatan extends Component
             'bentuk_kegiatan.required' => 'Deskripsi Wajib di Isi',
             'lokasi_kegiatan.required' => 'Lokasi Kegiatan Wajib di Isi',
             'kelurahan.required' => 'Kelurahan Wajib di Isi',
+            'jumlah_penerima_manfaat.required' => 'Jumlah Penerima Wajib di Isi',
         ]);
 
         $namaPdf = 'usulan-kegiatan-' . uniqid() . date('ymdhis') . '.' . $this->proposal->getClientOriginalExtension();
@@ -78,6 +81,7 @@ class TambahUsulanKegiatan extends Component
             'lokasi_kegiatan' => $this->lokasi_kegiatan,
             'id_kelurahan' => $this->kelurahan,
             'id_member' => $this->userId,
+            'jumlah_penerima_manfaat' => $this->jumlah_penerima_manfaat,
         ]);
 
         $this->proposal->storeAs('pdf/', $namaPdf);
