@@ -74,7 +74,6 @@
         </div>
     </section>
 
-    <!-- Years of experience-->
     <section class="section section-sm bg-default">
         <div class="container">
             <div class="row row-30 row-xl-24 justify-content-center align-items-center align-items-lg-start text-left">
@@ -100,7 +99,6 @@
         </div>
     </section>
 
-    <!-- Latest blog posts-->
     <section class="section section-sm bg-default" id="berita">
         <div class="container">
             <h2>BERITA MITRA CSR</h2>
@@ -132,7 +130,7 @@
         </div>
     </section>
 
-    <!-- Latest galeri-->
+   
     <section class="section section-sm section-fluid bg-default text-center" id="galeri">
         <div class="container-fluid">
             <h2 class="wow fadeInLeft">Galeri</h2>
@@ -151,8 +149,6 @@
                     </li>
                     <li><a href="#" data-isotope-filter="Galeri_Video" data-isotope-group="gallery">Galeri
                             Video</a></li>
-
-
 
                 </ul>
             </div>

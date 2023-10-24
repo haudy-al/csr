@@ -1,5 +1,10 @@
 <div>
     <div>
+        <div wire:loading>
+
+            <h5>Mohon Tunggu...</h5>
+    
+        </div>
         <div class="row">
             <div class="col-md-5">
 

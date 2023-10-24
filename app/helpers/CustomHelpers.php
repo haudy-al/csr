@@ -114,3 +114,13 @@ function cekGambarMember($namaFile)
     return asset('storage/img/none.png');
   }
 }
+
+function cekGambarDokumenPage1($id)
+{
+  $namaFile = 'dokumen-img_'. $id . '_page_001.png';
+  if (file_exists(storage_path('app/public/pdf-image/' . $namaFile))) {
+    return asset('storage/pdf-image/' . $namaFile);
+  } else {
+    return asset('storage/img/none.png');
+  }
+}

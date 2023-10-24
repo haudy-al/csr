@@ -35,6 +35,10 @@ Route::get('/proyek-csr/kegiatan/detail', [FrontEndCtl::class, 'viewProyekCsrKeg
 Route::get('/proyek-csr/kegiatan/proposal/{id}/image', [FrontEndCtl::class,'viewProposalImage'])->name('pdf.image');
 
 Route::get('/statistik', [FrontEndCtl::class, 'viewStatistik']);
+Route::get('/dokumen', [FrontEndCtl::class, 'viewDokumen']);
+Route::get('/dokumen/detail/{id}', [FrontEndCtl::class, 'viewDokumenDetail']);
+
+
 
 
 

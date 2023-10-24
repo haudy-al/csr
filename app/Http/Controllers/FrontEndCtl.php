@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BeritaModel;
 use App\Models\BidangModel;
+use App\Models\DokumenModel;
 use App\Models\FaqModel;
 use App\Models\GaleriFotoModel;
 use App\Models\GaleriVideoModel;
@@ -189,21 +190,62 @@ class FrontEndCtl extends Controller
         return $tahun;
     }
 
-    function viewMitraCsr() {
+    function viewMitraCsr()
+    {
         return view('mitracsr.index');
     }
 
 
-    function viewDetailMitraCsr() {
+    function viewDetailMitraCsr()
+    {
         if (!_get('i')) {
-           abort('404');
+            abort('404');
         }
 
         $dataUser = MemberModel::find(_get('i'));
 
-        return view('mitracsr.detail',[
-            'data'=>$dataUser
+        return view('mitracsr.detail', [
+            'data' => $dataUser
         ]);
+    }
 
+    function viewDokumen()
+    {
+
+        $data = DokumenModel::orderBy('created_at', 'DESC')->paginate('6');
+
+        return view('dokumen', [
+            'dataDokumen' => $data
+        ]);
+    }
+
+    function viewDokumenDetail($id)
+    {
+        $dataDokumen = DokumenModel::find($id);
+
+        $pdfPath = storage_path('app/pdf/' . $dataDokumen->dokumen);
+        $imagePath = storage_path('app/public/pdf-image/' .'dokumen-img_'. $dataDokumen->id . '_page_'); 
+
+        if (!file_exists($pdfPath)) {
+            abort(404, 'File not found');
+        }
+
+        $pdf = new Pdf($pdfPath);
+        $totalPages = $pdf->getNumberOfPages();
+
+
+        $imageUrl = [];
+
+
+        for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
+            $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
+            $imageUrl[] = 'dokumen-img_'. $dataDokumen->id . '_page_' . $pageNumberString . '.png';
+           
+        }
+
+        return view('detailDokumen', [
+            'dataDokumen' => $dataDokumen,
+            'imageUrl'=>$imageUrl,
+        ]);
     }
 }
