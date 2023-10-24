@@ -9,6 +9,7 @@ use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 function isx(&$value, $default_value = "")
 {
@@ -117,10 +118,44 @@ function cekGambarMember($namaFile)
 
 function cekGambarDokumenPage1($id)
 {
-  $namaFile = 'dokumen-img_'. $id . '_page_001.png';
+  $namaFile = 'dokumen-img_' . $id . '_page_001.png';
   if (file_exists(storage_path('app/public/pdf-image/' . $namaFile))) {
     return asset('storage/pdf-image/' . $namaFile);
   } else {
     return asset('storage/img/none.png');
   }
+}
+
+
+function getJumlahProyekTerkumpul($id)
+{
+  $query = "SELECT laporan.* 
+  FROM usulan_kegiatan 
+  JOIN laporan ON usulan_kegiatan.id = laporan.id_usulan_kegiatan 
+  WHERE usulan_kegiatan.id = :idUsulanKegiatan";
+
+  $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id]);
+
+  $anggaranTerkumpul = 0;
+  $penerimaManfaat = 0;
+
+  foreach ($dataLaporan as $item) {
+    $anggaranTerkumpul += $item->anggaran;
+    $penerimaManfaat += $item->target_sasaran;
+  }
+
+  return [
+    'anggaranTerkumpul'=>$anggaranTerkumpul,
+    'penerimaManfaat'=>$penerimaManfaat,
+  ];
+}
+
+function hitungPersentase($angka, $total)
+{
+    if ($total != 0) {
+        $persentase = ($angka / $total) * 100;
+        return number_format($persentase, 2); 
+    } else {
+        return 0; 
+    }
 }

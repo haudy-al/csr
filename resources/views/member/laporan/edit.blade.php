@@ -1,0 +1,39 @@
+@extends('member.layouts.app')
+
+@section('content_member')
+    <div class="container-fluid">
+
+        <div class="card">
+
+            <div class="card-header">
+                <a href="/member/laporan" class="btn btn-sm"><span class="mdi mdi-keyboard-backspace"></span> Kembali</a>
+            </div>
+
+            <div class="card-body">
+
+
+                @livewire('member.edit-laporan')
+
+
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+@section('breadcrumb')
+<div class="row">
+    <div class="col-12 d-flex no-block align-items-center">
+        <h4 class="page-title">Laporan</h4>
+        <div class="ms-auto text-end">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Laporan</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+@endsection

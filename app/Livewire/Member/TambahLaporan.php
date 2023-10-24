@@ -76,13 +76,13 @@ class TambahLaporan extends Component
         $status1 = false;
         $status2 = false;
 
-        if ($this->anggaran >= $this->batasAnggaran) {
+        if ($this->anggaran > $this->batasAnggaran) {
             $message = 'Anggaran Melebihi Batas ' . $this->batasAnggaran;
             $this->dispatch('jumlahLebihBesar', $message);
             $status1 = true;
         }
 
-        if ($this->target_sasaran >= $this->jumlahPenerimaManfaat) {
+        if ($this->target_sasaran > $this->jumlahPenerimaManfaat) {
             $message = 'Melebihi Jumlah Penerima Manfaat ' . $this->jumlahPenerimaManfaat;
             $this->dispatch('jumlahLebihBesar', $message);
             $status2 = true;

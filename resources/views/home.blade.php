@@ -274,7 +274,7 @@
     </section>
 
     <!-- Contact Form-->
-    <section class="section section-sm section-last bg-default text-left">
+    {{-- <section class="section section-sm section-last bg-default text-left">
         <div class="container">
             <article class="title-classic">
                 <div class="title-classic-title">
@@ -318,7 +318,7 @@
                 <button class="button button-primary button-pipaluk" type="submit">Send Message</button>
             </form>
         </div>
-    </section>
+    </section> --}}
 
 
 
