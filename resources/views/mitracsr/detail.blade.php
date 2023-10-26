@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class="col-md-7 mb-3">
                         <p>
                             <strong>Nama Perusahaan :</strong> {{ $data->nama_perusahaan }}
                         </p>
@@ -33,7 +33,7 @@
     </section>
 
     <script>
-        document.addEventListener("turbolinks:load", function() {
+        document.addEventListener("DOMContentLoaded", function() {
             let mapOptions = {
                 center: [-6.595018, 106.816635],
                 zoom: 13

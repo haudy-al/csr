@@ -52,6 +52,14 @@
                 </table>
 
                 {{ $dataKegiatan->links() }}
+
+                @if (count($dataKegiatan) < 1)
+                    <div style="width: 100%; display: flex; justify-content: center">
+
+                        <img src="{{ asset('img/datakosong.png') }}" width="400px" alt="">
+                    </div>
+                        
+                    @endif
             </div>
         </div>
     </div>

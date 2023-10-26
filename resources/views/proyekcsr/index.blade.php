@@ -10,7 +10,7 @@
             <h3>Daftar Projek CSR</h3>
             <div class="row">
                 @foreach ($dataBidang as $item)
-                    <div class="col-md-3 m-2">
+                    <div class="col-md-3 mb-3">
                         <div class="card">
                             <div class="card-body">
                                 <h4 style="text-transform: capitalize">{{ $item->nama }}</h4>

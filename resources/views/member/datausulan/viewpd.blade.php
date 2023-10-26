@@ -39,7 +39,7 @@
                                     <td>{{ $item->penerima_manfaat }}</td>
                                     <td>{!! $item->bentuk_kegiatan !!}</td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
-                                    <td>{{ $item->kelurahan->nama }}</td>
+                                    <td>{{ $item->kelurahan->nama ?? '' }}</td>
                                     <td>Rp. {{ $item->anggaran }}</td>
                                     <td>
                                         <form action="/member/data-usulan/pdf/{{ $item->id }}" method="POST">
@@ -49,20 +49,31 @@
                                     </td>
 
                                     <td>
-                                      
+
                                         @php
-                                            $cekDataL = App\Models\LaporanModel::where('id_usulan_kegiatan', $item->id)->where('id_member',getDataMember()->id)->get()->first();
+                                            $cekDataL = App\Models\LaporanModel::where('id_usulan_kegiatan', $item->id)
+                                                ->where('id_member', getDataMember()->id)
+                                                ->get()
+                                                ->first();
                                         @endphp
 
                                         @if (!$cekDataL)
-                            
-                                        <form action="/member/data-usulan/pemerintah/bantu/{{ $item->id }}"
-                                            method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-success text-light">Bantu</button>
-                                        </form>
-
+                                            <form action="/member/data-usulan/pemerintah/bantu/{{ $item->id }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="btn badge m-1 btn-primary text-light">Bantu</button>
+                                            </form>
+                                        @else
+                                            <span class="badge m-1 rounded-pill bg-success">
+                                                Dibantu
+                                            </span>
                                         @endif
+
+                                        <a class="btn btn-secondary badge m-1 "
+                                            href="/membar/data-usulan/detail?i={{ $item->id }}">
+                                            <span class="mdi mdi-eye"></span> Detail
+                                        </a>
 
                                     </td>
 

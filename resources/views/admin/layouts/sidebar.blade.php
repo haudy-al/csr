@@ -13,6 +13,9 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/faq"
                         aria-expanded="false"><i class="mdi mdi-cellphone"></i><span class="hide-menu">FAQ</span></a>
                 </li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/calendar"
+                        aria-expanded="false"><i class="mdi mdi-calendar"></i><span class="hide-menu">Agenda Kegiatan</span></a>
+                </li>
 
 
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"

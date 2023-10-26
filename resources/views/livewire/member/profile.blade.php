@@ -200,7 +200,7 @@
                                     </div>
                                 @else
                                     <div class="mb-3">
-                                        <img src="/storage/img/{{ $gambar_perusahaan_lama }}" width="200px">
+                                        <img src="{{ cekGambarMember($gambar_perusahaan_lama) }}" width="200px">
 
                                     </div>
                                 @endif

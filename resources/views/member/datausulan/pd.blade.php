@@ -6,7 +6,8 @@
         <div class="card">
 
             <div class="card-header">
-                <a href="/member/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span> Tambah</a>
+                <a href="/member/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span>
+                    Tambah</a>
             </div>
 
             <div class="card-body">
@@ -25,7 +26,7 @@
                                 <th>Kelurahan</th>
                                 <th>anggaran</th>
                                 <th>Proposal</th>
-                        
+
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -40,7 +41,7 @@
                                     <td>{{ $item->jumlah_penerima_manfaat }}</td>
                                     <td>{!! $item->bentuk_kegiatan !!}</td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
-                                    <td>{{ $item->kelurahan->nama }}</td>
+                                    <td>{{ $item->kelurahan->nama ?? '' }}</td>
                                     <td>Rp. {{ $item->anggaran }}</td>
                                     <td>
                                         <form action="/member/data-usulan/pdf/{{ $item->id }}" method="POST">
@@ -55,12 +56,16 @@
                                             @csrf
                                             @method('delete')
                                             <button onclick="return confirm('Yakin Ingin Mengapus ?')" type="submit"
-                                                class="btn btn-sm btn-danger text-light"><span
+                                                class="btn badge m-1 btn-danger text-light"><span
                                                     class="mdi mdi-delete"></span> Hapus</button>
                                         </form>
-                                        <a class="btn btn-warning btn-sm"
+                                        <a class="btn btn-warning badge m-1"
                                             href="/membar/data-usulan/edit?i={{ $item->id }}">
                                             <span class="mdi mdi-file"></span> Ubah
+                                        </a>
+                                        <a class="btn btn-secondary badge m-1"
+                                            href="/membar/data-usulan/detail?i={{ $item->id }}">
+                                            <span class="mdi mdi-eye"></span> Detail
                                         </a>
                                     </td>
 

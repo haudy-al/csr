@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AdminBeritaCtl;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminDataUsulanCtl;
@@ -28,11 +29,13 @@ use App\Http\Middleware\ThrottleLogin;
 */
 
 Route::get('/', [FrontEndCtl::class, 'index']);
+Route::get('/agenda-kegiatan', [FrontEndCtl::class, 'viewAgendaKegiatan']);
+
 Route::get('/proyek-csr', [FrontEndCtl::class, 'viewProyekCsr']);
 Route::get('/proyek-csr/kegiatan', [FrontEndCtl::class, 'viewProyekCsrKegiatan']);
 
 Route::get('/proyek-csr/kegiatan/detail', [FrontEndCtl::class, 'viewProyekCsrKegiatanDetail']);
-Route::get('/proyek-csr/kegiatan/proposal/{id}/image', [FrontEndCtl::class,'viewProposalImage'])->name('pdf.image');
+Route::get('/proyek-csr/kegiatan/proposal/{id}/image', [FrontEndCtl::class, 'viewProposalImage'])->name('pdf.image');
 
 Route::get('/statistik', [FrontEndCtl::class, 'viewStatistik']);
 Route::get('/dokumen', [FrontEndCtl::class, 'viewDokumen']);
@@ -66,6 +69,7 @@ Route::middleware(['member.auth'])->group(function () {
     Route::post('/member/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/data-usulan/edit', [dataUsulanMemberCtl::class, 'viewEdit']);
+    Route::get('/membar/data-usulan/detail', [dataUsulanMemberCtl::class, 'viewDetail']);
 
     Route::get('/member/data-usulan/pemerintah', [dataUsulanMemberCtl::class, 'viewDataUsulanPD']);
     Route::post('/member/data-usulan/pemerintah/bantu/{id}', [dataUsulanMemberCtl::class, 'BantuUsulan']);
@@ -75,6 +79,9 @@ Route::middleware(['member.auth'])->group(function () {
     Route::post('/member/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/laporan/edit', [LaporanMemberCtl::class, 'viewEdit']);
+    Route::get('/membar/laporan/detail', [LaporanMemberCtl::class, 'viewDetail']);
+    Route::post('/member/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
+
 });
 // admin rote
 
@@ -155,6 +162,12 @@ Route::middleware(['admin.auth'])->group(function () {
 
 
     Route::get('/admin/galeri/video', [AdminGaleriCtl::class, 'viewVideo']);
+
+    Route::get('/admin/calendar', [ActivityController::class, 'index'])->name('calendar.index');
+    Route::get('/admin/calendar/tambah', [ActivityController::class, 'viewTambah'])->name('calendar.store');
+
+    Route::post('/admin/calendar/tambah', [ActivityController::class, 'store'])->name('calendar.store');
+    Route::delete('/admin/calendar/hapus/{id}', [ActivityController::class, 'ProsesHapus']);
 });
 
 

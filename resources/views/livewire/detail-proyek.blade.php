@@ -19,7 +19,7 @@
 
             <div class="card mt-3">
                 <div class="card-header">
-                    <h5>Yang berpartisipasi dalam project ini</h5>
+                    <h5>Yang berpartisipasi dalam proyek ini</h5>
                 </div>
                 <div class="card-body">
                     <table class="table">

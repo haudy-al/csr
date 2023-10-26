@@ -115,7 +115,7 @@
                     id="">
                     <option value="">Pilih kelurahan</option>
                     @foreach ($datakelurahan as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        <option value="{{ $item->id_kelurahan }}">{{ $item->nama }}</option>
                     @endforeach
                 </select>
 

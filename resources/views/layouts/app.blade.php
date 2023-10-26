@@ -8,7 +8,7 @@
         content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
-    
+
     <link rel="icon" href="https://fileshaudy.000webhostapp.com/files/logokotabogor.gif" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css"
@@ -33,21 +33,34 @@
             display: block;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/geosearch.css" integrity="sha512-ai0NxYSxeh+RZ1GBMDY503sdYPVuMEx0sg3vKuFHN5DclEv0QMkHqJuYyogAHK/Eb4SWHlRWKmogCsm3ajgIUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/geosearch.css"
+        integrity="sha512-ai0NxYSxeh+RZ1GBMDY503sdYPVuMEx0sg3vKuFHN5DclEv0QMkHqJuYyogAHK/Eb4SWHlRWKmogCsm3ajgIUQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/bundle.min.js" integrity="sha512-x8n5sU+7HmKzbIlFYoPgy40I80YSLf95TLUK1OxYuhtBKZOkD+oh0Y4UtLy6UyFE3XBEb40/O/tyJA3HaVa5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     @yield('custom_cdn')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/bundle.min.js"
+        integrity="sha512-x8n5sU+7HmKzbIlFYoPgy40I80YSLf95TLUK1OxYuhtBKZOkD+oh0Y4UtLy6UyFE3XBEb40/O/tyJA3HaVa5Xg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.min.js" integrity="sha512-ifx27fvbS52NmHNCt7sffYPtKIvIzYo38dILIVHQ9am5XGDQ2QjSXGfUZ54Bs3AXdVi7HaItdhAtdhKz8fOFrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
     @livewireStyles
+
 
 </head>
 
@@ -66,12 +79,12 @@
         <div id="home">
 
             @yield('home')
-            
+
 
         </div>
 
         @yield('content')
-        
+
 
         <!-- Page Footer-->
         <footer class="section section-fluid footer-minimal context-dark">
@@ -81,7 +94,7 @@
                         <ul class="footer-list-category-2">
                             <li><a href="http://bappeda.jabarprov.go.id/">Bappeda Jawa Barat</a></li>
                             <li><a href="http://bappeda.kotabogor.go.id/">Bappeda Kota Bogor</a></li>
-                           
+
                         </ul>
                     </div>
                     <div class="footer-minimal-bottom-panel text-sm-left">
@@ -98,11 +111,11 @@
                             </div>
                             <div class="col-sm-6 col-md-4 order-sm-first">
                                 <!-- Rights-->
-                                <p class="rights"><span>&copy;&nbsp;2019 TJSLP Kota Bogor. 
+                                <p class="rights"><span>&copy;&nbsp;2019 TJSLP Kota Bogor.
                                 </p>
                             </div>
                             <div class="col-sm-6 col-md-4 text-md-right"><span> All Rights Reserved. </span>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -124,8 +137,8 @@
                             <div class="row row-14 gutters-14">
                                 <div class="col-12">
                                     <div class="form-wrap">
-                                        <input class="form-input" id="contact-modal-name" type="text"
-                                            name="name" data-constraints="">
+                                        <input class="form-input" id="contact-modal-name" type="text" name="name"
+                                            data-constraints="">
                                         <label class="form-label" for="contact-modal-name">Your Name</label>
                                     </div>
                                 </div>

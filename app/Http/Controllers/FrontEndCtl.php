@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\BeritaModel;
 use App\Models\BidangModel;
 use App\Models\DokumenModel;
@@ -29,13 +30,15 @@ class FrontEndCtl extends Controller
         $dataGaleriFoto = GaleriFotoModel::take(5)->get();
         $dataBerita = BeritaModel::take(3)->get();
         $Faq = FaqModel::get();
-
-
+        $activities = Activity::all();
+        
+        
         return view('home', [
             'dataGaleriVideo' => $dataGaleriVideo,
             'dataGaleriFoto' => $dataGaleriFoto,
             'dataBerita' => $dataBerita,
             'Faq' => $Faq,
+            'activities'=>$activities
         ]);
     }
 
@@ -246,6 +249,13 @@ class FrontEndCtl extends Controller
         return view('detailDokumen', [
             'dataDokumen' => $dataDokumen,
             'imageUrl'=>$imageUrl,
+        ]);
+    }
+
+    function viewAgendaKegiatan() {
+        $activities = Activity::all();
+        return view('agendakegiatan',[
+            'activities'=>$activities
         ]);
     }
 }

@@ -25,7 +25,8 @@
                                         <option value="">Pilih</option>
 
                                         @foreach ($dataUsulanKegiatan as $item)
-                                            <option value="{{ $item->id }}" {!! _get('usulan') == '{{ $item->id }}' ? 'selected' : '' !!}>{{ $item->nama_kegiatan }}</option>
+                                            <option value="{{ $item->id }}" {!! _get('usulan') == '{{ $item->id }}' ? 'selected' : '' !!}>
+                                                {{ $item->nama_kegiatan }}</option>
                                         @endforeach
 
 
@@ -77,23 +78,28 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ asset('storage/img/'.$item->foto) }}">
-                                            <img src="{{ asset('storage/img/'.$item->foto) }}" width="50px" alt="">
-                                           </a>
+                                        <a href="{{ asset('storage/img/' . $item->foto) }}">
+                                            <img src="{{ asset('storage/img/' . $item->foto) }}" width="50px"
+                                                alt="">
+                                        </a>
                                     </td>
 
                                     <td>
-                                        <form class="" action="/member/laporan/hapus/{{ $item->id }}"
+                                        <form class="d-inline" action="/member/laporan/hapus/{{ $item->id }}"
                                             method="POST">
                                             @csrf
                                             @method('delete')
                                             <button onclick="return confirm('Yakin Ingin Mengapus ?')" type="submit"
-                                                class="btn btn-sm btn-danger text-light"><span
+                                                class="btn badge btn-danger text-light"><span
                                                     class="mdi mdi-delete"></span> Hapus</button>
                                         </form>
-                                        <a class="btn btn-warning btn-sm"
+                                        <a class="btn btn-warning badge"
                                             href="/membar/laporan/edit?i={{ $item->id }}">
                                             <span class="mdi mdi-file"></span> Ubah
+                                        </a>
+                                        <a class="btn btn-secondary badge mt-1"
+                                            href="/membar/laporan/detail?i={{ $item->id }}">
+                                            <span class="mdi mdi-eye"></span> Detail
                                         </a>
                                     </td>
 

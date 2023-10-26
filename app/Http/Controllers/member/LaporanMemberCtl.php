@@ -13,16 +13,8 @@ class LaporanMemberCtl extends Controller
     {
         $user_id = getDataMember()->id;
 
-        // $dataLaporan = LaporanModel::whereHas('usulanKegiatan', function ($query) use ($user_id) {
-        //     $query->whereHas('transaksiUsulan', function ($query) use ($user_id) {
-        //         $query->where('id_member', $user_id);
-        //     });
-        // })->get();
 
         $dataLaporan = LaporanModel::where('id_member', $user_id)->get();
-
-        
-
 
         $dataUsulanKegiatan = UsulanKegiatanModel::whereHas('transaksiUsulan', function ($query) use ($user_id) {
             $query->whereIn('id_usulan_kegiatan', function ($subquery) use ($user_id) {
@@ -41,15 +33,13 @@ class LaporanMemberCtl extends Controller
 
     function viewTambah()
     {
-        return view('member.laporan.tambah', [
-           
-        ]);
+        return view('member.laporan.tambah', []);
     }
 
     function DownloadPdf($id)
     {
         $cek = LaporanModel::find($id);
-        $path = storage_path('app/pdf/' . $cek->dokumen); // Tentukan path file di folder storage
+        $path = storage_path('app/pdf/' . $cek->dokumen); 
 
         if (file_exists($path)) {
             return response()->download($path, $cek->dokumen, [
@@ -81,9 +71,19 @@ class LaporanMemberCtl extends Controller
         }
     }
 
-    function viewEdit() {
-        return view('member.laporan.edit', [
-           
+    function viewEdit()
+    {
+        return view('member.laporan.edit', []);
+    }
+
+    function viewDetail()
+    {
+        $data = LaporanModel::where('id', _get('i'))->where('id_member', getDataMember()->id)->get()->first();
+        if (!$data) {
+            return redirect()->back()->with(session()->flash('error', 'Data Tidak Ditemukan!'));
+        }
+        return view('member.laporan.detail', [
+            'data'=>$data
         ]);
     }
 }

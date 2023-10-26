@@ -64,6 +64,8 @@
                                 <li class="rd-nav-item"><a class="rd-nav-link" href="/#home">Beranda</a></li>
                                 <li class="rd-nav-item @if(getUrlSaatIni() == '/proyek-csr') active @endif"><a class="rd-nav-link" href="/proyek-csr">Proyek CSR</a>
                                 </li>
+                                <li class="rd-nav-item @if(getUrlSaatIni() == '/agenda-kegiatan') active @endif"><a class="rd-nav-link" href="/agenda-kegiatan">Kegiatan CSR</a>
+                                </li>
                                 <li class="rd-nav-item"><a class="rd-nav-link" href="/#Publikasi">Publikasi</a>
                                 </li>
 

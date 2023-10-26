@@ -20,7 +20,7 @@ class UsulanKegiatanModel extends Model
 
     public function kelurahan()
     {
-        return $this->hasOne(KelurahanModel::class, 'id', 'id_kelurahan');
+        return $this->hasOne(KelurahanModel::class, 'id_kelurahan', 'id_kelurahan');
     }
 
     public function member()

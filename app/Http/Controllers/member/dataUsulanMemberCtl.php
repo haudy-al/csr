@@ -21,8 +21,12 @@ class dataUsulanMemberCtl extends Controller
                 'dataUsulan' => $dataUsulan
             ]);
         } elseif (getDataMember()->level == 'cp') {
+            $dataUsulanCp = UsulanKegiatanModel::whereHas('member', function ($query) {
+                $query->where('level', 'cp');
+            })->where('id_member', '!=', getDataMember()->id)->get();
             return view('member.datausulan.cp', [
-                'dataUsulan' => $dataUsulan
+                'dataUsulan' => $dataUsulan,
+                'dataUsulanCp' => $dataUsulanCp
             ]);
         }
     }
@@ -68,22 +72,21 @@ class dataUsulanMemberCtl extends Controller
 
         if ($cek) {
 
-            $path = storage_path('app/pdf/' . $cek->proposal); 
+            $path = storage_path('app/pdf/' . $cek->proposal);
 
             if (file_exists($path)) {
                 unlink($path);
             }
 
-            $awalan_nama = $cek->id; 
-            $direktori = storage_path('app/public/pdf-image'); 
+            $awalan_nama = $cek->id;
+            $direktori = storage_path('app/public/pdf-image');
 
             $files = scandir($direktori);
 
             foreach ($files as $file) {
                 if (strpos($file, $awalan_nama) === 0 && pathinfo($file, PATHINFO_EXTENSION) === 'png') {
-                    Storage::delete('app/public/pdf-image/' . $file); 
+                    Storage::delete('app/public/pdf-image/' . $file);
                     unlink($direktori . '/' . $file);
-                   
                 }
             }
 
@@ -115,5 +118,16 @@ class dataUsulanMemberCtl extends Controller
         }
 
         return redirect('/member/laporan/tambah?usulan=' . $id);
+    }
+
+    function viewDetail() {
+        $data = UsulanKegiatanModel::where('id', _get('i'))->get()->first();
+
+        if (!$data) {
+            return redirect()->back()->with(session()->flash('error', 'Data Tidak Ditemukan!'));
+        }
+        return view('member.datausulan.detail', [
+            'data'=>$data
+        ]);
     }
 }
