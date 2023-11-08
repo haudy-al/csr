@@ -9,6 +9,8 @@ use App\Http\Controllers\AdminFaqCtl;
 use App\Http\Controllers\AdminGaleriCtl;
 use App\Http\Controllers\AdminLaaporanCtl;
 use App\Http\Controllers\AdminMasterCtl;
+use App\Http\Controllers\AdminUsulanPermintaan;
+use App\Http\Controllers\dataUsulanPeminatanCtl;
 use App\Http\Controllers\FrontEndCtl;
 use App\Http\Controllers\MemberCtl;
 use App\Http\Controllers\UserAuthController;
@@ -82,6 +84,11 @@ Route::middleware(['member.auth'])->group(function () {
     Route::get('/membar/laporan/detail', [LaporanMemberCtl::class, 'viewDetail']);
     Route::post('/member/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
 
+    Route::get('/member/data-usulan-peminatan', [dataUsulanPeminatanCtl::class, 'index']);
+    Route::post('/member/data-usulan-peminatan/surat-minat/{id}', [dataUsulanPeminatanCtl::class, 'DownloadSuratMinat'])->name('download.surat_minat');
+    Route::delete('/member/data-usulan-peminatan/delete/{id}', [dataUsulanPeminatanCtl::class, 'ProsesHapus']);
+
+    
 });
 // admin rote
 
@@ -146,6 +153,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::delete('/admin/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/admin/data-usulan/edit', [AdminDataUsulanCtl::class, 'viewEdit']);
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
+    Route::post('/admin/data-usulan/word/surat-pernyataan/{id}', [dataUsulanMemberCtl::class, 'DownloadWordSuratUsulan']);
     Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
 
     Route::get('/admin/master/dokumen', [AdminDokumenCtl::class, 'index']);
@@ -159,7 +167,10 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::delete('/admin/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
     Route::get('/admin/laporan/edit', [AdminLaaporanCtl::class, 'viewEdit']);
     Route::get('/admin/laporan/word/{id}', [AdminLaaporanCtl::class, 'exportWord']);
+    Route::post('/admin/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
 
+    Route::get('/admin/data-usulan-peminatan', [AdminUsulanPermintaan::class, 'index']);
+    Route::post('/admin/data-usulan-peminatan/status/{id}', [AdminUsulanPermintaan::class, 'UpdateStatus']);
 
     Route::get('/admin/galeri/video', [AdminGaleriCtl::class, 'viewVideo']);
 

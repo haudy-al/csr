@@ -8,6 +8,7 @@ use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class dataUsulanMemberCtl extends Controller
 {
@@ -66,6 +67,21 @@ class dataUsulanMemberCtl extends Controller
         }
     }
 
+    function DownloadWordSuratUsulan($id)
+    {
+        $cek = UsulanKegiatanModel::find($id);
+        $path = storage_path('app/word/' . $cek->surat_pernyataan);
+
+        if (file_exists($path)) {
+            return response()->download($path, $cek->surat_pernyataan, [
+                'Content-Type' => 'application/docx',
+                'Content-Disposition' => 'inline; filename="' . $cek->surat_pernyataan . '"',
+            ]);
+        } else {
+            abort(404, 'File not found');
+        }
+    }
+
     function ProsesHapus($id)
     {
         $cek = UsulanKegiatanModel::find($id);
@@ -76,6 +92,12 @@ class dataUsulanMemberCtl extends Controller
 
             if (file_exists($path)) {
                 unlink($path);
+            }
+
+            $path2 = storage_path('app/word/' . $cek->surat_pernyataan);
+
+            if (file_exists($path2)) {
+                unlink($path2);
             }
 
             $awalan_nama = $cek->id;
@@ -106,28 +128,74 @@ class dataUsulanMemberCtl extends Controller
         return view('member.datausulan.edit');
     }
 
-    function BantuUsulan($id)
+    function BantuUsulan(Request $req, $id)
     {
+
+        $data = $req->all();
+
+        $rules = [
+            'target_sasaran' => 'required',
+        ];
+
+        $customMessages = [
+            'target_sasaran.required' => 'Target Sasaran harus diisi.',
+        ];
+
+        $validator = Validator::make($data, $rules, $customMessages);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with(session()->flash('BantuGagal', $id));
+        }
+
+        $query = "SELECT transaksi_usulan.* 
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+
+
+        $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id]);
+
+
+        $targetSasaran = getTargetSasaran($id)->jumlah_penerima_manfaat;
+
+        foreach ($dataLaporan as $item) {
+            $targetSasaran -= $item->target_sasaran;
+        }
+
+        if ($req->target_sasaran > $targetSasaran) {
+            $message = 'Target Sasaran Melebihi Batas ' . $targetSasaran;
+
+            return redirect()->back()->withErrors(['target_sasaran' => $message])->withInput()->with(session()->flash('BantuGagal', $id));
+        }
+
         if (getDataTransaksiByid($id) == null) {
             TransaksiUsulan::create([
                 'id_member' => getDataMember()->id,
                 'id_usulan_kegiatan' => $id,
+                'target_sasaran' => $req->target_sasaran,
             ]);
 
-            return redirect('/member/laporan/tambah?usulan=' . $id);
+            return redirect('/member/data-usulan-peminatan');
         }
 
-        return redirect('/member/laporan/tambah?usulan=' . $id);
+        TransaksiUsulan::where('id_usulan_kegiatan', $id)->where('id_member', getDataMember()->id)->update([
+            'target_sasaran' => $req->target_sasaran,
+            'status' => 'proses',
+        ]);
+
+        // return redirect('/member/laporan/tambah?usulan=' . $id);
+        return redirect('/member/data-usulan-peminatan');
     }
 
-    function viewDetail() {
+    function viewDetail()
+    {
         $data = UsulanKegiatanModel::where('id', _get('i'))->get()->first();
 
         if (!$data) {
             return redirect()->back()->with(session()->flash('error', 'Data Tidak Ditemukan!'));
         }
         return view('member.datausulan.detail', [
-            'data'=>$data
+            'data' => $data
         ]);
     }
 }

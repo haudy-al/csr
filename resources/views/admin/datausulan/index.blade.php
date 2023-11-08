@@ -23,7 +23,6 @@
                                 <th>Deskripsi</th>
                                 <th>Lokasi</th>
                                 <th>Kelurahan</th>
-                                <th>anggaran</th>
                                 <th>Proposal</th>
                                 <th>Level</th>
 
@@ -38,11 +37,10 @@
                                     <td>{{ $item->nama_kegiatan }}</td>
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
-                                    <td>{{ $item->jumlah_penerima_manfaat }}</td>
+                                    <td>{{ $item->kategori_manfaat }} : {{ $item->jumlah_penerima_manfaat }}</td>
                                     <td>{!! $item->bentuk_kegiatan !!}</td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
-                                    <td>{{ $item->kelurahan->nama }}</td>
-                                    <td>Rp. {{ $item->anggaran }}</td>
+                                    <td>{{ $item->kelurahan->nama ?? '' }}</td>
                                     <td>
                                         <form action="/admin/data-usulan/pdf/{{ $item->id }}" method="POST">
                                             @csrf

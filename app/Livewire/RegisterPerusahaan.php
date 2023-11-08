@@ -22,8 +22,8 @@ class RegisterPerusahaan extends Component
     public $no_telepon_perusahaan;
     public $kategori_perusahaan;
     public $alamat_perusahaan;
-    public $latitude;
-    public $longitude;
+    public $latitude = '0';
+    public $longitude = '0';
     public $kelurahan;
     public $gambar_perusahaan;
 
@@ -48,8 +48,8 @@ class RegisterPerusahaan extends Component
             'no_telepon_perusahaan' => 'required',
             'kategori_perusahaan' => 'required',
             'alamat_perusahaan' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'latitude' => '',
+            'longitude' => '',
             // 'kelurahan' => 'required',
             'gambar_perusahaan' => 'required',
         ]);

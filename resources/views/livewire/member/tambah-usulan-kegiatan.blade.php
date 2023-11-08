@@ -4,7 +4,7 @@
             <div class="mb-3">
                 <label for="">Nama Kegiatan</label>
 
-                <input type="text" wire:model.live="nama_kegiatan"
+                <input type="text" wire:model="nama_kegiatan"
                     class="form-control  @error('nama_kegiatan') is-invalid @enderror" name="nama_kegiatan" id="">
                 @error('nama_kegiatan')
                     <span class="text-danger">{{ $message }}</span>
@@ -14,8 +14,8 @@
             <div class="mb-3">
                 <label for="">Bidang</label>
 
-                <select name="" wire:model.live="bidang" class="form-control @error('bidang') is-invalid @enderror"
-                    id="">
+                <select name="" wire:model="bidang"
+                    class="form-control @error('bidang') is-invalid @enderror" id="">
                     <option value="">Pilih Bidang Kegiatan</option>
                     @foreach ($dataBidang as $item)
                         <option value="{{ $item->id }}">{{ $item->nama }}</option>
@@ -33,54 +33,51 @@
                 @error('proposal')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model.live="proposal" class="form-control " name="proposal" id="iniImage">
+                <input type="file" wire:model="proposal" class="form-control " name="proposal" id="iniImage">
             </div>
 
             <div class="mb-3">
                 <label for="">Penerima Manfaat</label>
 
-                <input type="text" wire:model.live="penerima_manfaat"
-                    class="form-control  @error('penerima_manfaat') is-invalid @enderror" name="penerima_manfaat" id="">
+                <input type="text" wire:model="penerima_manfaat"
+                    class="form-control  @error('penerima_manfaat') is-invalid @enderror" name="penerima_manfaat"
+                    id="">
                 @error('penerima_manfaat')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="">Jumlah Penerima Manfaat</label>
+                <label for="">Target Sasaran</label>
 
-                <input type="number" wire:model.live="jumlah_penerima_manfaat"
-                    class="form-control  @error('jumlah_penerima_manfaat') is-invalid @enderror" name="jumlah_penerima_manfaat" id="">
-                @error('jumlah_penerima_manfaat')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
+                <div class="input-group">
+                    <select class="form-control" wire:model="kategori_manfaat" name="kategori_manfaat" id="">
+                        <option value="barang">Barang</option>
+                        <option value="rupiah">Rupiah</option>
+                    </select>
+                    <input type="number" wire:model="jumlah_penerima_manfaat"
+                        class="form-control  @error('jumlah_penerima_manfaat') is-invalid @enderror"
+                        name="jumlah_penerima_manfaat" id="">
+                    @error('jumlah_penerima_manfaat')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
 
             <div class="mb-3">
 
                 <label for="">Waktu Pelaksanaan</label>
 
-                <input type="date" wire:model.live="waktu_pelaksanaan"
-                    class="form-control  @error('waktu_pelaksanaan') is-invalid @enderror" name="waktu_pelaksanaan" id="">
+                <input type="date" wire:model="waktu_pelaksanaan"
+                    class="form-control  @error('waktu_pelaksanaan') is-invalid @enderror" name="waktu_pelaksanaan"
+                    id="">
                 @error('waktu_pelaksanaan')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
             </div>
 
-            <div class="mb-3">
-                <label for="">Anggaran</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model.live="anggaran"
-                    class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
-                </div>
-                @error('anggaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
+           
 
         </div>
         <div class="col-md-7">
@@ -88,7 +85,7 @@
 
                 <label for="">Deskripsi</label>
                 <div wire:ignore>
-                    <textarea wire:model.live="bentuk_kegiatan" class="" name="bentuk_kegiatan" id="bentuk_kegiatan"></textarea>
+                    <textarea wire:model="bentuk_kegiatan" class="" name="bentuk_kegiatan" id="bentuk_kegiatan"></textarea>
                 </div>
 
                 @error('bentuk_kegiatan')
@@ -100,7 +97,7 @@
             <div class="mb-3">
                 <label for="">Lokasi Kegiatan</label>
                 <div wire:ignore>
-                    <textarea wire:model.live="lokasi_kegiatan" class="form-control" name="lokasi_kegiatan"></textarea>
+                    <textarea wire:model="lokasi_kegiatan" class="form-control" name="lokasi_kegiatan"></textarea>
                 </div>
 
                 @error('lokasi_kegiatan')
@@ -111,8 +108,8 @@
             <div class="mb-3">
                 <label for="">Kelurahan</label>
 
-                <select name="" wire:model.live="kelurahan" class="form-control @error('kelurahan') is-invalid @enderror"
-                    id="">
+                <select name="" wire:model="kelurahan"
+                    class="form-control @error('kelurahan') is-invalid @enderror" id="">
                     <option value="">Pilih kelurahan</option>
                     @foreach ($datakelurahan as $item)
                         <option value="{{ $item->id_kelurahan }}">{{ $item->nama }}</option>
@@ -124,9 +121,8 @@
                 @enderror
             </div>
 
-            
         </div>
-        
+
         <div class="mb-3">
             <button wire:click="TambahUsulanKegiatan" class="btn btn-secondary btn-sm">Tambah</button>
         </div>

@@ -16,9 +16,6 @@
                             <strong>Usulan Kegiatan : </strong> {{ $data->nama_kegiatan }}
                         </p>
                         <p>
-                            <strong>Anggaran : </strong> Rp.{{ $data->anggaran }}
-                        </p>
-                        <p>
                             <strong>Jumlah Penerima Manfaat : </strong> {{ $data->jumlah_penerima_manfaat }}
                         </p>
                         <p>

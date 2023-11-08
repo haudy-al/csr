@@ -34,7 +34,7 @@
                             @foreach ($dataMemberPartisipasi as $item)
                                 <tr>
                                     <td>{{ $item->username }}</td>
-                                    <td>{{ $item->target_sasaran }}</td>
+                                    <td>{{ $kategori_manfaat }} : {{ $item->target_sasaran }}</td>
                                     <td>Rp. {{ $item->anggaran }}</td>
                                 </tr>
                             @endforeach

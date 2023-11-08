@@ -23,8 +23,8 @@
                                 <th>Bentuk Kegiatan</th>
                                 <th>Lokasi</th>
                                 <th>Kelurahan</th>
-                                <th>anggaran</th>
                                 <th>Proposal</th>
+                                <th>Progres</th>
 
                                 <th>Aksi</th>
                             </tr>
@@ -39,36 +39,102 @@
                                     <td>{{ $item->penerima_manfaat }}</td>
                                     <td>{!! $item->bentuk_kegiatan !!}</td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
-                                    <td>{{ $item->kelurahan->nama ?? '' }}</td>
-                                    <td>Rp. {{ $item->anggaran }}</td>
+                                    <td>{{ $item->kelurahan->nama ?? '-' }}</td>
                                     <td>
                                         <form action="/member/data-usulan/pdf/{{ $item->id }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn"><span class="mdi mdi-eye"></span></button>
                                         </form>
                                     </td>
+                                    <td>
+                                        @php
+                                            $persen = hitungPersentase(getJumlahTransaksiTerkumpul($item->id), getTargetSasaran($item->id)->jumlah_penerima_manfaat);
+                                        @endphp
+
+
+                                        <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
+                                            aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar bg-info"
+                                                style="height: 25px; width: {{ $persen }}%;">{{ $persen }}%
+                                            </div>
+                                        </div>
+
+
+                                    </td>
 
                                     <td>
 
-                                        @php
-                                            $cekDataL = App\Models\LaporanModel::where('id_usulan_kegiatan', $item->id)
-                                                ->where('id_member', getDataMember()->id)
-                                                ->get()
-                                                ->first();
-                                        @endphp
+                                        @if (getTaransaksi($item->id) == null || (getTaransaksi($item->id)->status ?? '') == 'ditolak')
+                                            @if (getTransaksiTersedia($item->id) < 1)
+                                                <span class=" badge m-1 bg-success text-light">Full</span>
+                                            @else
+                                                <button type="submit" class="btn badge m-1 btn-primary text-light"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalBantu{{ $item->id }}">Bantu</button>
 
-                                        @if (!$cekDataL)
-                                            <form action="/member/data-usulan/pemerintah/bantu/{{ $item->id }}"
-                                                method="POST">
-                                                @csrf
-                                                <button type="submit"
-                                                    class="btn badge m-1 btn-primary text-light">Bantu</button>
-                                            </form>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modalBantu{{ $item->id }}" tabindex="-1"
+                                                    aria-labelledby="modalBantuLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form
+                                                                action="/member/data-usulan/pemerintah/bantu/{{ $item->id }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <div class="modal-header border-0">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                                    </h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body border-0">
+                                                                    <div class="mb-3">
+                                                                        <strong>
+                                                                            <span style="text-transform: capitalize">
+                                                                                {{ $item->kategori_manfaat }} Tersedia :
+                                                                                {{ getTransaksiTersedia($item->id) }}
+                                                                            </span>
+                                                                        </strong>
+                                                                    </div>
+
+                                                                    <div class="mb-3">
+                                                                        <label for="">Target Sasaran</label>
+
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-text"
+                                                                                style="text-transform: capitalize">
+                                                                                {{ $item->kategori_manfaat }}
+                                                                            </span>
+                                                                            <input type="number" name="target_sasaran"
+                                                                                class="form-control">
+                                                                        </div>
+                                                                        @error('target_sasaran')
+                                                                            <small
+                                                                                class="text-danger">{{ $message }}</small>
+                                                                        @enderror
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+
+                                                                    <button type="submit"
+                                                                        class="btn btn-success">Bantu</button>
+                                                                </div>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         @else
-                                            <span class="badge m-1 rounded-pill bg-success">
-                                                Dibantu
+                                            <span style="text-transform: capitalize"
+                                                class="badge m-1 rounded-pill status-{{ getTaransaksi($item->id)->status ?? ' ' }}">
+                                                {{ getTaransaksi($item->id)->status ?? ' ' }}
                                             </span>
                                         @endif
+
+
+                                     
 
                                         <a class="btn btn-secondary badge m-1 "
                                             href="/membar/data-usulan/detail?i={{ $item->id }}">
@@ -90,6 +156,17 @@
         </div>
 
     </div>
+
+    @if (session()->has('BantuGagal'))
+        <script>
+            function showModalTambah(id) {
+                $(`#modalBantu${id}`).modal('show');
+            }
+            $(function() {
+                showModalTambah(`{{ session('BantuGagal') }}`)
+            });
+        </script>
+    @endif
 
     @include('admin.layouts.alert')
 

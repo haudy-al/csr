@@ -21,6 +21,7 @@ class TambahLaporan extends Component
     public $target_sasaran;
     public $batasAnggaran;
     public $jumlahPenerimaManfaat;
+    public $kategori_manfaat;
 
 
     public function mount()
@@ -32,6 +33,8 @@ class TambahLaporan extends Component
         if (!$cek) {
             return abort('404');
         }
+
+        $this->kategori_manfaat = $cek->kategori_manfaat;
 
         $this->nama_kegiatan = $cek->nama_kegiatan;
         $this->idKegiatan = _get('usulan');

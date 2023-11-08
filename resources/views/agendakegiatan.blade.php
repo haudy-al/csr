@@ -15,10 +15,11 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalTitle"></h5>
-                        
+                        <small id="tglStart"></small>
+
                     </div>
                     <div class="modal-body" id="modalDescription"></div>
-                   
+
                 </div>
             </div>
         </div>
@@ -40,11 +41,18 @@
                     @endforeach
                 ],
                 eventClick: function(info) {
-                    // Menetapkan judul dan deskripsi modal dengan info aktivitas yang diklik
+                    const options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    };
+                    const tanggalTerformat = info.event.start.toLocaleDateString(undefined, options);
                     $('#modalTitle').text(info.event.title);
                     $('#modalDescription').text(info.event.extendedProps.description);
+                    $('#tglStart').text(tanggalTerformat);
 
-                    // Menampilkan modal
+                    tglStart
+
                     $('#activityModal').modal('show');
                 }
             });

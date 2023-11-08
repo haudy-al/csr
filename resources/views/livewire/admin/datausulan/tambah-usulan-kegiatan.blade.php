@@ -48,15 +48,21 @@
             </div>
 
             <div class="mb-3">
-                <label for="">Jumlah Penerima Manfaat</label>
+                <label for="">Target Sasaran</label>
 
-                <input type="number" wire:model.live="jumlah_penerima_manfaat"
-                    class="form-control  @error('jumlah_penerima_manfaat') is-invalid @enderror" name="jumlah_penerima_manfaat" id="">
-                @error('jumlah_penerima_manfaat')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
+                <div class="input-group">
+                    <select class="form-control" wire:model="kategori_manfaat" name="kategori_manfaat" id="">
+                        <option value="barang">Barang</option>
+                        <option value="rupiah">Rupiah</option>
+                    </select>
+                    <input type="number" wire:model="jumlah_penerima_manfaat"
+                        class="form-control  @error('jumlah_penerima_manfaat') is-invalid @enderror"
+                        name="jumlah_penerima_manfaat" id="">
+                    @error('jumlah_penerima_manfaat')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
-
             <div class="mb-3">
 
                 <label for="">Waktu Pelaksanaan</label>
@@ -70,18 +76,6 @@
 
             </div>
 
-            <div class="mb-3">
-                <label for="">Anggaran</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model.live="anggaran"
-                        class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
-                </div>
-                @error('anggaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
 
 
         </div>

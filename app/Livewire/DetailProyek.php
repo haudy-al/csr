@@ -18,6 +18,7 @@ class DetailProyek extends Component
 
     public $anggaranTersedia;
     public $penerimaManfaat;
+    public $kategori_manfaat;
 
     function mount()
     {
@@ -48,6 +49,8 @@ class DetailProyek extends Component
         if (!$cek) {
             abort(404, 'File not found');
         }
+
+        $this->kategori_manfaat = $cek->kategori_manfaat;
 
         $pdfPath = storage_path('app/pdf/' . $cek->proposal);
         $imagePath = storage_path('app/public/pdf-image/' . $cek->id . '_page_'); // Nama file akan ditambahi dengan nomor halaman

@@ -15,6 +15,11 @@ class TransaksiUsulan extends Model
 
     public function member()
     {
+        return $this->hasOne(MemberModel::class, 'id');
+    }
+
+    public function member2()
+    {
         return $this->belongsTo(MemberModel::class, 'id_member');
     }
 

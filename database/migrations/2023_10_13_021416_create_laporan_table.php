@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_usulan_kegiatan');
             $table->foreignId('id_member');
-            $table->string('anggaran');
+            $table->foreignId('id_transaksi');
             $table->text('keterangan');
             $table->string('dokumen');
             $table->string('foto');
-            $table->bigInteger('target_sasaran');
             $table->timestamps();
         });
     }

@@ -25,11 +25,12 @@
                     </div>
                     <div class="rd-navbar-main-element">
                         <div class="rd-navbar-nav-wrap">
+                            
                             <!-- RD Navbar Share-->
                             <div class="rd-navbar-share fl-bigmug-line-user144"
                                 data-rd-navbar-toggle=".rd-navbar-share-list">
                                 <ul class="list-inline rd-navbar-share-list">
-                                    @if (getDataMember() != null )
+                                    @if (getDataMember() != null)
                                         <li class="rd-navbar-share-list-item"><a class="" onclick="memberArea()"
                                                 href="#" style="font-size: 14px !important">Member Area</a></li>
                                     @else

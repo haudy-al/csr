@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('lokasi_kegiatan');
             $table->foreignId('id_kelurahan');
             $table->string('penerima_manfaat');
+            $table->enum('kategori_manfaat',['barang','rupiah'])->default('barang');
             $table->date('waktu_pelaksanaan');
-            $table->string('anggaran');
             $table->string('proposal');
             $table->bigInteger('jumlah_penerima_manfaat');
             $table->timestamps();

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_usulan_kegiatan');
             $table->foreignId('id_member');
-            $table->enum('status',['0','1'])->default('0');
+            $table->enum('status',['proses','diterima','ditolak'])->default('proses');
+            $table->bigInteger('target_sasaran');
             $table->timestamps();
         });
     }

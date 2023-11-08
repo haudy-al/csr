@@ -39,7 +39,7 @@
 
                                     <td>
 
-                                        <form action="/member/laporan/pdf/{{ $item->id }}" method="POST">
+                                        <form action="/admin/laporan/pdf/{{ $item->id }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn"><span class="mdi mdi-eye"></span></button>
                                         </form>

@@ -12,10 +12,9 @@
                 @foreach ($dataDokumen as $item)
                     <div class="col-sm-6 col-lg-4 wow fadeInLeft" data-wow-delay=".2s">
                         <!-- Post Modern-->
-                        <article class="post post-modern " ><a class="post-modern-figure"
-                                href="/dokumen/detail/{{ $item->id }}"><img
-                                    src="{{ cekGambarDokumenPage1($item->id) }}" alt="" width="370"
-                                    height="307" style="border: 1px #b4b4b4 solid" />
+                        <article class="post post-modern "><a class="post-modern-figure"
+                                href="/dokumen/detail/{{ $item->id }}"><img src="{{ cekGambarDokumenPage1($item->id) }}"
+                                    alt="" width="370" height="307" style="border: 1px #b4b4b4 solid" />
                                 <div class="post-modern-time">
                                     <time datetime="2019-07-22"><span
                                             class="post-modern-time-month">{{ $item->created_at->format('m') }}</span><span
@@ -24,14 +23,18 @@
                             </a>
                             <h4 class="post-modern-title"><a
                                     href="/dokumen/detail/{{ $item->id }}">{{ $item->judul }}</a></h4>
-                           
+
                         </article>
                     </div>
                 @endforeach
 
             </div>
 
-            
+            @if (count($dataDokumen) < 1)
+                <div class="d-flex justify-content-center">
+                    <img class="w-50" src="{{ asset('img/datakosong.png') }}" alt="">
+                </div>
+            @endif
             <div class="d-flex justify-content-center">
                 {{ $dataDokumen->links() }}
             </div>

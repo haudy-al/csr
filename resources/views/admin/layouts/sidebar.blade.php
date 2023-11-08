@@ -13,8 +13,9 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/faq"
                         aria-expanded="false"><i class="mdi mdi-cellphone"></i><span class="hide-menu">FAQ</span></a>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/admin/calendar"
-                        aria-expanded="false"><i class="mdi mdi-calendar"></i><span class="hide-menu">Agenda Kegiatan</span></a>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                        href="/admin/calendar" aria-expanded="false"><i class="mdi mdi-calendar"></i><span
+                            class="hide-menu">Agenda Kegiatan</span></a>
                 </li>
 
 
@@ -38,6 +39,10 @@
 
                         <li class="sidebar-item"><a href="/admin/data-usulan" class="sidebar-link"><i
                                     class="mdi mdi-file-account"></i><span class="hide-menu"> Usulan Kegiatan
+                                </span></a>
+                        </li>
+                        <li class="sidebar-item"><a href="/admin/data-usulan-peminatan" class="sidebar-link"><i
+                                    class="mdi mdi-file-account"></i><span class="hide-menu"> Usulan Peminatan
                                 </span></a>
                         </li>
                         <li class="sidebar-item"><a href="/admin/laporan" class="sidebar-link"><i

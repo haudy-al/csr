@@ -41,7 +41,11 @@ function getKategoriPerusahaan()
 
 function getDataMember()
 {
-  $user = MemberModel::where('token', session('user_token'))->get()->first();
+  $token = session('user_token');
+  if ($token == null) {
+    return null;
+  }
+  $user = MemberModel::where('token', $token)->get()->first();
   if (!$user) {
     return null;
   } else {
@@ -69,6 +73,63 @@ function getDataTransaksiByid($id)
   } else {
     return $data;
   }
+}
+
+function getTransaksiTersedia($id_kegiatan)
+{
+  $query = "SELECT transaksi_usulan.* 
+  FROM usulan_kegiatan 
+  JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+  WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+
+
+  $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id_kegiatan]);
+
+
+  $targetSasaran = getTargetSasaran($id_kegiatan)->jumlah_penerima_manfaat;
+
+  foreach ($dataLaporan as $item) {
+    $targetSasaran -= $item->target_sasaran;
+  }
+
+  return $targetSasaran;
+}
+
+function getTargetSasaran($id)
+{
+  $data = UsulanKegiatanModel::find($id);
+  if (!$data) {
+    return null;
+  } else {
+    return $data;
+  }
+}
+
+function getTaransaksi($id_kegiatan)
+{
+  $data = TransaksiUsulan::where('id_usulan_kegiatan', $id_kegiatan)->where('id_member', getDataMember()->id)->get()->first();
+  if (!$data) {
+    return null;
+  } else {
+    return $data;
+  }
+}
+
+function getTaransaksiAdmin($id)
+{
+  $data = TransaksiUsulan::find($id);
+  if (!$data) {
+    return null;
+  } else {
+    return $data;
+  }
+}
+
+function getJmlTransaksiProsesByMember()
+{
+  $data = TransaksiUsulan::where('id_member', getDataMember()->id)->where('status', 'proses')->count();
+
+  return $data;
 }
 
 function getUrlSaatIni()
@@ -126,6 +187,24 @@ function cekGambarDokumenPage1($id)
   }
 }
 
+function getJumlahTransaksiTerkumpul($id)
+{
+  $query = "SELECT transaksi_usulan.* 
+  FROM usulan_kegiatan 
+  JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+  WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+
+  $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $id]);
+
+  $targetSasaran = 0;
+
+  foreach ($dataTransaksi as $item) {
+    $targetSasaran += $item->target_sasaran;
+  }
+
+  return $targetSasaran;
+}
+
 
 function getJumlahProyekTerkumpul($id)
 {
@@ -145,17 +224,17 @@ function getJumlahProyekTerkumpul($id)
   }
 
   return [
-    'anggaranTerkumpul'=>$anggaranTerkumpul,
-    'penerimaManfaat'=>$penerimaManfaat,
+    'anggaranTerkumpul' => $anggaranTerkumpul,
+    'penerimaManfaat' => $penerimaManfaat,
   ];
 }
 
 function hitungPersentase($angka, $total)
 {
-    if ($total != 0) {
-        $persentase = ($angka / $total) * 100;
-        return number_format($persentase, 2); 
-    } else {
-        return 0; 
-    }
+  if ($total != 0) {
+    $persentase = ($angka / $total) * 100;
+    return number_format($persentase, 0);
+  } else {
+    return 0;
+  }
 }

@@ -10,7 +10,7 @@
             <tbody>
                 <tr>
                     <td>Rp. {{ $batasAnggaran }}</td>
-                    <td>{{ $jumlahPenerimaManfaat }}</td>
+                    <td>{{ $kategori_manfaat }} : {{ $jumlahPenerimaManfaat }}</td>
                 </tr>
             </tbody>
         </table>

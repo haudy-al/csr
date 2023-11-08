@@ -1,57 +1,5 @@
 <div>
-    {{-- <div class="row d-flex justify-content-center">
-        <div class="col-md-4">
-
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                    <form wire:submit="ProsesLogin">
-                        <div class="text-center mb-3">
-
-                            <h3>Login</h3>
-                        </div>
-
-
-                        <div class="form-outline mb-4">
-                            @error('username')
-                                <span class="error text-danger">{{ $message }}</span>
-                            @enderror
-                            <input type="text" id="loginName" wire:model.live="username" class="form-control" />
-                            <label class="form-label" for="loginName">username</label>
-
-                        </div>
-
-                        <!-- Password input -->
-                        <div class="form-outline mb-4">
-                            @error('password')
-                                <span class="error text-danger">{{ $message }}</span>
-                            @enderror
-                            <input type="password" wire:model.live="password" id="loginPassword" class="form-control" />
-                            <label class="form-label" for="loginPassword">Password</label>
-
-                        </div>
-
-                        <div wire:ignore>
-                            {!! NoCaptcha::renderJs() !!}
-                            {!! NoCaptcha::display(['data-callback' => 'onCallback', 'data-theme' => 'dark']) !!}
-                            <button type="button" id="refresh-captcha">Refresh Captcha</button>
-                        </div>
-
-                        @error('recaptcha')
-                            <p class="error text-danger">{{ $message }}</p>
-                        @enderror
-
-
-                        <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
-
-                    </form>
-                </div>
-
-            </div>
-          
-
-
-        </div>
-    </div> --}}
+    
 
     <style>
         .btn-login {
@@ -70,7 +18,7 @@
                 <div class="col-sm-6 text-black" style="max-height: 100vh; overflow: auto">
 
                     <div class="px-5 ms-xl-4">
-                        <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
+                        <i class="fas fa-crowa fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
                         <span class="h1 fw-bold mb-0">
                             <h1 class="logo me-auto"><img width="200px" src="{{ asset('img') }}/logo.png"
                                     alt="" class="img-fluid">

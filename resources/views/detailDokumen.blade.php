@@ -7,16 +7,23 @@
 @section('content')
     <section class="section section-sm bg-default">
         <div class="container">
-            <h3>{{ $dataDokumen->judul }}</h3>
             <div class="row mt-3">
-                @foreach ($imageUrl as $imagePath)
-                    <div class="col-md-4">
-                        <a href="{{ asset('storage/pdf-image/' . $imagePath) }}" data-lightbox="roadtrip">
-                            <img style="border: 1px #bdbbbb solid" src="{{ asset('storage/pdf-image/' . $imagePath) }}" width="100%" alt="Page Image">
-                        </a>
+                <div class="col-md-6">
+                    <h3 class="mb-3">{{ $dataDokumen->judul }}</h3>
+                    <div style="max-height: 842px; overflow: auto">
 
+                        @foreach ($imageUrl as $imagePath)
+                            <div class="col-md-12">
+                                <a href="{{ asset('storage/pdf-image/' . $imagePath) }}" data-lightbox="roadtrip">
+                                    <img style="border: 1px #bdbbbb solid"
+                                        src="{{ asset('storage/pdf-image/' . $imagePath) }}" width="100%"
+                                        alt="Page Image">
+                                </a>
+
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
 
             </div>
         </div>
