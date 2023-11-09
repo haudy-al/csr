@@ -69,6 +69,11 @@
                                                         class="mdi mdi-delete"></span> Hapus</button>
                                             </form>
                                         @endif
+
+                                        @if (getTaransaksi($item->id)->status == 'diterima')
+                                            <a href="/member/laporan/tambah/{{ getTaransaksi($item->id)->id }}?usulan={{ $item->id }}" class="btn btn-success badge mb-1" ><span
+                                                    class="mdi mdi-plus"></span> Buat Laporan</a>
+                                        @endif
                                     </td>
 
                                 </tr>

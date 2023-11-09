@@ -59,6 +59,7 @@ Route::get('/mitra-csr/detail', [FrontEndCtl::class, 'viewDetailMitraCsr']);
 
 Route::get('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'viewLogin']);
+Route::post('/member/login/reset', [UserAuthController::class, 'resetLogin']);
 
 Route::get('/logout', [UserAuthController::class, 'Logout']);
 Route::get('/lupa-password', [UserAuthController::class, 'LupaPassword']);
@@ -77,7 +78,7 @@ Route::middleware(['member.auth'])->group(function () {
     Route::post('/member/data-usulan/pemerintah/bantu/{id}', [dataUsulanMemberCtl::class, 'BantuUsulan']);
 
     Route::get('/member/laporan', [LaporanMemberCtl::class, 'index']);
-    Route::get('/member/laporan/tambah', [LaporanMemberCtl::class, 'viewTambah']);
+    Route::get('/member/laporan/tambah/{id}', [LaporanMemberCtl::class, 'viewTambah']);
     Route::post('/member/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/laporan/edit', [LaporanMemberCtl::class, 'viewEdit']);

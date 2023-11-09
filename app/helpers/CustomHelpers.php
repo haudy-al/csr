@@ -78,9 +78,9 @@ function getDataTransaksiByid($id)
 function getTransaksiTersedia($id_kegiatan)
 {
   $query = "SELECT transaksi_usulan.* 
-  FROM usulan_kegiatan 
-  JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
-  WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
 
   $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id_kegiatan]);
@@ -190,9 +190,9 @@ function cekGambarDokumenPage1($id)
 function getJumlahTransaksiTerkumpul($id)
 {
   $query = "SELECT transaksi_usulan.* 
-  FROM usulan_kegiatan 
-  JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
-  WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
   $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $id]);
 
@@ -208,24 +208,22 @@ function getJumlahTransaksiTerkumpul($id)
 
 function getJumlahProyekTerkumpul($id)
 {
-  $query = "SELECT laporan.* 
-  FROM usulan_kegiatan 
-  JOIN laporan ON usulan_kegiatan.id = laporan.id_usulan_kegiatan 
-  WHERE usulan_kegiatan.id = :idUsulanKegiatan";
+  $query = "SELECT transaksi_usulan.* 
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
-  $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id]);
+  $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $id]);
 
-  $anggaranTerkumpul = 0;
-  $penerimaManfaat = 0;
+  
+  $sasaran = 0;
 
-  foreach ($dataLaporan as $item) {
-    $anggaranTerkumpul += $item->anggaran;
-    $penerimaManfaat += $item->target_sasaran;
+  foreach ($dataTransaksi as $item) {
+    $sasaran += $item->target_sasaran;
   }
 
   return [
-    'anggaranTerkumpul' => $anggaranTerkumpul,
-    'penerimaManfaat' => $penerimaManfaat,
+    'sasaran' => $sasaran,
   ];
 }
 

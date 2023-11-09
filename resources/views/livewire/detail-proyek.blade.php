@@ -6,8 +6,6 @@
                     <p>Penerima Manfaat : {{ $data->penerima_manfaat }}</p>
                     <p>Jumlah Penerima Manfaat : {{ $penerimaManfaat }} / {{ $data->jumlah_penerima_manfaat }}</p>
 
-                    <p>Anggaran : Rp. {{ $anggaranTersedia }} / Rp.{{ $data->anggaran }}</p>
-
                     <p>
                         Bentuk Kegiatan :
                         <br>
@@ -27,15 +25,13 @@
                             <tr>
                                 <th>Nama Perusahaan</th>
                                 <th>Target Sasaran</th>
-                                <th>Anggaran</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($dataMemberPartisipasi as $item)
                                 <tr>
-                                    <td>{{ $item->username }}</td>
-                                    <td>{{ $kategori_manfaat }} : {{ $item->target_sasaran }}</td>
-                                    <td>Rp. {{ $item->anggaran }}</td>
+                                    <td>{{ $item->member2->username }}</td>
+                                    <td><span class="text-capitalize">{{ $kategori_manfaat }}</span> : {{ $item->target_sasaran }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

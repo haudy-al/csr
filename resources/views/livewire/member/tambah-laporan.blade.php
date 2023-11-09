@@ -3,14 +3,14 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Anggaran Yang dibutuhkan</th>
+                    <th>Sasaran Peminatan</th>
                     <th>Sasaran Yang Tersedia</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Rp. {{ $batasAnggaran }}</td>
-                    <td>{{ $kategori_manfaat }} : {{ $jumlahPenerimaManfaat }}</td>
+                    <td><span class="text-capitalize">{{ $kategori_manfaat }}</span> : {!! $transaksi[0]->target_sasaran ?? '0' !!} / {{ $total_sasaran }}</td>
+                    <td><span class="text-capitalize">{{ $kategori_manfaat }}</span> : {{ $jumlahPenerimaManfaat }}</td>
                 </tr>
             </tbody>
         </table>
@@ -26,32 +26,6 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-
-            <div class="mb-3">
-                <label for="">Anggaran</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model="anggaran"
-                    class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
-                </div>
-                @error('anggaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="">Target Sasaran</label>
-
-                <div class="input-group">
-                    <input type="number" wire:model="target_sasaran"
-                    class="form-control  @error('target_sasaran') is-invalid @enderror" name="target_sasaran" id="">
-                </div>
-                @error('target_sasaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
 
             <div class="mb-3">
                 <label for="iniImage"><span class="mdi mdi-upload @error('dokumen') is-invalid @enderror"></span>

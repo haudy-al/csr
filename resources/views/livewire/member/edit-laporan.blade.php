@@ -1,20 +1,5 @@
 <div>
-    <div class="card mb-3">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Anggaran Yang dibutuhkan</th>
-                    <th>Sasaran Yang Tersedia</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rp. {{ $batasAnggaran }}</td>
-                    <td>{{ $jumlahPenerimaManfaat }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    
     <div class="row">
         <div class="col-md-5">
             <div class="mb-3">
@@ -25,32 +10,7 @@
                 @error('nama_kegiatan')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="">Anggaran</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model="anggaran"
-                    class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
-                </div>
-                @error('anggaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="">Target Sasaran</label>
-
-                <div class="input-group">
-                    <input type="number" wire:model="target_sasaran"
-                    class="form-control  @error('target_sasaran') is-invalid @enderror" name="target_sasaran" id="">
-                </div>
-                @error('target_sasaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+            </div>        
 
 
             <div class="mb-3">
@@ -80,7 +40,7 @@
 
                 <label for="">Keterangan</label>
                 <div wire:ignore>
-                    <textarea wire:model="keterangan" class="" name="keterangan" id="keterangan"></textarea>
+                    <textarea wire:model="keterangan" class="" name="keterangan" id="keterangan">{{ $keterangan }}</textarea>
                 </div>
 
                 @error('keterangan')

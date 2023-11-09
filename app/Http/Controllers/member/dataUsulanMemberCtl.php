@@ -134,7 +134,7 @@ class dataUsulanMemberCtl extends Controller
         $data = $req->all();
 
         $rules = [
-            'target_sasaran' => 'required',
+            'target_sasaran' => 'required|numeric|min:0',
         ];
 
         $customMessages = [
@@ -150,7 +150,7 @@ class dataUsulanMemberCtl extends Controller
         $query = "SELECT transaksi_usulan.* 
                     FROM usulan_kegiatan 
                     JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
-                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
 
         $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id]);

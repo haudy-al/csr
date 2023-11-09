@@ -49,7 +49,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Kegiatan</th>
-                                <th>Anggaran</th>
+                               
                                 <th>Target Sasaran</th>
                                 <th>Keterangan</th>
                                 <th>Dokumen Laporan</th>
@@ -65,8 +65,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan Telah Dihapus...' }}</td>
-                                    <td>{{ $item->anggaran }}</td>
-                                    <td>{{ $item->target_sasaran }}</td>
+                                    <td><span class="text-capitalize">{{ $item->usulanKegiatan->kategori_manfaat }}</span> : {{ $item->transaksi->target_sasaran }}</td>
                                     <td>{!! $item->keterangan !!}</td>
 
                                     <td>

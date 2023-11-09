@@ -31,9 +31,12 @@ class LaporanMemberCtl extends Controller
         ]);
     }
 
-    function viewTambah()
+    function viewTambah($id)
     {
-        return view('member.laporan.tambah', []);
+       
+        return view('member.laporan.tambah', [
+            'idT'=>$id,
+        ]);
     }
 
     function DownloadPdf($id)
