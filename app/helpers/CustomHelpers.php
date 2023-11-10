@@ -4,6 +4,7 @@ use App\Models\AdminModel;
 use App\Models\BidangModel;
 use App\Models\KategoriMemberModel;
 use App\Models\KelurahanModel;
+use App\Models\LaporanModel;
 use App\Models\MemberModel;
 use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
@@ -215,7 +216,7 @@ function getJumlahProyekTerkumpul($id)
 
   $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $id]);
 
-  
+
   $sasaran = 0;
 
   foreach ($dataTransaksi as $item) {
@@ -234,5 +235,54 @@ function hitungPersentase($angka, $total)
     return number_format($persentase, 0);
   } else {
     return 0;
+  }
+}
+
+
+function validatePassword($password)
+{
+  $minLength = 6;
+  $status = 'kuat';
+  $message = "Password kuat!";
+
+  if (strlen($password) < $minLength) {
+    $status = 'lemah';
+    $message = "Password terlalu pendek. Minimal $minLength karakter.";
+  } else {
+    if (!preg_match('/[A-Z]/', $password)) {
+      $status = 'lemah';
+      $message = "Password harus mengandung minimal satu huruf besar.";
+    }
+
+    if (!preg_match('/[a-z]/', $password)) {
+      $status = 'lemah';
+      $message = "Password harus mengandung minimal satu huruf kecil.";
+    }
+
+    if (!preg_match('/[0-9]/', $password)) {
+      $status = 'sedang';
+      $message = "Password harus mengandung minimal satu angka.";
+    }
+
+    if (!preg_match('/[!@#$%^&*()\-_=+{};:,<.>ยง~]/', $password)) {
+      $status = 'sedang';
+      $message = "Password harus mengandung minimal satu karakter khusus.";
+    }
+  }
+
+  return [
+    'status' => $status,
+    'message' => $message
+  ];
+}
+
+function cekLaporan($id)
+{
+  $data = LaporanModel::where('id_transaksi',$id)->get()->first();
+
+  if ($data) {
+    return $data;
+  } else {
+    return null;
   }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\member;
 
 use App\Http\Controllers\Controller;
 use App\Models\LaporanModel;
-use App\Models\UsulanKegiatanModel;
+use App\Models\TransaksiUsulan;
 use Illuminate\Http\Request;
 
 class LaporanMemberCtl extends Controller
@@ -16,18 +16,12 @@ class LaporanMemberCtl extends Controller
 
         $dataLaporan = LaporanModel::where('id_member', $user_id)->get();
 
-        $dataUsulanKegiatan = UsulanKegiatanModel::whereHas('transaksiUsulan', function ($query) use ($user_id) {
-            $query->whereIn('id_usulan_kegiatan', function ($subquery) use ($user_id) {
-                $subquery->select('id_usulan_kegiatan')
-                    ->from('transaksi_usulan')
-                    ->where('id_member', $user_id);
-            });
-        })->get();
+        $dataTransaksi = TransaksiUsulan::where('id_member',$user_id)->where('status','diterima')->get();
 
 
         return view('member.laporan.index', [
             'dataLaporan' => $dataLaporan,
-            'dataUsulanKegiatan' => $dataUsulanKegiatan,
+            'dataTransaksi' => $dataTransaksi,
         ]);
     }
 

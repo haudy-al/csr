@@ -146,10 +146,12 @@
                                 <div class="input-group">
 
                                     @if ($ubah == true)
-                                        
+                                        @if ($password)
+                                            <span class="input-group-text password-{{ $statusPassword }}">{{ $statusPassword }}</span>
+                                        @endif
                                         <input type="text" class="form-control" name="password" id="password"
-                                             wire:model.live="password" placeholder="Masukan Password Baru Anda...">
-                                            <button type="button" class="btn btn-danger text-light btn-sm"
+                                            wire:model.live="password" placeholder="Masukan Password Baru Anda...">
+                                        <button type="button" class="btn btn-danger text-light btn-sm"
                                             wire:click="Batal">Batal</button>
                                         <button type="button" class="btn btn-success text-light btn-sm"
                                             wire:click="SimpanPassword">Simpan</button>
@@ -158,6 +160,8 @@
                                             wire:click="ubahPass">Ubah Password</button>
                                     @endif
                                 </div>
+
+
 
 
                                 @error('password')
@@ -228,8 +232,14 @@
 
         window.addEventListener('UbahPasswordSuccess', () => {
             toastr.success(`Ubah Password Berhasil`, 'success');
-           
+
         })
+
+        window.addEventListener('PasswordLemah', ($message) => {
+            toastr.error(`${$message.detail.message}`, 'error');
+        })
+
+        
     </script>
 
     <script>

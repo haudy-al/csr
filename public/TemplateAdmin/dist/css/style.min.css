@@ -15085,23 +15085,43 @@ label {
 }
 
 
-.status-proses{
+.status-proses {
     background-color: orange;
     color: white;
     padding: 0 8px 0 8px;
     border-radius: 20px;
 }
 
-.status-diterima{
+.status-diterima {
     background-color: green;
     color: white;
     padding: 0 8px 0 8px;
     border-radius: 20px;
 }
 
-.status-ditolak{
+.status-ditolak {
     background-color: red;
     color: white;
     padding: 0 8px 0 8px;
     border-radius: 20px;
+}
+
+
+.password-sedang {
+    background-color: orange;
+    color: white;
+    text-transform: capitalize;
+}
+
+.password-kuat {
+    background-color: green;
+    color: white;
+    text-transform: capitalize;
+
+}
+
+.password-lemah {
+    background-color: red;
+    color: white;
+    text-transform: capitalize;
 }

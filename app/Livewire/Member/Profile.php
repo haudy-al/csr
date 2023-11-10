@@ -27,6 +27,9 @@ class Profile extends Component
 
     public $username;
     public $password;
+    public $statusPassword = '';
+    public $messagePassword = '';
+
     public $email_perusahaan;
 
     public $ubah = false;
@@ -52,6 +55,12 @@ class Profile extends Component
     }
     public function render()
     {
+
+        if ($this->password) {
+            $this->statusPassword = validatePassword($this->password)['status'];
+            $this->messagePassword = validatePassword($this->password)['message'];
+        }
+
         return view('livewire.member.profile');
     }
 
@@ -70,6 +79,12 @@ class Profile extends Component
         $this->validate([
             'password' => 'required',
         ]);
+
+        if ($this->statusPassword != 'kuat') {
+            $this->dispatch('PasswordLemah',message: $this->messagePassword);
+            return false;
+        }
+
         MemberModel::where('id', $this->id)->update([
             'password' => Hash::make($this->password),
         ]);
