@@ -76,6 +76,14 @@ class LoginAdmin extends Component
     
                 session(['token' => $token]);
                 session()->regenerate();
+
+                $dLog = [
+                    'level'=>'admin',
+                    'idAkun'=>$user->id,
+                    'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+                    'subject'=>'Login Admin'
+                ];
+                createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
     
                 $this->dispatch('LoginBerhasil');
             } else {

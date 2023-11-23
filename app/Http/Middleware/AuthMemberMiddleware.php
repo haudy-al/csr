@@ -18,17 +18,17 @@ class AuthMemberMiddleware
     {
         $user = MemberModel::where('token',session('user_token'))->get()->first();
 
-        if (!$user) {
-            return redirect('/login')->withErrors(['error','Login Terlebihdahulu']);
+        if (!$user || session('user_token') == '0' || session('user_token') == null) {
+            return redirect('/login')->withErrors(['error' => 'Login Terlebih dahulu']);
         }
 
-        if (session('user_token') == '0') {
-            return redirect('/login')->withErrors(['error','Login Terlebihdahulu']);
+        if (getDataMember()->status != 1 || getDataMember()->password_expire <= date('Y-m-d')) {
+            if (!str_contains($request->url(), '/member/reset-password')) {
+                return redirect('/member/reset-password')->with(session()->flash('error','Sulahkan Ubah Password Anda Terlebih Dahulu'));
+            }
         }
 
-        if (session('user_token') == null) {
-            return redirect('/login')->withErrors(['error','Login Terlebihdahulu']);
-        }
+      
 
         return $next($request);
     }

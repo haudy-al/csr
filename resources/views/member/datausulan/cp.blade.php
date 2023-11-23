@@ -88,7 +88,7 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table id="zero_config" class="table table-striped table-bordered">
+                    <table id="zero_config2" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -127,12 +127,17 @@
                                         @endphp
 
 
-                                        <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
-                                            aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-info"
-                                                style="height: 25px; width: {{ $persen }}%;">{{ $persen }}%
+                                        @if ($persen != '0')
+                                            <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
+                                                aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-info"
+                                                    style="height: 25px; width: {{ $persen }}%;">
+                                                    {{ $persen }}%
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            0%
+                                        @endif
 
 
                                     </td>
@@ -209,7 +214,7 @@
                                         @endif
 
 
-                                     
+
 
                                         <a class="btn btn-secondary badge m-1 "
                                             href="/membar/data-usulan/detail?i={{ $item->id }}">

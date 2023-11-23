@@ -17,15 +17,7 @@ class MitraCsr extends Component
     {
         $dataMember = MemberModel::query();
 
-        if ($this->type === 'all') {
-            $dataMember = $dataMember;
-        } elseif ($this->type === 'cp') {
-
-            $dataMember = $dataMember->where('level', 'cp');
-        } elseif ($this->type === 'pd') {
-
-            $dataMember = $dataMember->where('level', 'pd');
-        }
+        $dataMember = $dataMember->where('level', 'cp');
 
         if (!empty($this->search)) {
             $dataMember->where('nama_perusahaan', 'like', '%' . $this->search . '%');

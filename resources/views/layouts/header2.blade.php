@@ -1,3 +1,8 @@
+<style nonce="{{ csp_nonce() }}">
+    .btn-left{
+        font-size: 14px !important
+    }
+</style>
 <header class="section page-header">
     <!-- RD Navbar-->
     <div class="rd-navbar-wrap">
@@ -31,17 +36,17 @@
                                 <ul class="list-inline rd-navbar-share-list">
                                     @if (getDataMember() != null )
 
-                                        <li class="rd-navbar-share-list-item"><a class="" onclick="memberArea()"
-                                                href="#" style="font-size: 14px !important">Member Area</a></li>
+                                        <li class="rd-navbar-share-list-item"><a class="btn-left" onclick="memberArea()"
+                                                href="#" >Member Area</a></li>
                                     @else
-                                        <li class="rd-navbar-share-list-item"><a class="" onclick="login()"
-                                                href="#" style="font-size: 14px !important">Login</a></li>
-                                        <li class="rd-navbar-share-list-item"><a class="" onclick="reg()"
-                                                href="#" style="font-size: 14px !important">Daftar</a></li>
+                                        <li class="rd-navbar-share-list-item"><a class="btn-left" onclick="login()"
+                                                href="#" >Login</a></li>
+                                        <li class="rd-navbar-share-list-item"><a class="btn-left" onclick="reg()"
+                                                href="#" >Daftar</a></li>
                                     @endif
                                 </ul>
                             </div>
-                            <script>
+                            <script nonce="{{ csp_nonce() }}">
                                  function memberArea() {
                                     setTimeout(function() {
                                         window.location.href = "/member";

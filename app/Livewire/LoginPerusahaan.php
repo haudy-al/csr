@@ -86,6 +86,14 @@ class LoginPerusahaan extends Component
                 session(['user_token' => $token]);
                 session()->regenerate();
 
+                $dLog = [
+                    'level'=>'user',
+                    'idAkun'=>$user->id,
+                    'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+                    'subject'=>'Login member'
+                ];
+                createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
+
                 $this->dispatch('LoginBerhasil');
             } else {
                 if ($cek) {

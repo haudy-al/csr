@@ -9,7 +9,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><span class="text-capitalize">{{ $kategori_manfaat }}</span> : {!! $transaksi[0]->target_sasaran ?? '0' !!} / {{ $total_sasaran }}</td>
+                    <td><span class="text-capitalize">{{ $kategori_manfaat }}</span> : {!! $transaksi[0]->target_sasaran ?? '0' !!} /
+                        {{ $total_sasaran }}</td>
                     <td><span class="text-capitalize">{{ $kategori_manfaat }}</span> : {{ $jumlahPenerimaManfaat }}</td>
                 </tr>
             </tbody>
@@ -21,38 +22,43 @@
                 <label for="">Nama Kegiatan</label>
 
                 <input type="text" disabled wire:model="nama_kegiatan"
-                    class="form-control  @error('nama_kegiatan') is-invalid @enderror" name="nama_kegiatan" id="">
+                    class="form-control  @error('nama_kegiatan') is-invalid @enderror" name="nama_kegiatan"
+                    id="">
                 @error('nama_kegiatan')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="iniImage"><span class="mdi mdi-upload @error('dokumen') is-invalid @enderror"></span>
-                    Dokumen Laporan (PDF)</label>
+                <label for="iniImage"><span class="mdi mdi-upload "></span>
+                    Dokumen Laporan (PDF)<span class="text-danger">*</span> <span class="text-danger">Max 2mb</span> </label>
+                <input type="file" wire:model="dokumen" class="form-control @error('dokumen') is-invalid @enderror"
+                    name="dokumen" id="iniImage">
                 @error('dokumen')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model="dokumen" class="form-control " name="dokumen" id="iniImage">
+                <br>
+                <span>Template Download <a href="{{ asset('templatelaporan.doc') }}">disini</a></span>
             </div>
 
             <div class="mb-3">
-                <label for="iniImage"><span class="mdi mdi-upload @error('foto') is-invalid @enderror"></span>
-                    Foto Kegiatan (Image)</label>
+                <label for="iniImage"><span class="mdi mdi-upload "></span>
+                    Foto Kegiatan (Image)<span class="text-danger">*</span> <span class="text-danger">Max 2mb</span> </label>
+                <input type="file" wire:model="foto" class="form-control @error('foto') is-invalid @enderror"
+                    name="foto" id="iniImage">
                 @error('foto')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-                <input type="file" wire:model="foto" class="form-control " name="foto" id="iniImage">
             </div>
 
-                   
+
 
 
         </div>
         <div class="col-md-7">
             <div class="mb-3">
 
-                <label for="">Keterangan</label>
+                <label for="">Keterangan<span class="text-danger">*</span> </label>
                 <div wire:ignore>
                     <textarea wire:model="keterangan" class="" name="keterangan" id="keterangan"></textarea>
                 </div>
@@ -61,11 +67,11 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
 
-            </div>         
+            </div>
 
-            
+
         </div>
-        
+
         <div class="mb-3">
             <button wire:click="TambahLaporan" class="btn btn-secondary btn-sm">Tambah</button>
         </div>

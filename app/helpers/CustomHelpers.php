@@ -5,6 +5,7 @@ use App\Models\BidangModel;
 use App\Models\KategoriMemberModel;
 use App\Models\KelurahanModel;
 use App\Models\LaporanModel;
+use App\Models\LogActivities;
 use App\Models\MemberModel;
 use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
@@ -51,6 +52,34 @@ function getDataMember()
     return null;
   } else {
     return $user;
+  }
+}
+
+function getDataMemberById($id)
+{
+  $user = MemberModel::find($id);
+
+  return $user;
+}
+
+function getDataAdminById($id)
+{
+  $user = AdminModel::find($id);
+
+  return $user;
+}
+
+function getDataAdmin()
+{
+  $token = session('token');
+  if ($token == null) {
+    return null;
+  }
+  $admin = AdminModel::where('token', $token)->get()->first();
+  if (!$admin) {
+    return null;
+  } else {
+    return $admin;
   }
 }
 
@@ -241,7 +270,7 @@ function hitungPersentase($angka, $total)
 
 function validatePassword($password)
 {
-  $minLength = 6;
+  $minLength = 8;
   $status = 'kuat';
   $message = "Password kuat!";
 
@@ -278,11 +307,23 @@ function validatePassword($password)
 
 function cekLaporan($id)
 {
-  $data = LaporanModel::where('id_transaksi',$id)->get()->first();
+  $data = LaporanModel::where('id_transaksi', $id)->get()->first();
 
   if ($data) {
     return $data;
   } else {
     return null;
   }
+}
+
+function createdLog($level,$idakun,$subject, $url)
+{
+  LogActivities::create([
+    'level'=>$level,
+    'id_akun' => $idakun,
+    'url' => $url,
+    'subject' => $subject,
+    'ip' => $_SERVER['REMOTE_ADDR'],
+    'agent' => $_SERVER['HTTP_USER_AGENT']
+  ]);
 }

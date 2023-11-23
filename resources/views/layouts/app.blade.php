@@ -9,14 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
 
-    <link rel="icon" href="https://fileshaudy.000webhostapp.com/files/logokotabogor.gif" type="image/x-icon">
+    <link nonce="{{ csp_nonce() }}" rel="icon" href="https://fileshaudy.000webhostapp.com/files/logokotabogor.gif" type="image/x-icon">
     <!-- Stylesheets-->
-    <link rel="stylesheet" type="text/css"
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" type="text/css"
         href="//fonts.googleapis.com/css?family=Poppins:400,500,600%7CTeko:300,400,500%7CMaven+Pro:500">
-    <link rel="stylesheet" href="{{ asset('site') }}/css/bootstrap.css">
-    <link rel="stylesheet" href="{{ asset('site') }}/css/fonts.css">
-    <link rel="stylesheet" href="{{ asset('site') }}/css/style.css">
-    <style>
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="{{ asset('site') }}/css/bootstrap.css">
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="{{ asset('site') }}/css/fonts.css">
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="{{ asset('site') }}/css/style.css">
+    <style nonce="{{ csp_nonce() }}">
         .ie-panel {
             display: none;
             background: #212121;
@@ -33,41 +33,43 @@
             display: block;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/geosearch.css"
+   
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="{{ asset('dist/fontawesome/css/all.main.css') }}">
+
+
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link nonce="{{ csp_nonce() }}" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/geosearch.css"
         integrity="sha512-ai0NxYSxeh+RZ1GBMDY503sdYPVuMEx0sg3vKuFHN5DclEv0QMkHqJuYyogAHK/Eb4SWHlRWKmogCsm3ajgIUQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
-    
+    <script nonce="{{ csp_nonce() }}" src="{{ asset('TemplateAdmin') }}/dist/js/jquery-3.7.1.min.js"></script>
+
+
 
 
     @yield('custom_cdn')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/bundle.min.js"
+    <script nonce="{{ csp_nonce() }}" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geosearch/3.8.0/bundle.min.js"
         integrity="sha512-x8n5sU+7HmKzbIlFYoPgy40I80YSLf95TLUK1OxYuhtBKZOkD+oh0Y4UtLy6UyFE3XBEb40/O/tyJA3HaVa5Xg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.min.js" integrity="sha512-ifx27fvbS52NmHNCt7sffYPtKIvIzYo38dILIVHQ9am5XGDQ2QjSXGfUZ54Bs3AXdVi7HaItdhAtdhKz8fOFrA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
-    @livewireStyles
+    @livewireStyles(['nonce' => csp_nonce() ])
 
 
 </head>
 
 <body>
-    <div class="ie-panel"><a href="http://windows.microsoft.com/en-US/internet-explorer/"><img
-                src="{{ asset('site') }}/images/ie8-panel/warning_bar_0000_us.jpg" height="42" width="820"
-                alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a>
+
     </div>
     {{-- <div class="preloader">
         <div class="preloader-body">
@@ -90,28 +92,23 @@
         <footer class="section section-fluid footer-minimal context-dark">
             <div class="bg-gray-15">
                 <div class="container-fluid">
-                    <div class="footer-minimal-inset oh">
+                    {{-- <div class="footer-minimal-inset oh">
                         <ul class="footer-list-category-2">
                             <li><a href="http://bappeda.jabarprov.go.id/">Bappeda Jawa Barat</a></li>
                             <li><a href="http://bappeda.kotabogor.go.id/">Bappeda Kota Bogor</a></li>
 
                         </ul>
-                    </div>
+                    </div> --}}
                     <div class="footer-minimal-bottom-panel text-sm-left">
                         <div class="row row-10 align-items-md-center">
                             <div class="col-sm-6 col-md-4 text-sm-right text-md-center">
                                 <div>
-                                    <ul class="list-inline list-inline-sm footer-social-list-2">
-                                        <li><a class="icon fa fa-facebook" href="#"></a></li>
-                                        <li><a class="icon fa fa-twitter" href="#"></a></li>
-                                        <li><a class="icon fa fa-google-plus" href="#"></a></li>
-                                        <li><a class="icon fa fa-instagram" href="#"></a></li>
-                                    </ul>
+                                    
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-4 order-sm-first">
                                 <!-- Rights-->
-                                <p class="rights"><span>&copy;&nbsp;2019 TJSLP Kota Bogor.
+                                <p class="rights"><span>&copy;&nbsp;2023 Pemerintah Kota Bogor.
                                 </p>
                             </div>
                             <div class="col-sm-6 col-md-4 text-md-right"><span> All Rights Reserved. </span>
@@ -144,8 +141,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-wrap">
-                                        <input class="form-input" id="contact-modal-email" type="email"
-                                            name="email" data-constraints=" ">
+                                        <input class="form-input" id="contact-modal-email" type="email" name="email"
+                                            data-constraints=" ">
                                         <label class="form-label" for="contact-modal-email">E-mail</label>
                                     </div>
                                 </div>
@@ -170,15 +167,15 @@
             </div>
         </div>
     </div>
-    @livewireScripts
+    @livewireScripts(['nonce' => csp_nonce() ])
     <script>
         // Turbolinks.start();
     </script>
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!-- Javascript-->
-    <script src="{{ asset('site') }}/js/core.min.js"></script>
-    <script src="{{ asset('site') }}/js/script.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ asset('site') }}/js/core.min.js"></script>
+    <script nonce="{{ csp_nonce() }}" src="{{ asset('site') }}/js/script.js"></script>
     <!-- coded by Himic-->
 </body>
 

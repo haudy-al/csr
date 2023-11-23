@@ -62,6 +62,25 @@ class LaporanMemberCtl extends Controller
 
             $cek->delete();
 
+            if (cekUrlAdmin()) {
+                $level = 'admin';
+                $idAkun = getDataAdmin()->id;
+                $sub = 'Hapus Laporan (admin)';
+            } else {
+                $level = 'user';
+                $idAkun = getDataMember()->id;
+                $sub = 'Hapus Laporan ';
+            }
+
+            $dLog = [
+                'level' => $level,
+                'idAkun' => $idAkun,
+                'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+                'subject' => $sub
+            ];
+            createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
+
+
             return redirect()->back()->with(session()->flash('error', 'Delete Berhasil'));
         } else {
             abort(404, 'Page not found');

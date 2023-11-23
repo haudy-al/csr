@@ -215,7 +215,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="accordion" style="text-align: left">
+                    <div class="accordion text-left" >
                         @foreach ($Faq as $item)
                             <div class="accordion-item">
                                 <div class="accordion-header">{{ $item->judul }}</div>
@@ -234,6 +234,8 @@
     <!-- Contact information-->
     <section class="section section-sm bg-default" id="contacts">
         <div class="container">
+            <h2 class="wow fadeInLeft"><span class="text-danger">K</span>ontak</h2>
+
             <div class="row row-30 justify-content-center">
                 <div class="col-sm-8 col-md-6 col-lg-4">
                     <article class="box-contacts">
@@ -334,7 +336,7 @@
     </section>
 
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const accordionHeaders = document.querySelectorAll('.accordion-header');
 
         accordionHeaders.forEach(header => {

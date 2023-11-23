@@ -74,9 +74,9 @@ class TambahLaporan extends Component
     function TambahLaporan()
     {
         $this->validate([
-            'dokumen' => 'required|mimes:pdf',
+            'dokumen' => 'required|mimes:pdf|max:2048',
             'keterangan' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,gif',
+            'foto' => 'required|image|mimes:jpeg,png,gif|max:2048',
         ]);
         
         $namaPdf = 'dokumen-laporan-' . uniqid() . date('ymdhis') . '.' . $this->dokumen->getClientOriginalExtension();
@@ -95,6 +95,14 @@ class TambahLaporan extends Component
         $this->foto->storeAs('public/img/', $namaFoto);
 
         $this->clearInput();
+
+        $dLog = [
+            'level'=>'user',
+            'idAkun'=>getDataMember()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Tambah Laporan member'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
 
         $this->dispatch('TambahBerhasil');
     }

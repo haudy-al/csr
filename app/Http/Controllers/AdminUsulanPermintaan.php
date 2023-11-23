@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEmailJob;
+use App\Mail\NotifikasiTransaksi;
 use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AdminUsulanPermintaan extends Controller
 {
@@ -51,6 +54,26 @@ class AdminUsulanPermintaan extends Controller
 
         $cek->status = $req->status;
         $cek->save();
+
+        if ($req->status == 'diterima') {
+            $dataMail = [
+                'email'=>'csdewa25@gmail.com',
+                'nama_perusahaan'=>getDataMemberById($cek->id_member)->nama_perusahaan,
+                // 'pesan'=>'Minat Anda Di Terima',
+                'target_sasaran'=>getTargetSasaran($cek->id_usulan_kegiatan)->kategori_manfaat . ' '. $cek->target_sasaran,
+                'nama_kegiatan'=>getTargetSasaran($cek->id_usulan_kegiatan)->nama_kegiatan
+            ];
+    
+            SendEmailJob::dispatch($dataMail);
+        }
+
+        $dLog = [
+            'level'=>'admin',
+            'idAkun'=>getDataAdmin()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Update Status Usulan Minat ('.$req->status.')'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
 
         return redirect()->back()->with(session()->flash('success', 'Update Berhasil'));
     }

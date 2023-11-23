@@ -1,11 +1,16 @@
 <div>
-    
 
-    <style>
+
+    <style nonce="{{ csp_nonce() }}">
         .btn-login {
             background-color: rgb(82, 52, 250) !important;
             width: 100%;
             color: #ffff;
+        }
+
+        .line {
+            max-height: 100vh;
+            overflow: auto
         }
     </style>
 
@@ -15,7 +20,7 @@
     <section class="vh-100">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 text-black" style="max-height: 100vh; overflow: auto">
+                <div class="col-sm-6 text-black line" style="">
 
                     <div class="px-5 ms-xl-4">
                         <i class="fas fa-crowa fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
@@ -42,7 +47,7 @@
                                 </div>
                                 <br>
 
-                                <script>
+                                <script nonce="{{ csp_nonce() }}">
                                     var targetTime = new Date("{{ $waktu_login }}").getTime();
 
                                     function updateCountdown() {
@@ -64,7 +69,6 @@
                                     }
 
                                     var countdownInterval = setInterval(updateCountdown, 1000);
-                                    
                                 </script>
                             @endif
 
@@ -109,7 +113,7 @@
                             </div>
 
                             <div class="pt-1 mb-3">
-                                <button type="submit" class="btn btn-login rounded-0 btn-lg btn-block"
+                                <button type="submit" class="btn btn-primary w-100 rounded-0 btn-lg btn-block"
                                     type="button">Login</button>
                             </div>
 
@@ -131,8 +135,7 @@
         </div>
     </section>
 
-    <script>
-        
+    <script nonce="{{ csp_nonce() }}">
         var onCallback = function() {
             @this.set('recaptcha', grecaptcha.getResponse());
         }
@@ -152,7 +155,7 @@
             setTimeout(function() {
                 window.location.href = "/admin/login";
             }, 1000);
-          
+
 
         })
 
@@ -175,7 +178,7 @@
         });
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const passwordInput = document.getElementById("password");
         const showPasswordCheckbox = document.getElementById("showPassword");
 
@@ -191,7 +194,7 @@
         });
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         function ClearJmlLogin(ip) {
             var formData = new FormData();
             formData.append('_methode', 'POST');
@@ -215,7 +218,7 @@
         // ClearJmlLogin('1212')
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         // Ambil elemen countdown-timer dan pesan dari respons JSON
         const countdownTimer = document.getElementById('countdown-timer');
 

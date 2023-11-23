@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('kategori_manfaat',['barang','rupiah'])->default('barang');
             $table->date('waktu_pelaksanaan');
             $table->string('proposal');
-            $table->bigInteger('jumlah_penerima_manfaat');
+            $table->string('jumlah_penerima_manfaat');
             $table->timestamps();
         });
     }

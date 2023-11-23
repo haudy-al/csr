@@ -84,6 +84,8 @@ class dataUsulanMemberCtl extends Controller
 
     function ProsesHapus($id)
     {
+
+
         $cek = UsulanKegiatanModel::find($id);
 
         if ($cek) {
@@ -92,12 +94,6 @@ class dataUsulanMemberCtl extends Controller
 
             if (file_exists($path)) {
                 unlink($path);
-            }
-
-            $path2 = storage_path('app/word/' . $cek->surat_pernyataan);
-
-            if (file_exists($path2)) {
-                unlink($path2);
             }
 
             $awalan_nama = $cek->id;
@@ -113,6 +109,28 @@ class dataUsulanMemberCtl extends Controller
             }
 
             $cek->delete();
+
+            $level = '';
+            $idAkun = '';
+
+            if (cekUrlAdmin()) {
+                $level = 'admin';
+                $idAkun = getDataAdmin()->id;
+                $sub = 'Hapus Usulan Kegiatan (admin)';
+            } else {
+                $level = 'user';
+                $idAkun = getDataMember()->id;
+                $sub = 'Hapus Usulan Kegiatan ';
+            }
+
+            $dLog = [
+                'level' => $level,
+                'idAkun' => $idAkun,
+                'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+                'subject' => $sub
+            ];
+
+            createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
 
             return redirect()->back()->with(session()->flash('error', 'Delete Berhasil'));
         } else {
@@ -182,6 +200,14 @@ class dataUsulanMemberCtl extends Controller
             'target_sasaran' => $req->target_sasaran,
             'status' => 'proses',
         ]);
+
+        $dLog = [
+            'level' => 'user',
+            'idAkun' => getDataMember()->id,
+            'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+            'subject' => 'Tambah Usulan Peminatan member'
+        ];
+        createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
 
         // return redirect('/member/laporan/tambah?usulan=' . $id);
         return redirect('/member/data-usulan-peminatan');

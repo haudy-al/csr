@@ -11,6 +11,7 @@ use App\Models\GaleriFotoModel;
 use App\Models\GaleriVideoModel;
 use App\Models\MemberModel;
 use App\Models\UsulanKegiatanModel;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Svg\Surface\SurfacePDFLib;

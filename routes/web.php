@@ -17,7 +17,6 @@ use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\member\dataUsulanMemberCtl;
 use App\Http\Controllers\member\LaporanMemberCtl;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\ThrottleLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +29,9 @@ use App\Http\Middleware\ThrottleLogin;
 |
 */
 
-Route::get('/', [FrontEndCtl::class, 'index']);
+// Route::get('/', [FrontEndCtl::class, 'index']);
+Route::get('/', [FrontEndCtl::class, 'index'])->middleware(Spatie\Csp\AddCspHeaders::class);
+
 Route::get('/agenda-kegiatan', [FrontEndCtl::class, 'viewAgendaKegiatan']);
 
 Route::get('/proyek-csr', [FrontEndCtl::class, 'viewProyekCsr']);
@@ -66,6 +67,9 @@ Route::get('/lupa-password', [UserAuthController::class, 'LupaPassword']);
 
 Route::middleware(['member.auth'])->group(function () {
     Route::get('/member', [MemberCtl::class, 'index']);
+    Route::get('/member/json/data-transaksi', [MemberCtl::class, 'getDataTransaksi']);
+    
+    Route::get('/member/reset-password', [MemberCtl::class, 'viewRisetPassword']);
     Route::get('/member/profile', [MemberCtl::class, 'viewProfile']);
     Route::get('/member/data-usulan', [dataUsulanMemberCtl::class, 'index']);
     Route::get('/member/data-usulan/tambah', [dataUsulanMemberCtl::class, 'viewTambah']);
@@ -100,6 +104,7 @@ Route::get('/admin/logout', [AdminController::class, 'logout']);
 
 Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard']);
+    Route::get('/admin/json/data-transaksi', [AdminController::class, 'getDataTransaksi']);
     Route::get('/admin/berita', [AdminController::class, 'viewBerita']);
     Route::get('/admin/berita/tambah', [AdminBeritaCtl::class, 'viewTambah']);
     Route::get('/admin/berita/edit', [AdminBeritaCtl::class, 'viewEdit']);

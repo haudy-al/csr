@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+
+    <style nonce="{{ csp_nonce() }}">
+    .h-map{
+        height: 200px;
+    }
+    </style>
+
     <section class="section section-sm bg-default" style="text-align: left; margin-bottom: 100px">
         <div class="container-fluid">
             <div class="card border-0">
@@ -24,7 +31,7 @@
                     </div>
 
                     <div class="col-md-5">
-                        <div id="map" style="height: 200px;"></div>
+                        <div id="map" class="h-map" style="height: 200px;"></div>
                     </div>
 
                 </div>
@@ -32,7 +39,7 @@
         </div>
     </section>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         document.addEventListener("DOMContentLoaded", function() {
             let mapOptions = {
                 center: [-6.595018, 106.816635],

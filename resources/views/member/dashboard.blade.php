@@ -3,9 +3,27 @@
 @section('content_member')
     <div class="container-fluid">
 
-        <div class="table-responsive">
-            <div id="columnchart_values_usulan"></div>
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <div id="columnchart_values_usulan"></div>
+                </div>
+
+            </div>
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <div id="curve_chart"></div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="table-responsive">
+                    <div id="chart_laporan"></div>
+                </div>
+            </div>
         </div>
+
 
 
 
@@ -18,6 +36,9 @@
         });
 
         google.charts.setOnLoadCallback(drawChartUsulan);
+
+        google.charts.setOnLoadCallback(drawChartLaporan);
+        google.charts.setOnLoadCallback(drawChart);
 
         function drawChartUsulan() {
             var data = new google.visualization.DataTable();
@@ -48,6 +69,71 @@
                 document.getElementById("columnchart_values_usulan")
             );
             chart.draw(data, options);
+        }
+
+        function drawChartLaporan() {
+            var data = new google.visualization.DataTable();
+            data.addColumn("string", "Year");
+            data.addColumn("number", "Jumlah Laporan");
+
+            // Add data rows from PHP array
+            @foreach ($dataLaporan as $year => $count)
+                data.addRow(["{{ $year }}", {{ $count }}]);
+            @endforeach
+
+            var options = {
+                title: "Laporan Tahun Ini dan 5 Tahun Sebelumnya",
+                width: "100%",
+                height: "100%",
+                bar: {
+                    groupWidth: "50%"
+                },
+                hAxis: {
+                    title: "Tahun"
+                },
+                vAxis: {
+                    title: "Jumlah"
+                },
+                colors: ['#ff0000']
+            };
+
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById("chart_laporan")
+            );
+            chart.draw(data, options);
+        }
+
+        function drawChart() {
+            fetch('/member/json/data-transaksi')
+                .then(response => response.json())
+                .then(data => {
+                    var chartData = [
+                        ['Bulan', 'Bantuan Proses', 'Diterima', 'Ditolak']
+                    ];
+                    data.forEach(item => {
+                        chartData.push([item.month, parseInt(item.bantuan_proses), parseInt(item.diterima),
+                            parseInt(item.ditolak)
+                        ]);
+                    });
+
+                    var data = google.visualization.arrayToDataTable(chartData);
+
+                    var currentYear = new Date().getFullYear();
+
+                    var options = {
+                        title: 'Data Usulan Peminatan ' + currentYear,
+                        curveType: 'function',
+                        legend: {
+                            position: 'bottom'
+                        },
+                        colors: ['yellow', 'green', 'red'],
+                        pointSize: 7 
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                    chart.draw(data, options);
+                });
         }
     </script>
 @endsection

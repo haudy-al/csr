@@ -27,6 +27,7 @@ return new class extends Migration
             $table->text('token')->nullable();
             $table->enum('level',['pd','cp'])->default('cp');
             $table->enum('status',['0','1'])->default('0');
+            $table->date('password_expire')->default('1999-01-01');
             $table->timestamps();
         });
     }

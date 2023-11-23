@@ -108,7 +108,7 @@
     </div>
 
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         var onCallback = function() {
             @this.set('recaptcha', grecaptcha.getResponse());
         }
@@ -151,7 +151,7 @@
         });
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const passwordInput = document.getElementById("password");
         const showPasswordCheckbox = document.getElementById("showPassword");
 
@@ -167,7 +167,7 @@
         });
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         function ClearJmlLogin(ip) {
             var formData = new FormData();
             formData.append('_methode', 'POST');
@@ -183,7 +183,9 @@
                     document.location = '/login';
                 },
                 error: function(xhr) {
-                    console.log('gagal');
+
+                    console.log(xhr);
+
                 }
             });
         }
@@ -191,7 +193,7 @@
         // ClearJmlLogin('1212')
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         // Ambil elemen countdown-timer dan pesan dari respons JSON
         const countdownTimer = document.getElementById('countdown-timer');
 
