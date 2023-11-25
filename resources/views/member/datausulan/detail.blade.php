@@ -16,7 +16,7 @@
                             <strong>Usulan Kegiatan : </strong> {{ $data->nama_kegiatan }}
                         </p>
                         <p>
-                            <strong>Jumlah Penerima Manfaat : </strong> {{ $data->jumlah_penerima_manfaat }}
+                            <strong>Jumlah Penerima Manfaat : </strong> {{ convertSatuanTargetSasaran($data->kategori_manfaat,$data->jumlah_penerima_manfaat) }}
                         </p>
                         <p>
                             <strong>Lokasi Kegiatan : </strong> {{ $data->lokasi_kegiatan }}

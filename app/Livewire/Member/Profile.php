@@ -117,6 +117,10 @@ class Profile extends Component
     function SimpanProfile()
     {
 
+        $this->validate([
+            'email_perusahaan'=>'required|email|unique:member,email_perusahaan,' . $this->id,
+        ]);
+
         $namaGambar = $this->gambar_perusahaan_lama;
         if ($this->gambar_perusahaan) {
             $namaGambar = 'member-' . uniqid() . date('ymdhis') . '.' . $this->gambar_perusahaan->getClientOriginalExtension();

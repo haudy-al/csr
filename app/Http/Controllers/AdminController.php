@@ -129,4 +129,8 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    function viewLupaPassword() {
+        return view('admin.reset-password');
+    }
 }

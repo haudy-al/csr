@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsulanKegiatanExport;
 use App\Models\BidangModel;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 
@@ -89,4 +91,9 @@ class AdminDataUsulanCtl extends Controller
 
         return response()->download(storage_path($filename))->deleteFileAfterSend(true);
     }
+
+    function exportExcel() {
+        return Excel::download(new UsulanKegiatanExport, 'kegiatan.xlsx');
+    }
+
 }

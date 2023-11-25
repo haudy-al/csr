@@ -3,8 +3,12 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="mb-3">
+                    <label for="">Email</label>
+                    <input class="form-control" type="text" wire:model.live="email">
+                </div>
+                <div class="mb-3">
                     <label for="">Username</label>
-                    <input class="form-control" type="text" wire:model.live="username" disabled>
+                    <input class="form-control" type="text" wire:model="username" disabled>
                 </div>
 
                 <div class="mb-3">

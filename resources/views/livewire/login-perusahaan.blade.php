@@ -51,7 +51,7 @@
                     <div class="form-outline mb-4" style="text-align: left">
 
                         <label class="" style="color: black" for="form2Example18">Username :</label>
-                        <input type="text" id="loginName" wire:model.live="username"
+                        <input type="text" id="loginName" wire:model="username"
                             class="form-control form-control-lg @error('username') is-invalid @enderror" />
                         @error('username')
                             <small style="color: red">{{ $message }}</small>
@@ -62,7 +62,7 @@
                     <div class="form-outline mb-3" style="text-align: left">
 
                         <label class="" style="color: black" for="form2Example28">Password :</label>
-                        <input type="password" wire:model.live="password" id="password"
+                        <input type="password" wire:model="password" id="password"
                             class="form-control form-control-lg @error('password') is-invalid @enderror" />
                         @error('password')
                             <small style="color: red">{{ $message }}</small>
@@ -70,7 +70,7 @@
 
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <div wire:ignore>
 
                             {!! NoCaptcha::renderJs() !!}
@@ -80,6 +80,15 @@
                         </div>
 
                         @error('recaptcha')
+                            <small style="color: red">{{ $message }}</small>
+                        @enderror
+                    </div> --}}
+
+                    <div class="input-group mb-3 ">
+                        <img class="" src="{{ captcha_src('math') }}" alt="CAPTCHA">
+                        <input class="w-25 form-control h-50" type="text" id="captcha" wire:model='captcha' name="captcha">
+
+                        @error('captcha')
                             <small style="color: red">{{ $message }}</small>
                         @enderror
                     </div>
@@ -109,21 +118,21 @@
 
 
     <script nonce="{{ csp_nonce() }}">
-        var onCallback = function() {
-            @this.set('recaptcha', grecaptcha.getResponse());
-        }
+        // var onCallback = function() {
+        //     @this.set('recaptcha', grecaptcha.getResponse());
+        // }
 
         window.addEventListener('LoginGagal', () => {
 
             toastr.error(`Username Atau Password Salah`, 'error');
-            refreshCaptcha();
+            // refreshCaptcha();
 
         })
 
         window.addEventListener('LoginTunggu', () => {
 
             toastr.error(`Silahkan Login Kembali Setelah Beberapa Menit`, 'error');
-            refreshCaptcha();
+            // refreshCaptcha();
 
             setTimeout(function() {
                 window.location.href = "/login";
@@ -147,7 +156,7 @@
 
         // Panggil fungsi refreshCaptcha saat tombol ditekan
         document.getElementById('refresh-captcha').addEventListener('click', function() {
-            refreshCaptcha();
+            // refreshCaptcha();
         });
     </script>
 

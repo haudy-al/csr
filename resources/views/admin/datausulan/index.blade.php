@@ -7,7 +7,7 @@
 
             <div class="card-header">
                 <a href="/admin/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span> Tambah</a>
-                <a href="/admin/data-usulan/tambah" class="btn btn-success btn-sm text-light"><span class="mdi mdi-file-excel"></span> Export</a>
+                <a href="/admin/data-usulan/excel" class="btn btn-success btn-sm text-light"><span class="mdi mdi-file-excel"></span> Export</a>
             </div>
 
             <div class="card-body">

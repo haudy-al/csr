@@ -86,7 +86,7 @@
 
                             <div class="form-outline mb-4">
 
-                                <input type="text" id="loginName" wire:model.live="username"
+                                <input type="text" id="loginName" wire:model="username"
                                     class="form-control form-control-lg" />
 
                                 <label class="form-label" for="form2Example18">Username</label>
@@ -94,22 +94,31 @@
 
                             <div class="form-outline mb-3">
 
-                                <input type="password" wire:model.live="password" id="password"
+                                <input type="password" wire:model="password" id="password"
                                     class="form-control form-control-lg" />
 
                                 <label class="form-label" for="form2Example28">Password</label>
                             </div>
 
-                            <div class="form-outline mb-4">
+                            <div class="form-outline mb-3">
                                 <input type="checkbox" id="showPassword" /> <label for="showPassword">Tampilkan
                                     Password</label>
                             </div>
 
-                            <div class="mb-3" wire:ignore>
+                            <div class="form-outline mb-4">
+                                <a class="text-danger" href="/admin/lupa-password">Lupa Password ?</a>
+                            </div>
+
+                            {{-- <div class="mb-3" wire:ignore>
                                 {!! NoCaptcha::renderJs() !!}
                                 {!! NoCaptcha::display(['data-callback' => 'onCallback', 'data-theme' => 'light']) !!}
                                 <button type="button" class="btn badge btn-outline-secondary text-dark"
                                     id="refresh-captcha"><i class="fa-solid fa-arrows-rotate"></i></button>
+                            </div> --}}
+
+                            <div class="input-group mb-3 ">
+                                <img class="" src="{{ captcha_src('math') }}" alt="CAPTCHA">
+                                <input class="w-25 form-control" type="text" id="captcha" wire:model='captcha' name="captcha">
                             </div>
 
                             <div class="pt-1 mb-3">
@@ -136,21 +145,21 @@
     </section>
 
     <script nonce="{{ csp_nonce() }}">
-        var onCallback = function() {
-            @this.set('recaptcha', grecaptcha.getResponse());
-        }
+        // var onCallback = function() {
+        //     @this.set('recaptcha', grecaptcha.getResponse());
+        // }
 
         window.addEventListener('LoginGagal', () => {
 
             toastr.error(`Username Atau Password Salah`, 'error');
-            refreshCaptcha();
+            // refreshCaptcha();
 
         })
 
         window.addEventListener('LoginTunggu', () => {
 
             toastr.error(`Silahkan Login Kembali Setelah Beberapa Menit`, 'error');
-            refreshCaptcha();
+            // refreshCaptcha();
 
             setTimeout(function() {
                 window.location.href = "/admin/login";

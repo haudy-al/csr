@@ -99,7 +99,7 @@ class TambahUsulanKegiatan extends Component
             'lokasi_kegiatan' => $this->lokasi_kegiatan,
             'id_kelurahan' => $this->kelurahan,
             'id_member' => $this->userId,
-            'jumlah_penerima_manfaat' => $this->jumlah_penerima_manfaat,
+            'jumlah_penerima_manfaat' => str_replace(',','',$this->jumlah_penerima_manfaat),
             'kategori_manfaat' => $this->kategori_manfaat,
         ]);
 

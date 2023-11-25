@@ -8,6 +8,7 @@ use Livewire\Component;
 
 class ProfileAdmin extends Component
 {
+    public $email;
     public $username;
     public $password;
     public $id;
@@ -16,6 +17,7 @@ class ProfileAdmin extends Component
     {
         $admin = AdminModel::where('token',session('token'))->get()->first();
         $this->username = $admin->username;
+        $this->email = $admin->email;
         $this->id = $admin->id;
        
     }
@@ -26,13 +28,21 @@ class ProfileAdmin extends Component
     }
 
     function SimpanProfile() {
-        if (!$this->password) {
-            return false;
-        }
-        AdminModel::where('id',$this->id)->update([
-            'password'=>Hash::make($this->password)
-        ]);
 
+        $this->validate([
+            'email' => 'required|email|unique:admin,email,' . $this->id,
+        ]);
+        
+        $cek = AdminModel::where('id',$this->id)->first();
+        
+        if ($this->password) {
+            $cek->password = Hash::make($this->password);
+        }
+
+        $cek->email = $this->email;
+
+        $cek->save();
+     
         $this->password = "";
 
         $this->dispatch('TambahBerhasil');

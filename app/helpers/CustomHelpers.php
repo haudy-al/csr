@@ -316,14 +316,34 @@ function cekLaporan($id)
   }
 }
 
-function createdLog($level,$idakun,$subject, $url)
+function createdLog($level, $idakun, $subject, $url)
 {
   LogActivities::create([
-    'level'=>$level,
+    'level' => $level,
     'id_akun' => $idakun,
     'url' => $url,
     'subject' => $subject,
     'ip' => $_SERVER['REMOTE_ADDR'],
     'agent' => $_SERVER['HTTP_USER_AGENT']
   ]);
+}
+
+function convertSatuanTargetSasaran($char,$count)
+{
+  switch (strtolower($char)) {
+    case 't':
+      return $count.' Ton';
+    case 'g':
+      return $count.' Gram';
+    case 'kg':
+      return $count.' Kg';
+    case 'rupiah':
+      return 'Rp.'.$count;
+    case 'buah':
+      return $count.' Buah';
+    case 'paket':
+      return $count.' Paket';
+    default:
+      return 'Satuan tidak valid';
+  }
 }

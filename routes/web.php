@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', [FrontEndCtl::class, 'index']);
-Route::get('/', [FrontEndCtl::class, 'index'])->middleware(Spatie\Csp\AddCspHeaders::class);
+Route::get('/', [FrontEndCtl::class, 'index'])->middleware(Spatie\Csp\AddCspHeaders::class,\Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class);
 
 Route::get('/agenda-kegiatan', [FrontEndCtl::class, 'viewAgendaKegiatan']);
 
@@ -100,6 +100,9 @@ Route::middleware(['member.auth'])->group(function () {
 Route::post('/admin/login/reset', [AdminController::class, 'resetLogin']);
 Route::get('/admin/login', [AdminController::class, 'viewLogin']);
 Route::get('/admin/logout', [AdminController::class, 'logout']);
+Route::get('/admin/lupa-password', [AdminController::class, 'viewLupaPassword']);
+
+
 
 
 Route::middleware(['admin.auth'])->group(function () {
@@ -161,6 +164,8 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::post('/admin/data-usulan/word/surat-pernyataan/{id}', [dataUsulanMemberCtl::class, 'DownloadWordSuratUsulan']);
     Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
+    Route::get('/admin/data-usulan/excel', [AdminDataUsulanCtl::class, 'exportExcel']);
+    
 
     Route::get('/admin/master/dokumen', [AdminDokumenCtl::class, 'index']);
     Route::get('/admin/master/dokumen/tambah', [AdminDokumenCtl::class, 'viewTambah']);

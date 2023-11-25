@@ -13,7 +13,9 @@ class LoginPerusahaan extends Component
     public $username;
     public $password;
 
-    public $recaptcha;
+    // public $recaptcha;
+    public $captcha;
+
 
     public $ipAddress;
     public $userAgent;
@@ -44,8 +46,15 @@ class LoginPerusahaan extends Component
         $this->validate([
             'username' => 'required',
             'password' => 'required',
-            'recaptcha' => 'required|captcha'
+            // 'recaptcha' => 'required|captcha',
+            'captcha' => 'required|captcha',
 
+
+        ],[
+            'username.required'=>'Username Wajib di Isi',
+            'password.required'=>'Password Wajib di Isi',
+            'captcha.required'=>'Captcha Wajib di Isi',
+            'captcha.captcha'=>'Captcha Salah',
         ]);
 
         $r = uniqid() . date('ymdhis');
@@ -104,7 +113,7 @@ class LoginPerusahaan extends Component
 
                     $cek->save();
 
-                    if ($cek->jml_upaya_login == 5) {
+                    if ($cek->jml_upaya_login == 3) {
                         return redirect('/login');
                     }
                     $this->dispatch('LoginGagal');

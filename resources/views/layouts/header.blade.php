@@ -45,8 +45,6 @@
                                                 href="#">Daftar</a></li>
                                     @endif
 
-
-
                                 </ul>
                             </div>
                             <script nonce="{{ csp_nonce() }}">

@@ -265,8 +265,8 @@
                             <div class="box-contacts-icon fl-bigmug-line-chat55"></div>
                             <div class="box-contacts-decor"></div>
                             <p class="box-contacts-link" style=""><a
-                                    href="mailto:bappedalitbang.kotabogor@gmail.com"
-                                    style="font-size: 14px">bappedalitbang.kotabogor@gmail.com</a></p>
+                                    href="mailto:bappeda@kotabogor.go.id"
+                                    style="font-size: 14px">bappeda@kotabogor.go.id</a></p>
 
                         </div>
                     </article>

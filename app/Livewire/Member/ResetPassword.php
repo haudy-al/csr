@@ -3,6 +3,7 @@
 namespace App\Livewire\Member;
 
 use App\Models\MemberModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
@@ -12,6 +13,8 @@ class ResetPassword extends Component
     public $password;
     public $statusPassword = '';
     public $messagePassword = '';
+
+    public $password_lama;
 
     public function render()
     {
@@ -26,10 +29,16 @@ class ResetPassword extends Component
     {
         $this->validate([
             'password' => 'required',
+            'password_lama' => 'required',
         ]);
 
         if ($this->statusPassword != 'kuat') {
             $this->dispatch('PasswordLemah', message: $this->messagePassword);
+            return false;
+        }
+        
+        if (!Auth::guard('member')->attempt(['username' => getDataMember()->username, 'password' => $this->password_lama])) {
+            $this->dispatch('PasswordLemah',message: 'Password Lama Salah');
             return false;
         }
 
