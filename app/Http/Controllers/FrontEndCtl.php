@@ -32,6 +32,7 @@ class FrontEndCtl extends Controller
         $dataBerita = BeritaModel::take(3)->get();
         $Faq = FaqModel::get();
         $activities = Activity::all();
+        $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
         
         
         return view('home', [
@@ -39,7 +40,8 @@ class FrontEndCtl extends Controller
             'dataGaleriFoto' => $dataGaleriFoto,
             'dataBerita' => $dataBerita,
             'Faq' => $Faq,
-            'activities'=>$activities
+            'activities'=>$activities,
+            'dataBeritaKotaBogor'=>$dataBeritaKotaBogor
         ]);
     }
 
@@ -257,6 +259,44 @@ class FrontEndCtl extends Controller
         $activities = Activity::all();
         return view('agendakegiatan',[
             'activities'=>$activities
+        ]);
+    }
+
+    public function getApiBeritaKotaBogor()
+    {
+        $clientId = env('OAUTH_CLIENT_ID');
+        $clientSecret = env('OAUTH_CLIENT_SECRET');
+        $tokenUrl = env('OAUTH_TOKEN_URL');
+
+        $client = new Client();
+        $response = $client->post($tokenUrl, [
+            'form_params' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
+            ],
+        ]);
+
+        $token = json_decode($response->getBody()->getContents())->access_token;
+
+        $apiUrl = 'https://api-splp.layanan.go.id/t/kotabogor.go.id/Kominfo-KotaBogor/1.0/berita';
+        $response = $client->post($apiUrl, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+            ],
+        ]);
+
+
+        $data = json_decode($response->getBody()->getContents());
+
+        return $data;
+    }
+
+    public function viewBeritaKotaBogor()
+    {
+        $dataBerita = $this->getApiBeritaKotaBogor();
+        return view('berita-kota-bogor',[
+            'dataBerita'=>$dataBerita
         ]);
     }
 }

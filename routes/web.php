@@ -51,6 +51,7 @@ Route::get('/dokumen/detail/{id}', [FrontEndCtl::class, 'viewDokumenDetail']);
 
 
 Route::get('/berita', [FrontEndCtl::class, 'viewBerita']);
+Route::get('/berita-kota-bogor', [FrontEndCtl::class, 'viewBeritaKotaBogor']);
 Route::get('/berita/detail/{id}', [FrontEndCtl::class, 'detailBerita']);
 Route::get('/galeri', [FrontEndCtl::class, 'viewGaleri']);
 Route::get('/galeri/foto/detail/{id}', [FrontEndCtl::class, 'detailGaleriFoto']);
