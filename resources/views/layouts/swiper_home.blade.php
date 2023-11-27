@@ -16,9 +16,9 @@
             <div class="swiper-slide" data-slide-bg="{{ asset('storage/img/' . $item->gambar) }}">
                 <div class="swiper-slide-caption section-md">
                     <div class="container">
-                        <h1 class="hj" data-caption-animate="fadeInLeft" data-caption-delay="0">
-                            {{ Str::substr($item->judul, 0, 26) }}...
-                        </h1>
+                        <h2 class="hj" data-caption-animate="fadeInLeft" data-caption-delay="0">
+                            {{ $item->judul }}
+                        </h2>
                         <p class="text-width-large" data-caption-animate="fadeInRight" data-caption-delay="100">Dapatkan
                             Berita Terbaru mengenai TJSLP Kota Bogor Dengan Cepat Dan Akurat.</p>
                         {{-- <a class="button button-primary button-ujarak" href="#modalCta"

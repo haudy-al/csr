@@ -34,9 +34,9 @@ class FrontEndCtl extends Controller
         $Faq = FaqModel::get();
         $activities = Activity::all();
         // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
-        $dataBeritaKotaBogor = $this->getApiBeritaKotaBogor();
+        $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'}, 0, 3);
 
-        // dd($dataBeritaKotaBogor->{'Berita Bogor'});
+        // dd($dataBeritaKotaBogor);
         
         
         return view('home', [
@@ -45,7 +45,7 @@ class FrontEndCtl extends Controller
             'dataBerita' => $dataBerita,
             'Faq' => $Faq,
             'activities'=>$activities,
-            'dataBeritaKotaBogor'=>$dataBeritaKotaBogor->{'Berita Bogor'}
+            'dataBeritaKotaBogor'=>$dataBeritaKotaBogor
         ]);
     }
 
@@ -309,7 +309,7 @@ class FrontEndCtl extends Controller
 
     public function viewBeritaKotaBogor()
     {
-        $dataBerita = $this->getApiBeritaKotaBogor();
+        $dataBerita = $this->getApiBeritaKotaBogor()->{'Berita Bogor'};
         return view('berita-kota-bogor',[
             'dataBerita'=>$dataBerita
         ]);
@@ -318,13 +318,13 @@ class FrontEndCtl extends Controller
      public function detailBeritaKotaBogor($post_id)
         {
             try {
-                $cachedData = Cache::get('api_berita_kota_bogor') ?? $this->getApiBeritaKotaBogor();
+                $cachedData = Cache::get('api_berita_kota_bogor')->{'Berita Bogor'} ?? $this->getApiBeritaKotaBogor()->{'Berita Bogor'};
 
-                $detailBerita = collect($cachedData)->firstWhere('post_id', $post_id);
+                $detailBerita = collect($cachedData)->firstWhere('postid', $post_id);
 
                 if ($detailBerita) {
                     
-                    return view('detail-berita-kota-bogor', ['data' => $detailBerita,'beritaLain'=>array_slice($this->getApiBeritaKotaBogor(), 0, 5)]);
+                    return view('detail-berita-kota-bogor', ['data' => $detailBerita,'beritaLain'=>array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'}, 0, 5)]);
                 }
 
                 return abort(404);
@@ -332,50 +332,5 @@ class FrontEndCtl extends Controller
                 return abort(404);
             }
         }
-
-
-    public function apiBogor()
-    {
-        try {
-            $cachedData = Cache::get('api_berita_kota_bogor2');
-            if ($cachedData) {
-                return $cachedData;
-            }
-
-            $clientId = env('OAUTH_CLIENT_ID');
-            $clientSecret = env('OAUTH_CLIENT_SECRET');
-            $tokenUrl = env('OAUTH_TOKEN_URL');
-
-            $client = new Client();
-            
-            $response = $client->post($tokenUrl, [
-                'form_params' => [
-                    'grant_type' => 'client_credentials',
-                    'client_id' => $clientId,
-                    'client_secret' => $clientSecret,
-                ],
-            ]);
-
-            $token = json_decode($response->getBody()->getContents())->access_token;
-
-            $apiUrl = 'https://api-splp.layanan.go.id/t/kotabogor.go.id/KotaBogor/1.0/berita?key=b3r1t4b0g0r';
-
-            $response = $client->get($apiUrl, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token,
-                ],
-            ]);
-
-            $data = json_decode($response->getBody()->getContents());
-
-            Cache::put('api_berita_kota_bogor2', $data, now()->addHours(1));
-
-            return $data;
-
-        } catch (\Exception $e) {
-            return $e;
-        }
-    }
-
 
 }

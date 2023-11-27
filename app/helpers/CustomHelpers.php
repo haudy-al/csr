@@ -9,6 +9,7 @@ use App\Models\LogActivities;
 use App\Models\MemberModel;
 use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -332,22 +333,31 @@ function createdLog($level, $idakun, $subject, $url)
   ]);
 }
 
-function convertSatuanTargetSasaran($char,$count)
+function convertSatuanTargetSasaran($char, $count)
 {
   switch (strtolower($char)) {
     case 't':
-      return $count.' Ton';
+      return $count . ' Ton';
     case 'g':
-      return $count.' Gram';
+      return $count . ' Gram';
     case 'kg':
-      return $count.' Kg';
+      return $count . ' Kg';
     case 'rupiah':
-      return 'Rp.'.$count;
+      return 'Rp.' . $count;
     case 'buah':
-      return $count.' Buah';
+      return $count . ' Buah';
     case 'paket':
-      return $count.' Paket';
+      return $count . ' Paket';
     default:
       return 'Satuan tidak valid';
   }
+}
+
+function customFormatDateString($format, $tgl)
+{
+
+  $tanggal = Carbon::createFromFormat('d M Y', $tgl);
+
+  return $tanggal->format($format);
+
 }
