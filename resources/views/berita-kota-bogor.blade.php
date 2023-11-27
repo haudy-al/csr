@@ -13,17 +13,17 @@
                     <div class="col-sm-6 col-lg-4 wow fadeInLeft" data-wow-delay=".2s">
                         <!-- Post Modern-->
                         <article class="post post-modern"><a class="post-modern-figure"
-                                href="/berita/detail/{{ $item->post_id }}"><img
+                                href="/berita-kota-bogor/{{ $item->post_id }}/{{ str_replace(' ','-',$item->title) }}"><img
                                     src="https://kominfo.kotabogor.go.id/asset/images/web/konten/{{ $item->image }}" alt="" width="370"
                                     height="307" />
-                                <div class="post-modern-time">
+                                 <div class="post-modern-time">
                                     <time datetime="2019-07-22"><span
-                                            class="post-modern-time-month">8</span><span
-                                            class="post-modern-time-number">10</span></time>
+                                            class="post-modern-time-month">{{ Carbon\Carbon::parse($item->date_publish)->format('M') }}</span><span
+                                            class="post-modern-time-number">{{ Carbon\Carbon::parse($item->date_publish)->format('d') }}</span></time>
                                 </div>
                             </a>
                             <h4 class="post-modern-title"><a
-                                    href="/berita/detail/{{ $item->post_id }}">{{ $item->title }}</a></h4>
+                                    href="/berita-kota-bogor/{{ $item->post_id }}/{{ str_replace(' ','-',$item->title) }}">{{ $item->title }}</a></h4>
                             <!-- <p class="post-modern-text">{!! Str::substr($item->body, 0, 120) !!}...</p> -->
                         </article>
                     </div>

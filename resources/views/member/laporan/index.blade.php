@@ -24,8 +24,8 @@
                                         <option value="">Pilih</option>
                                 
                                         @foreach ($dataTransaksi as $item)
-                                            <option  data-idT="{{ $item->id }}" data-usulan="{{ $item->usulanKegiatan->id }}" {{ (cekLaporan($item->id)) ? 'disabled' : '' }} >
-                                                {{ $item->usulanKegiatan->nama_kegiatan }}
+                                            <option  data-idT="{{ $item->id ?? '' }}" data-usulan="{{ $item->usulanKegiatan->id ?? '' }}" {{ (cekLaporan($item->id)) ? 'disabled' : '' }} >
+                                                {{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan dihapus' }}
                                             </option>
                                         @endforeach
                                     </select>

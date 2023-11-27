@@ -138,18 +138,18 @@
                     <div class="col-sm-6 col-lg-4 wow fadeInLeft" data-wow-delay=".2s">
                         <!-- Post Modern-->
                         <article class="post post-modern"><a class="post-modern-figure"
-                                href="/berita/detail/{{ $item->post_id }}"><img
-                                    src="https://kominfo.kotabogor.go.id/asset/images/web/konten/{{ $item->image }}" alt="" width="370"
+                                href="/berita-kota-bogor/{{ $item['postid'] }}/{{ str_replace(' ','-',$item['judul']) }}"><img
+                                    src="{{ $item['gambar'] }}" alt="" width="370"
                                     height="307" />
                                 <div class="post-modern-time">
                                     <time datetime="2019-07-22"><span
-                                            class="post-modern-time-month">8</span><span
+                                            class="post-modern-time-month">9</span><span
                                             class="post-modern-time-number">10</span></time>
                                 </div>
                             </a>
                             <h4 class="post-modern-title"><a
-                                    href="/berita/detail/{{ $item->post_id }}">{{ $item->title }}</a></h4>
-                            <!-- <p class="post-modern-text">{!! Str::substr($item->body, 0, 120) !!}...</p> -->
+                                    href="/berita-kota-bogor/{{ $item['postid'] }}/{{ str_replace(' ','-',$item['judul']) }}">{{ $item['judul'] }}</a></h4>
+                           
                         </article>
                     </div>
                 @endforeach
@@ -197,7 +197,7 @@
                             </div>
                             <div class="thumbnail-classic-caption">
                                 <div class="thumbnail-classic-title-wrap"><a class="icon fl-bigmug-line-zoom60"
-                                        href="images/grid-gallery-2-1200x800-original.jpg" data-lightgallery="item"><img
+                                        href="{{ asset('storage/img/' . $galeriFoto->gambar) }}" data-lightgallery="item"><img
                                             src="{{ asset('storage/img/' . $galeriFoto->gambar) }}" alt=""
                                             width="420" height="350" /></a>
                                     <h5 class="thumbnail-classic-title"><a
@@ -221,7 +221,7 @@
                             </div>
                             <div class="thumbnail-classic-caption">
                                 <div class="thumbnail-classic-title-wrap"><a class="icon fl-bigmug-line-zoom60"
-                                        href="images/grid-gallery-3-1200x800-original.jpg" data-lightgallery="item"><img
+                                        href="{{ asset('storage/img/' . $galeriVideo->gambar) }}" data-lightgallery="item"><img
                                             src="{{ asset('storage/img/' . $galeriVideo->gambar) }}" alt=""
                                             width="420" height="350" /></a>
                                     <h5 class="thumbnail-classic-title"><a href="/galeri/video/detail/{{ $galeriVideo->id }}">{{ $galeriVideo->judul }}</a>

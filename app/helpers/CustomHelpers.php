@@ -200,8 +200,12 @@ function getDataUsulan($id)
 
 function cekGambarMember($namaFile)
 {
-  if (file_exists(storage_path('app/public/img/' . $namaFile))) {
-    return asset('storage/img/' . $namaFile);
+  $n = $namaFile;
+  if ($n = " " || null) {
+    $n = "kosong.png";
+  }
+  if (file_exists(storage_path('app/public/img/' . $n))) {
+    return asset('storage/img/' . $n);
   } else {
     return asset('storage/img/none.png');
   }

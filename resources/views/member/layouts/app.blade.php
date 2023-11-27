@@ -132,6 +132,14 @@
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <p class="text-light" >{{ getDataMember()->nama_perusahaan }}</p>
+
+                            </a>
+
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="{{ cekGambarMember(getDataMember()->gambar_perusahaan) }}" alt="Gambar Kosong" class="rounded-circle" width="31">

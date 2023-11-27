@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Svg\Surface\SurfacePDFLib;
 use Spatie\PdfToImage\Pdf;
+use Illuminate\Support\Facades\Cache;
 
 
 class FrontEndCtl extends Controller
@@ -32,7 +33,10 @@ class FrontEndCtl extends Controller
         $dataBerita = BeritaModel::take(3)->get();
         $Faq = FaqModel::get();
         $activities = Activity::all();
-        $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
+        // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
+        $dataBeritaKotaBogor = $this->getApiBeritaKotaBogor();
+
+        // dd($dataBeritaKotaBogor->{'Berita Bogor'});
         
         
         return view('home', [
@@ -41,7 +45,7 @@ class FrontEndCtl extends Controller
             'dataBerita' => $dataBerita,
             'Faq' => $Faq,
             'activities'=>$activities,
-            'dataBeritaKotaBogor'=>$dataBeritaKotaBogor
+            'dataBeritaKotaBogor'=>$dataBeritaKotaBogor->{'Berita Bogor'}
         ]);
     }
 
@@ -262,35 +266,46 @@ class FrontEndCtl extends Controller
         ]);
     }
 
-    public function getApiBeritaKotaBogor()
-    {
-        $clientId = env('OAUTH_CLIENT_ID');
-        $clientSecret = env('OAUTH_CLIENT_SECRET');
-        $tokenUrl = env('OAUTH_TOKEN_URL');
+    public function getApiBeritaKotaBogor(){
+        try {
+            $cachedData = Cache::get('api_berita_kota_bogor');
+            if ($cachedData) {
+                return $cachedData;
+            }
 
-        $client = new Client();
-        $response = $client->post($tokenUrl, [
-            'form_params' => [
-                'grant_type' => 'client_credentials',
-                'client_id' => $clientId,
-                'client_secret' => $clientSecret,
-            ],
-        ]);
+            $clientId = env('OAUTH_CLIENT_ID');
+            $clientSecret = env('OAUTH_CLIENT_SECRET');
+            $tokenUrl = env('OAUTH_TOKEN_URL');
 
-        $token = json_decode($response->getBody()->getContents())->access_token;
+            $client = new Client();
+            
+            $response = $client->post($tokenUrl, [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $clientId,
+                    'client_secret' => $clientSecret,
+                ],
+            ]);
 
-        $apiUrl = 'https://api-splp.layanan.go.id/t/kotabogor.go.id/Kominfo-KotaBogor/1.0/berita';
-        $response = $client->post($apiUrl, [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-            ],
-        ]);
+            $token = json_decode($response->getBody()->getContents())->access_token;
 
+            $apiUrl = 'https://api-splp.layanan.go.id/t/kotabogor.go.id/KotaBogor/1.0/berita?key=b3r1t4b0g0r';
+            $response = $client->get($apiUrl, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                ],
+            ]);
 
-        $data = json_decode($response->getBody()->getContents());
+            $data = json_decode($response->getBody()->getContents());
 
-        return $data;
+            Cache::put('api_berita_kota_bogor', $data, now()->addHours(1));
+
+            return $data;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
+
 
     public function viewBeritaKotaBogor()
     {
@@ -299,4 +314,68 @@ class FrontEndCtl extends Controller
             'dataBerita'=>$dataBerita
         ]);
     }
+
+     public function detailBeritaKotaBogor($post_id)
+        {
+            try {
+                $cachedData = Cache::get('api_berita_kota_bogor') ?? $this->getApiBeritaKotaBogor();
+
+                $detailBerita = collect($cachedData)->firstWhere('post_id', $post_id);
+
+                if ($detailBerita) {
+                    
+                    return view('detail-berita-kota-bogor', ['data' => $detailBerita,'beritaLain'=>array_slice($this->getApiBeritaKotaBogor(), 0, 5)]);
+                }
+
+                return abort(404);
+            } catch (\Exception $e) {
+                return abort(404);
+            }
+        }
+
+
+    public function apiBogor()
+    {
+        try {
+            $cachedData = Cache::get('api_berita_kota_bogor2');
+            if ($cachedData) {
+                return $cachedData;
+            }
+
+            $clientId = env('OAUTH_CLIENT_ID');
+            $clientSecret = env('OAUTH_CLIENT_SECRET');
+            $tokenUrl = env('OAUTH_TOKEN_URL');
+
+            $client = new Client();
+            
+            $response = $client->post($tokenUrl, [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $clientId,
+                    'client_secret' => $clientSecret,
+                ],
+            ]);
+
+            $token = json_decode($response->getBody()->getContents())->access_token;
+
+            $apiUrl = 'https://api-splp.layanan.go.id/t/kotabogor.go.id/KotaBogor/1.0/berita?key=b3r1t4b0g0r';
+
+            $response = $client->get($apiUrl, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                ],
+            ]);
+
+            $data = json_decode($response->getBody()->getContents());
+
+            Cache::put('api_berita_kota_bogor2', $data, now()->addHours(1));
+
+            return $data;
+
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
+
 }
