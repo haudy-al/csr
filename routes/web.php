@@ -167,7 +167,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::post('/admin/data-usulan/word/surat-pernyataan/{id}', [dataUsulanMemberCtl::class, 'DownloadWordSuratUsulan']);
     Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
-    Route::get('/admin/data-usulan/excel', [AdminDataUsulanCtl::class, 'exportExcel']);
+    Route::post('/admin/data-usulan/excel', [AdminDataUsulanCtl::class, 'exportExcel']);
     
 
     Route::get('/admin/master/dokumen', [AdminDokumenCtl::class, 'index']);
