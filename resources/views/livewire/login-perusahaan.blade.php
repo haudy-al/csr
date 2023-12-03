@@ -70,20 +70,7 @@
 
                     </div>
 
-                    {{-- <div class="mb-3">
-                        <div wire:ignore>
-
-                            {!! NoCaptcha::renderJs() !!}
-                            {!! NoCaptcha::display(['data-callback' => 'onCallback', 'data-theme' => 'light']) !!}
-                            <button type="button" class="btn badge btn-outline-secondary text-dark"
-                                id="refresh-captcha"><i class="fa-solid fa-arrows-rotate"></i></button>
-                        </div>
-
-                        @error('recaptcha')
-                            <small style="color: red">{{ $message }}</small>
-                        @enderror
-                    </div> --}}
-
+                   
                     <div class="input-group mb-3 ">
                         <img class="" src="{{ captcha_src('math') }}" alt="CAPTCHA">
                         <input class="w-25 form-control h-50" type="text" id="captcha" wire:model='captcha' name="captcha">
@@ -118,9 +105,7 @@
 
 
     <script nonce="{{ csp_nonce() }}">
-        // var onCallback = function() {
-        //     @this.set('recaptcha', grecaptcha.getResponse());
-        // }
+        
 
         window.addEventListener('LoginGagal', () => {
 

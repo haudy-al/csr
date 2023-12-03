@@ -355,9 +355,19 @@ function convertSatuanTargetSasaran($char, $count)
 
 function customFormatDateString($format, $tgl)
 {
+    if ($tgl === null) {
+        return null;
+    }
 
-  $tanggal = Carbon::createFromFormat('d M Y', $tgl);
+    try {
+        $tanggal = Carbon::createFromFormat('d M Y', $tgl);
 
-  return $tanggal->format($format);
+        if (!$tanggal) {
+            throw new \Exception("Format tanggal tidak sesuai");
+        }
 
+        return $tanggal->format($format);
+    } catch (\Exception $e) {
+        return null;
+    }
 }

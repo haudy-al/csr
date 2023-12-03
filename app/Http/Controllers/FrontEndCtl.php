@@ -34,10 +34,9 @@ class FrontEndCtl extends Controller
         $Faq = FaqModel::get();
         $activities = Activity::all();
         // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
-        $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'}, 0, 3);
+        $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'} ?? [], 0, 3) ;
 
-        // dd($dataBeritaKotaBogor);
-        
+        // dd($dataBeritaKotaBogor);      
         
         return view('home', [
             'dataGaleriVideo' => $dataGaleriVideo,
@@ -309,7 +308,7 @@ class FrontEndCtl extends Controller
 
     public function viewBeritaKotaBogor()
     {
-        $dataBerita = $this->getApiBeritaKotaBogor()->{'Berita Bogor'};
+        $dataBerita = $this->getApiBeritaKotaBogor()->{'Berita Bogor'} ?? [];
         return view('berita-kota-bogor',[
             'dataBerita'=>$dataBerita
         ]);

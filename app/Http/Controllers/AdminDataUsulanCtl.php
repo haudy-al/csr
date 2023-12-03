@@ -6,10 +6,13 @@ use App\Exports\UsulanKegiatanExport;
 use App\Models\BidangModel;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
+use ZipArchive;
 
 class AdminDataUsulanCtl extends Controller
 {
@@ -93,46 +96,33 @@ class AdminDataUsulanCtl extends Controller
         return response()->download(storage_path($filename))->deleteFileAfterSend(true);
     }
 
+
+
+
     function exportExcel(Request $req)
     {
         $data = $req->all();
-
         $rules = [
             'password_excel' => 'required',
-
         ];
-
         $customMessages = [
             'password_excel.required' => 'Password harus diisi.',
         ];
-
         $validator = Validator::make($data, $rules, $customMessages);
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput()->with(session()->flash('tambahGagal'));
         }
-
-        // return Excel::download(new UsulanKegiatanExport, 'kegiatan.xlsx');
-
         $export = new UsulanKegiatanExport();
-        $filePath = 'document.xlsx';
-        Excel::store($export, $filePath);
-
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-        $workbook = $reader->load(storage_path("app/{$filePath}"));
-        $workbook->getSecurity()->setLockWindows(true);
-        $workbook->getSecurity()->setLockStructure(true);
-        $workbook->getSecurity()->setlockRevision(true);
-        $workbook->getSecurity()->setRevisionsPassword($req->password_excel);
-        $workbook->getSecurity()->setWorkbookPassword($req->password_excel);
-
-        // dd($workbook);
-        
-        $protectedFilePath = 'document_protected.xlsx';
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($workbook);
-
-        $writer->save(storage_path("app/{$protectedFilePath}"));
-
-        return response()->download(storage_path("app/{$protectedFilePath}"))->deleteFileAfterSend(true);
+        $excelFilePath = 'document.xlsx';
+        $zipFilePath = 'document_protected.zip';
+        Excel::store($export, $excelFilePath);
+        $zip = new ZipArchive;
+        $zip->open(storage_path("app/{$zipFilePath}"), ZipArchive::CREATE);
+        $zip->addFile(storage_path("app/{$excelFilePath}"), 'document.xlsx');
+        $zip->setPassword($req->password_excel);
+        $zip->setEncryptionName('document.xlsx', ZipArchive::EM_AES_256, $req->password_excel);
+        $zip->close();
+        Storage::delete($excelFilePath);
+        return response()->download(storage_path("app/{$zipFilePath}"))->deleteFileAfterSend(true);
     }
 }

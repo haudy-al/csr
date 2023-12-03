@@ -18,8 +18,8 @@
                                     height="307" />
                                     <div class="post-modern-time">
                                         <time datetime="2019-07-22"><span
-                                                class="post-modern-time-month">{{ customFormatDateString('M',$item->tanggal) }}</span><span
-                                                class="post-modern-time-number">{{ customFormatDateString('d',$item->tanggal) }}</span></time>
+                                                class="post-modern-time-month">{{ customFormatDateString('M',$item->tanggal) ?? '' }}</span><span
+                                                class="post-modern-time-number">{{ customFormatDateString('d',$item->tanggal) ?? '' }}</span></time>
                                     </div>
                             </a>
                             <h4 class="post-modern-title"><a

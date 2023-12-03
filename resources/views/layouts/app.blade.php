@@ -168,9 +168,7 @@
         </div>
     </div>
     @livewireScripts(['nonce' => csp_nonce() ])
-    <script>
-        // Turbolinks.start();
-    </script>
+   
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
     <!-- Javascript-->
