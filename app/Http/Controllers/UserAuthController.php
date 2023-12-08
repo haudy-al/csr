@@ -23,7 +23,7 @@ class UserAuthController extends Controller
         if (!$user) {
             return redirect('/login');
         }
-        $user->update(['token' => 0]);
+        $user->update(['token' => null]);
         $user->save();
         session()->forget('user_token');
 

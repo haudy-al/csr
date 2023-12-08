@@ -29,6 +29,7 @@ return new class extends Migration
             $table->enum('status',['0','1'])->default('0');
             $table->date('password_expire')->default('1999-01-01');
             $table->timestamps();
+            $table->timestamp('last_seen')->nullable();
         });
     }
 

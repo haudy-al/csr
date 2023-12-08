@@ -355,19 +355,44 @@ function convertSatuanTargetSasaran($char, $count)
 
 function customFormatDateString($format, $tgl)
 {
-    if ($tgl === null) {
-        return null;
+  if ($tgl === null) {
+    return null;
+  }
+
+  try {
+    $tglInggris = str_replace(
+      ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+      ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      $tgl
+    );
+
+    $tanggal = Carbon::createFromFormat('d F Y', $tglInggris);
+
+    if (!$tanggal) {
+      throw new \Exception("Format tanggal tidak sesuai");
     }
 
-    try {
-        $tanggal = Carbon::createFromFormat('d M Y', $tgl);
+    return $tanggal->format($format);
+  } catch (\Exception $e) {
+    return null;
+  }
+}
 
-        if (!$tanggal) {
-            throw new \Exception("Format tanggal tidak sesuai");
-        }
+function getUserBylevelAndId($level,$id)
+{
+  $data = null;
+  switch ($level) {
+    case 'admin':
+      $data = AdminModel::find($id);
+      break;
+    case 'user':
+      $data = MemberModel::find($id);
+      break;
 
-        return $tanggal->format($format);
-    } catch (\Exception $e) {
-        return null;
-    }
+    default:
+      $data = $id;
+      break;
+  }
+
+  return $data;
 }

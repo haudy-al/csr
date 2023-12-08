@@ -70,20 +70,22 @@
 
                     </div>
 
-                   
+                    <div class="mb-3">
+                        <i class="fas fa-eye" id="showPasswordIcon"></i> Lihat Password
+                    </div>
+
+
                     <div class="input-group mb-3 ">
                         <img class="" src="{{ captcha_src('math') }}" alt="CAPTCHA">
-                        <input class="w-25 form-control h-50" type="text" id="captcha" wire:model='captcha' name="captcha">
+                        <input class="w-25 form-control h-50" type="text" id="captcha" wire:model='captcha'
+                            name="captcha">
 
                         @error('captcha')
                             <small style="color: red">{{ $message }}</small>
                         @enderror
                     </div>
 
-                    <div class="form-outline mb-4">
-                        <input type="checkbox" id="showPassword" /> <label for="showPassword">Tampilkan
-                            Password</label>
-                    </div>
+
 
 
 
@@ -105,8 +107,6 @@
 
 
     <script nonce="{{ csp_nonce() }}">
-        
-
         window.addEventListener('LoginGagal', () => {
 
             toastr.error(`Username Atau Password Salah`, 'error');
@@ -135,6 +135,11 @@
 
         })
 
+        window.addEventListener('LoginDeviceLain', () => {
+            toastr.warning(`Akun Telah Login di Perangkat Lain`, 'Warning');
+        })
+
+
         function refreshCaptcha() {
             grecaptcha.reset(); // Memuat ulang reCAPTCHA
         }
@@ -147,19 +152,22 @@
 
     <script nonce="{{ csp_nonce() }}">
         const passwordInput = document.getElementById("password");
-        const showPasswordCheckbox = document.getElementById("showPassword");
+        const showPasswordIcon = document.getElementById("showPasswordIcon");
 
-
-        showPasswordCheckbox.addEventListener("change", function() {
-
-            if (showPasswordCheckbox.checked) {
+        showPasswordIcon.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
                 passwordInput.type = "text";
+                showPasswordIcon.classList.remove("fa-eye");
+                showPasswordIcon.classList.add("fa-eye-slash");
             } else {
-
                 passwordInput.type = "password";
+                showPasswordIcon.classList.remove("fa-eye-slash");
+                showPasswordIcon.classList.add("fa-eye");
             }
         });
     </script>
+
+
 
     <script nonce="{{ csp_nonce() }}">
         function ClearJmlLogin(ip) {

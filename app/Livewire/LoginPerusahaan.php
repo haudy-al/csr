@@ -50,32 +50,17 @@ class LoginPerusahaan extends Component
             'captcha' => 'required|captcha',
 
 
-        ],[
-            'username.required'=>'Username Wajib di Isi',
-            'password.required'=>'Password Wajib di Isi',
-            'captcha.required'=>'Captcha Wajib di Isi',
-            'captcha.captcha'=>'Captcha Salah',
+        ], [
+            'username.required' => 'Username Wajib di Isi',
+            'password.required' => 'Password Wajib di Isi',
+            'captcha.required' => 'Captcha Wajib di Isi',
+            'captcha.captcha' => 'Captcha Salah',
         ]);
 
         $r = uniqid() . date('ymdhis');
 
         $token = sha1($r);
 
-        // if (Auth::guard('member')->attempt(['username' => $this->username, 'password' => $this->password])) {
-
-        //     $user = MemberModel::where('username', $this->username)->get()->first();
-
-        //     $user->update(['token' => $token]);
-
-        //     $user->save();
-
-        //     session(['user_token' => $token]);
-        //     session()->regenerate();
-
-        //     $this->dispatch('LoginBerhasil');
-        // } else {
-        //     $this->dispatch('LoginGagal');
-        // }
 
         $cek = LoginLogModel::where('user_ip', $this->ipAddress)->where('user_agent', $this->userAgent)->get()->first();
 
@@ -85,25 +70,30 @@ class LoginPerusahaan extends Component
             $this->dispatch('LoginTunggu');
         } else {
             if (Auth::guard('member')->attempt(['username' => $this->username, 'password' => $this->password])) {
-
+                
+                $inactiveThreshold = now()->subMinutes(10);
                 $user = MemberModel::where('username', $this->username)->get()->first();
 
-                $user->update(['token' => $token]);
+                if (($user->token == null || $user->user_token  == '0') || $user->last_seen < $inactiveThreshold) {
+                    $user->update(['token' => $token]);
 
-                $user->save();
+                    $user->save();
 
-                session(['user_token' => $token]);
-                session()->regenerate();
+                    session(['user_token' => $token]);
+                    session()->regenerate();
 
-                $dLog = [
-                    'level'=>'user',
-                    'idAkun'=>$user->id,
-                    'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
-                    'subject'=>'Login member'
-                ];
-                createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
+                    $dLog = [
+                        'level' => 'user',
+                        'idAkun' => $user->id,
+                        'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+                        'subject' => 'Login member'
+                    ];
+                    createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
 
-                $this->dispatch('LoginBerhasil');
+                    $this->dispatch('LoginBerhasil');
+                }else{
+                    $this->dispatch('LoginDeviceLain');
+                }
             } else {
                 if ($cek) {
                     $waktu = date('Y-m-d H:i:s');

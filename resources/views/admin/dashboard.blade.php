@@ -77,7 +77,7 @@
                                                 @foreach ($logAktivites as $key => $item)
                                                     <tr>
                                                         <td>{{ ++$key }}</td>
-                                                        <td>{{ $item->id_akun }}</td>
+                                                        <td>{{ getUserBylevelAndId($item->level,$item->id_akun)->username }}</td>
                                                         <td>{{ $item->ip }}</td>
                                                         <td>{{ $item->agent }}</td>
                                                         <td>{{ $item->subject }}</td>
