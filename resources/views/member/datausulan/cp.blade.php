@@ -6,9 +6,22 @@
         <div class="card">
 
             <div class="card-header">
-                <a href="/member/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span>
-                    Tambah</a>
+                {{-- <a href="/member/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span>
+                    Tambah</a> --}}
+
+                <div class="dropdown">
+                    <button class="btn btn-primary btn-sm " type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Tambah
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/member/data-usulan/tambah/baru">Kegiatan Baru</a></li>
+                        <li><a class="dropdown-item" href="/member/data-usulan/tambah/sudah-berjalan">Sudah Berjalan</a></li>
+                    </ul>
+                </div>
             </div>
+
+
 
             <div class="card-body">
 
@@ -65,162 +78,6 @@
                                             href="/membar/data-usulan/detail?i={{ $item->id }}">
                                             <span class="mdi mdi-eye"></span> Detail
                                         </a>
-                                    </td>
-
-                                </tr>
-                            @endforeach
-
-
-                        </tbody>
-
-                    </table>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="card">
-
-            <div class="card-header">
-                <h5>Usulan Kegiatan Perusahaan Lain</h5>
-            </div>
-
-            <div class="card-body">
-
-                <div class="table-responsive">
-                    <table id="zero_config2" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Kegiatan</th>
-                                <th>Bidang</th>
-                                <th>Penerima Manfaat</th>
-                                <th>Bentuk Kegiatan</th>
-                                <th>Lokasi</th>
-                                <th>Kelurahan</th>
-                                <th>Proposal</th>
-                                <th>Progres</th>
-
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach ($dataUsulanCp as $key => $item)
-                                <tr>
-                                    <td>{{ ++$key }}</td>
-                                    <td>{{ $item->nama_kegiatan }}</td>
-                                    <td>{{ $item->bidang->nama }}</td>
-                                    <td>{{ $item->penerima_manfaat }}</td>
-                                    <td>{!! $item->bentuk_kegiatan !!}</td>
-                                    <td>{{ $item->lokasi_kegiatan }}</td>
-                                    <td>{{ $item->kelurahan->nama ?? '-' }}</td>
-                                    <td>
-                                        <form action="/member/data-usulan/pdf/{{ $item->id }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn"><span class="mdi mdi-eye"></span></button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        @php
-                                            $persen = hitungPersentase(getJumlahTransaksiTerkumpul($item->id), getTargetSasaran($item->id)->jumlah_penerima_manfaat);
-                                        @endphp
-
-
-                                        @if ($persen != '0')
-                                            <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
-                                                aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar bg-info"
-                                                    style="height: 25px; width: {{ $persen }}%;">
-                                                    {{ $persen }}%
-                                                </div>
-                                            </div>
-                                        @else
-                                            0%
-                                        @endif
-
-
-                                    </td>
-
-                                    <td>
-
-                                        @if (getTaransaksi($item->id) == null || (getTaransaksi($item->id)->status ?? '') == 'ditolak')
-                                            @if (getTransaksiTersedia($item->id) < 1)
-                                                <span class=" badge m-1 bg-success text-light">Full</span>
-                                            @else
-                                                <button type="submit" class="btn badge m-1 btn-primary text-light"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalBantu{{ $item->id }}">Bantu</button>
-
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="modalBantu{{ $item->id }}" tabindex="-1"
-                                                    aria-labelledby="modalBantuLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <form
-                                                                action="/member/data-usulan/pemerintah/bantu/{{ $item->id }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <div class="modal-header border-0">
-                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                                    </h1>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body border-0">
-                                                                    <div class="mb-3">
-                                                                        <strong>
-                                                                            <span style="text-transform: capitalize">
-                                                                                {{ $item->kategori_manfaat }} Tersedia :
-                                                                                {{ getTransaksiTersedia($item->id) }}
-                                                                            </span>
-                                                                        </strong>
-                                                                    </div>
-
-                                                                    <div class="mb-3">
-                                                                        <label for="">Target Sasaran</label>
-
-                                                                        <div class="input-group">
-                                                                            <span class="input-group-text"
-                                                                                style="text-transform: capitalize">
-                                                                                {{ $item->kategori_manfaat }}
-                                                                            </span>
-                                                                            <input type="number" name="target_sasaran"
-                                                                                class="form-control">
-                                                                        </div>
-                                                                        @error('target_sasaran')
-                                                                            <small
-                                                                                class="text-danger">{{ $message }}</small>
-                                                                        @enderror
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="modal-footer">
-
-                                                                    <button type="submit"
-                                                                        class="btn btn-success">Bantu</button>
-                                                                </div>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @else
-                                            <span style="text-transform: capitalize"
-                                                class="badge m-1 rounded-pill status-{{ getTaransaksi($item->id)->status ?? ' ' }}">
-                                                {{ getTaransaksi($item->id)->status ?? ' ' }}
-                                            </span>
-                                        @endif
-
-
-
-
-                                        <a class="btn btn-secondary badge m-1 "
-                                            href="/membar/data-usulan/detail?i={{ $item->id }}">
-                                            <span class="mdi mdi-eye"></span> Detail
-                                        </a>
-
                                     </td>
 
                                 </tr>

@@ -21,6 +21,7 @@
     <link href="{{ asset('TemplateAdmin') }}/dist/css/style.min.css" rel="stylesheet">
     
     <link href="{{ asset('TemplateAdmin') }}/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="{{ asset('TemplateAdmin') }}/css/bs-stepper.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
@@ -237,6 +238,8 @@
     <script src="{{ asset('TemplateAdmin') }}/assets/libs/flot/jquery.flot.crosshair.js"></script>
     <script src="{{ asset('TemplateAdmin') }}/assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
     <script src="{{ asset('TemplateAdmin') }}/dist/js/pages/chart/chart-page-init.js"></script>
+
+    <script src="{{ asset('TemplateAdmin') }}/js/bs-stepper.min.js"></script>
 
 </body>
 

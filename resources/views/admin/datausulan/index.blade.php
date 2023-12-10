@@ -6,12 +6,13 @@
         <div class="card">
 
             <div class="card-header">
-                <a href="/admin/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span>
-                    Tambah</a>
+                {{-- <a href="/admin/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span>
+                    Tambah</a> --}}
 
-                <button type="button" data-bs-toggle="modal" data-bs-target="#ModalExportExcel" class="btn btn-success btn-sm text-light"><span
-                    class="mdi mdi-file-excel"></span>
-                Export</button>
+
+                <button type="button" data-bs-toggle="modal" data-bs-target="#ModalExportExcel"
+                    class="btn btn-success btn-sm text-light"><span class="mdi mdi-file-excel"></span>
+                    Export</button>
 
             </div>
 
@@ -105,7 +106,8 @@
 
                         <div class="mb-3">
                             <label for="">Password Excel<span class="text-danger">*</span> :</label>
-                            <input type="password" placeholder="Masukan Password..." name="password_excel" class="form-control">
+                            <input type="password" placeholder="Masukan Password..." name="password_excel"
+                                class="form-control">
                             @error('password_excel')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

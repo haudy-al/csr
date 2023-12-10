@@ -46,10 +46,13 @@ class dataUsulanMemberCtl extends Controller
         ]);
     }
 
-    function viewTambah()
+    function viewTambah($type)
     {
 
-        return view('member.datausulan.tambah');
+        // return view('member.datausulan.tambah');
+        return view('member.datausulan.cp.tambah',[
+            'type'=>$type
+        ]);
     }
 
     function DownloadPdf($id)

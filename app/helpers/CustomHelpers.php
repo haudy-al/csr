@@ -353,6 +353,26 @@ function convertSatuanTargetSasaran($char, $count)
   }
 }
 
+function convertSatuanTargetSasaran2($char)
+{
+  switch (strtolower($char)) {
+    case 't':
+      return  ' Ton';
+    case 'g':
+      return  ' Gram';
+    case 'kg':
+      return  ' Kg';
+    case 'rupiah':
+      return 'Rupiah';
+    case 'buah':
+      return  ' Buah';
+    case 'paket':
+      return  ' Paket';
+    default:
+      return 'Satuan tidak valid';
+  }
+}
+
 function customFormatDateString($format, $tgl)
 {
   if ($tgl === null) {

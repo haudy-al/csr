@@ -66,11 +66,10 @@ class EditUsulanKegiatan extends Component
             'proposal' => '',
             'penerima_manfaat' => 'required',
             'waktu_pelaksanaan' => 'required',
-            'anggaran' => 'required|numeric',
             'bentuk_kegiatan' => 'required',
             'lokasi_kegiatan' => 'required',
             'kelurahan' => 'required',
-            'jumlah_penerima_manfaat' => 'required',
+            'jumlah_penerima_manfaat' => 'required|numeric',
         ], [
             'nama_kegiatan.required' => 'Nama Kegiatan Wajib di Isi',
             'bidang.required' => 'Bidang Wajib di Isi',
@@ -89,7 +88,6 @@ class EditUsulanKegiatan extends Component
         $cek->id_bidang = $this->bidang;
         $cek->penerima_manfaat = $this->penerima_manfaat;
         $cek->waktu_pelaksanaan = $this->waktu_pelaksanaan;
-        $cek->anggaran = $this->anggaran;
         $cek->bentuk_kegiatan = $this->bentuk_kegiatan;
         $cek->lokasi_kegiatan = $this->lokasi_kegiatan;
         $cek->id_kelurahan = $this->kelurahan;

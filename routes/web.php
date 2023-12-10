@@ -75,7 +75,7 @@ Route::middleware(['member.auth'])->group(function () {
     Route::get('/member/reset-password', [MemberCtl::class, 'viewRisetPassword']);
     Route::get('/member/profile', [MemberCtl::class, 'viewProfile']);
     Route::get('/member/data-usulan', [dataUsulanMemberCtl::class, 'index']);
-    Route::get('/member/data-usulan/tambah', [dataUsulanMemberCtl::class, 'viewTambah']);
+    Route::get('/member/data-usulan/tambah/{type}', [dataUsulanMemberCtl::class, 'viewTambah']);
     Route::post('/member/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/data-usulan/edit', [dataUsulanMemberCtl::class, 'viewEdit']);
@@ -182,6 +182,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/laporan/edit', [AdminLaaporanCtl::class, 'viewEdit']);
     Route::get('/admin/laporan/word/{id}', [AdminLaaporanCtl::class, 'exportWord']);
     Route::post('/admin/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
+    Route::get('/admin/laporan/export/pdf/{id}', [AdminLaaporanCtl::class, 'exportPDF']);
 
     Route::get('/admin/data-usulan-peminatan', [AdminUsulanPermintaan::class, 'index']);
     Route::post('/admin/data-usulan-peminatan/status/{id}', [AdminUsulanPermintaan::class, 'UpdateStatus']);

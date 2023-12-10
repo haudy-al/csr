@@ -9,6 +9,7 @@
         "anhskohbo/no-captcha": "^3.5",
         "barryvdh/laravel-dompdf": "^2.0",
         "bepsvpt/secure-headers": "^7.4",
+        "clegginabox/pdf-merger": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
