@@ -36,7 +36,12 @@
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan }}</td>
                                     <td>{{ $item->usulanKegiatan->bidang->nama }}</td>
                                     <td>{{ $item->usulanKegiatan->penerima_manfaat }}</td>
-                                    <td>{!! $item->usulanKegiatan->bentuk_kegiatan !!}</td>
+                                    <td>
+                                        <div style="max-height: 300px; overflow: auto">
+                                            {!! $item->usulanKegiatan->bentuk_kegiatan !!}
+
+                                        </div>
+                                    </td>
                                     <td>{{ $item->usulanKegiatan->lokasi_kegiatan }}</td>
                                     <td>{{ $item->usulanKegiatan->kelurahan->nama ?? '-' }}</td>
                                     <td>

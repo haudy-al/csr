@@ -65,7 +65,7 @@
                                 <tbody>
                                     @foreach ($dataMemberPartisipasi as $item)
                                         <tr>
-                                            <td>{{ $item->member2->username }}</td>
+                                            <td>{{ $item->member2->nama_perusahaan }}</td>
                                             <td>
                                                 {{ convertSatuanTargetSasaran($kategori_manfaat,$item->target_sasaran) }}
                                                 

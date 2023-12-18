@@ -14,6 +14,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 use ZipArchive;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class AdminDataUsulanCtl extends Controller
 {
     function index()
@@ -124,5 +126,18 @@ class AdminDataUsulanCtl extends Controller
         $zip->close();
         Storage::delete($excelFilePath);
         return response()->download(storage_path("app/{$zipFilePath}"))->deleteFileAfterSend(true);
+    }
+
+    function ExportPdf($id)
+    {
+
+        $dataUsulanKegiatan = UsulanKegiatanModel::where('id', $id)->first();
+
+        $pdf = PDF::loadView('admin.datausulan.pdf', [
+            'data' => $dataUsulanKegiatan
+        ]);
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream('dokumen.pdf');
     }
 }

@@ -29,8 +29,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', [FrontEndCtl::class, 'index']);
-Route::get('/', [FrontEndCtl::class, 'index'])->middleware(Spatie\Csp\AddCspHeaders::class,\Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class);
+Route::get('/', [FrontEndCtl::class, 'index']);
+// Route::get('/', [FrontEndCtl::class, 'index'])->middleware(Spatie\Csp\AddCspHeaders::class,\Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class);
 
 Route::get('/agenda-kegiatan', [FrontEndCtl::class, 'viewAgendaKegiatan']);
 
@@ -75,6 +75,7 @@ Route::middleware(['member.auth'])->group(function () {
     Route::get('/member/reset-password', [MemberCtl::class, 'viewRisetPassword']);
     Route::get('/member/profile', [MemberCtl::class, 'viewProfile']);
     Route::get('/member/data-usulan', [dataUsulanMemberCtl::class, 'index']);
+    Route::get('/member/data-usulan/tambah', [dataUsulanMemberCtl::class, 'viewTambah']);
     Route::get('/member/data-usulan/tambah/{type}', [dataUsulanMemberCtl::class, 'viewTambah']);
     Route::post('/member/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
@@ -165,6 +166,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::delete('/admin/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/admin/data-usulan/edit', [AdminDataUsulanCtl::class, 'viewEdit']);
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
+    Route::get('/admin/data-usulan/export/pdf/{id}', [AdminDataUsulanCtl::class, 'ExportPdf']);
     Route::post('/admin/data-usulan/word/surat-pernyataan/{id}', [dataUsulanMemberCtl::class, 'DownloadWordSuratUsulan']);
     Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
     Route::post('/admin/data-usulan/excel', [AdminDataUsulanCtl::class, 'exportExcel']);

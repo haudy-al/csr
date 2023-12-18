@@ -52,6 +52,8 @@ class TambahUsulan extends Component
     public function render()
     {
 
+        // dd(getDataMember()->level);
+
         $bidang = BidangModel::all();
         $kecamatan = KecamatanModel::all();
         $kelurahan = KelurahanModel::where('id_kecamatan', $this->kecamatan)->get();
@@ -235,7 +237,7 @@ class TambahUsulan extends Component
     {
         
         $this->ValidateStap1();
-        
+
         $namaPdf = 'usulan-kegiatan-' . uniqid() . date('ymdhis') . '.' . $this->proposal->getClientOriginalExtension();
 
         $usulanKegiatan =  UsulanKegiatanModel::create([

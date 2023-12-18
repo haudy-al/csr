@@ -15125,3 +15125,21 @@ label {
     color: white;
     text-transform: capitalize;
 }
+
+#textContainer {
+    max-width: 400px;
+    overflow: hidden;
+  }
+  
+  #displayText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  #readMoreBtn {
+    display: none;
+  }
+  
+
+  

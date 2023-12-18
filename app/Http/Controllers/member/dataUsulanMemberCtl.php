@@ -46,12 +46,14 @@ class dataUsulanMemberCtl extends Controller
         ]);
     }
 
-    function viewTambah($type)
+    function viewTambah($type = null)
     {
+        if (getDataMember()->level == 'pd') {
+            return view('member.datausulan.tambah');  
+        }
 
-        // return view('member.datausulan.tambah');
-        return view('member.datausulan.cp.tambah',[
-            'type'=>$type
+        return view('member.datausulan.cp.tambah', [
+            'type' => $type
         ]);
     }
 

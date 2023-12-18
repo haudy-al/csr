@@ -46,7 +46,13 @@
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
                                     <td>{{ $item->kategori_manfaat }} : {{ $item->jumlah_penerima_manfaat }}</td>
-                                    <td>{!! $item->bentuk_kegiatan !!}</td>
+                                    <td>
+                                        <div style="max-height: 300px; overflow: auto">
+
+                                            {!! $item->bentuk_kegiatan !!}
+                                        </div>
+
+                                    </td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
                                     <td>{{ $item->kelurahan->nama ?? '' }}</td>
                                     <td>
@@ -59,8 +65,12 @@
 
 
                                     <td class="d-flex">
-                                        <a href="/admin/data-usulan/word/{{ $item->id }}"
-                                            class="btn badge btn-info"><span class="mdi mdi-file-word"></span> Word</a>
+                                        {{-- <a href="/admin/data-usulan/word/{{ $item->id }}"
+                                            class="btn badge btn-info"><span class="mdi mdi-file-word"></span> Word</a> --}}
+
+                                        <a href="/admin/data-usulan/export/pdf/{{ $item->id }}"
+                                            class="btn badge btn-secondary"><span class="mdi mdi-file-pdf"></span> PDF</a>
+
                                         <form class="d-inline" action="/admin/data-usulan/hapus/{{ $item->id }}"
                                             method="POST">
                                             @csrf
