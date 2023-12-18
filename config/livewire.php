@@ -156,4 +156,6 @@ return [
     */
 
     'pagination_theme' => 'bootstrap',
+    'verify' => true,
+    'csrf' => true,
 ];

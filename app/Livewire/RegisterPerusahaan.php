@@ -65,6 +65,8 @@ class RegisterPerusahaan extends Component
             'kelurahan' => 'required',
             'gambar_perusahaan' => 'required',
             'terms' => 'required',
+        ],[
+            'terms.required'=>'Wajib'
         ]);
 
 
