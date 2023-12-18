@@ -37,8 +37,12 @@
                                     <td>{{ $item->nama_kegiatan }}</td>
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
-                                    <td>{{ $item->kategori_manfaat }} : {{ $item->jumlah_penerima_manfaat }}</td>
-                                    <td>{!! $item->bentuk_kegiatan !!}</td>
+                                    <td>{{ convertSatuanTargetSasaran($item->kategori_manfaat,$item->jumlah_penerima_manfaat) }}</td>
+                                    <td>
+                                        <div style="max-height: 300px; overflow: auto">
+                                            {!! $item->bentuk_kegiatan !!}
+                                        </div>
+                                    </td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
                                     <td>{{ $item->kelurahan->nama ?? '' }}</td>
                                     <td>

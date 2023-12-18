@@ -6,8 +6,16 @@
         <div class="card">
 
             <div class="card-header">
-                <a href="/admin/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span> Tambah</a>
+                {{-- <a href="/admin/data-usulan/tambah" class="btn btn-primary btn-sm"><span class="mdi mdi-plus"></span>
+                    Tambah</a> --}}
+
+
+                <button type="button" data-bs-toggle="modal" data-bs-target="#ModalExportExcel"
+                    class="btn btn-success btn-sm text-light"><span class="mdi mdi-file-excel"></span>
+                    Export</button>
+
             </div>
+
 
             <div class="card-body">
 
@@ -38,7 +46,13 @@
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
                                     <td>{{ $item->kategori_manfaat }} : {{ $item->jumlah_penerima_manfaat }}</td>
-                                    <td>{!! $item->bentuk_kegiatan !!}</td>
+                                    <td>
+                                        <div style="max-height: 300px; overflow: auto">
+
+                                            {!! $item->bentuk_kegiatan !!}
+                                        </div>
+
+                                    </td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
                                     <td>{{ $item->kelurahan->nama ?? '' }}</td>
                                     <td>
@@ -51,14 +65,19 @@
 
 
                                     <td class="d-flex">
-                                        <a href="/admin/data-usulan/word/{{ $item->id }}" class="btn badge btn-info"><span class="mdi mdi-file-word"></span> Word</a>
+                                        {{-- <a href="/admin/data-usulan/word/{{ $item->id }}"
+                                            class="btn badge btn-info"><span class="mdi mdi-file-word"></span> Word</a> --}}
+
+                                        <a href="/admin/data-usulan/export/pdf/{{ $item->id }}"
+                                            class="btn badge btn-secondary"><span class="mdi mdi-file-pdf"></span> PDF</a>
+
                                         <form class="d-inline" action="/admin/data-usulan/hapus/{{ $item->id }}"
                                             method="POST">
                                             @csrf
                                             @method('delete')
                                             <button onclick="return confirm('Yakin Ingin Mengapus ?')" type="submit"
-                                                class="btn badge btn-danger text-light"><span
-                                                    class="mdi mdi-delete"></span> Hapus</button>
+                                                class="btn badge btn-danger text-light"><span class="mdi mdi-delete"></span>
+                                                Hapus</button>
                                         </form>
                                         <a class="btn btn-warning badge"
                                             href="/admin/data-usulan/edit?i={{ $item->id }}">
@@ -78,6 +97,52 @@
             </div>
         </div>
     </div>
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalExportExcel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="ModalExportExcelLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="ModalExportExcelLabel">Export Excel</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body border-0">
+                    <form class="d-inline" action="/admin/data-usulan/excel" method="POST">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label for="">Password Excel<span class="text-danger">*</span> :</label>
+                            <input type="password" placeholder="Masukan Password..." name="password_excel"
+                                class="form-control">
+                            @error('password_excel')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-sm text-light"><span
+                                class="mdi mdi-file-excel"></span>
+                            Export</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @if (session()->has('tambahGagal'))
+        <script>
+            function showModalTambah() {
+                $(`#ModalExportExcel`).modal('show');
+            }
+            $(function() {
+                showModalTambah()
+            });
+        </script>
+    @endif
 
     @include('admin.layouts.alert')
 

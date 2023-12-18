@@ -36,7 +36,12 @@
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan }}</td>
                                     <td>{{ $item->usulanKegiatan->bidang->nama }}</td>
                                     <td>{{ $item->usulanKegiatan->penerima_manfaat }}</td>
-                                    <td>{!! $item->usulanKegiatan->bentuk_kegiatan !!}</td>
+                                    <td>
+                                        <div style="max-height: 300px; overflow: auto">
+                                            {!! $item->usulanKegiatan->bentuk_kegiatan !!}
+
+                                        </div>
+                                    </td>
                                     <td>{{ $item->usulanKegiatan->lokasi_kegiatan }}</td>
                                     <td>{{ $item->usulanKegiatan->kelurahan->nama ?? '-' }}</td>
                                     <td>
@@ -57,17 +62,23 @@
                                         @endphp
 
 
-                                        <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
-                                            aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-info"
-                                                style="height: 25px; width: {{ $persen }}%;">{{ $persen }}%
+                                        @if ($persen != '0')
+                                            <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
+                                                aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-info"
+                                                    style="height: 25px; width: {{ $persen }}%;">
+                                                    {{ $persen }}%
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            0%
+                                        @endif
 
 
                                     </td>
                                     <td>
-                                        <form action="/admin/data-usulan-peminatan/status/{{ $item->id }}" method="POST">
+                                        <form action="/admin/data-usulan-peminatan/status/{{ $item->id }}"
+                                            method="POST">
                                             @csrf
                                             <select name="status" onchange="$(event.target).parents('form').submit()"
                                                 class="form-control-custom">

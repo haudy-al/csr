@@ -33,6 +33,7 @@ class ResetPassword extends Component
         $password = str_pad(rand(0, 99999), 5, '0', STR_PAD_LEFT);
 
         $cek->password = Hash::make($password);
+        $cek->status = '0';
         $cek->save();
 
         $dataMail = [
@@ -44,6 +45,15 @@ class ResetPassword extends Component
 
         Mail::to($cek->email_perusahaan)->send(new LupaPassword($dataMail));
         $this->status = true;
+
+        $dLog = [
+            'level'=>'user',
+            'idAkun'=>$cek->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Reset Password member (lupa password)'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
+
         $this->dispatch('Berhasil');
 
     }

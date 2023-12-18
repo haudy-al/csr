@@ -15,11 +15,9 @@
                         <p>
                             <strong>Usulan Kegiatan : </strong> {{ $data->usulan->nama_kegiatan }}
                         </p>
+                      
                         <p>
-                            <strong>Anggaran : </strong> Rp.{{ $data->anggaran }}
-                        </p>
-                        <p>
-                            <strong>Target Sasaran : </strong> {{ $data->target_sasaran }}
+                            <strong>Target Sasaran : </strong> <span class="text-capitalize">{{ $data->usulan->kategori_manfaat }} : {{ getTaransaksiAdmin($data->id_transaksi)->target_sasaran }}</span>
                         </p>
                         <p>
                             <strong>Keterangan : </strong> {!! $data->keterangan !!}

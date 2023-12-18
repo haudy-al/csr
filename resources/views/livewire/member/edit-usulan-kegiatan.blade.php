@@ -68,18 +68,7 @@
 
             </div>
 
-            <div class="mb-3">
-                <label for="">Anggaran</label>
-
-                <div class="input-group">
-                    <span class="input-group-text">Rp.</span>
-                    <input type="number" wire:model.live="anggaran"
-                    class="form-control  @error('anggaran') is-invalid @enderror" name="anggaran" id="">
-                </div>
-                @error('anggaran')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
+          
 
 
         </div>

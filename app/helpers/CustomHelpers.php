@@ -4,9 +4,12 @@ use App\Models\AdminModel;
 use App\Models\BidangModel;
 use App\Models\KategoriMemberModel;
 use App\Models\KelurahanModel;
+use App\Models\LaporanModel;
+use App\Models\LogActivities;
 use App\Models\MemberModel;
 use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +56,34 @@ function getDataMember()
   }
 }
 
+function getDataMemberById($id)
+{
+  $user = MemberModel::find($id);
+
+  return $user;
+}
+
+function getDataAdminById($id)
+{
+  $user = AdminModel::find($id);
+
+  return $user;
+}
+
+function getDataAdmin()
+{
+  $token = session('token');
+  if ($token == null) {
+    return null;
+  }
+  $admin = AdminModel::where('token', $token)->get()->first();
+  if (!$admin) {
+    return null;
+  } else {
+    return $admin;
+  }
+}
+
 function cekUrlAdmin()
 {
   $currentUrl = request()->url();
@@ -78,9 +109,9 @@ function getDataTransaksiByid($id)
 function getTransaksiTersedia($id_kegiatan)
 {
   $query = "SELECT transaksi_usulan.* 
-  FROM usulan_kegiatan 
-  JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
-  WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
 
   $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id_kegiatan]);
@@ -170,8 +201,12 @@ function getDataUsulan($id)
 
 function cekGambarMember($namaFile)
 {
-  if (file_exists(storage_path('app/public/img/' . $namaFile))) {
-    return asset('storage/img/' . $namaFile);
+  $n = $namaFile;
+  if ($n = " " || null) {
+    $n = "kosong.png";
+  }
+  if (file_exists(storage_path('app/public/img/' . $n))) {
+    return asset('storage/img/' . $n);
   } else {
     return asset('storage/img/none.png');
   }
@@ -190,9 +225,9 @@ function cekGambarDokumenPage1($id)
 function getJumlahTransaksiTerkumpul($id)
 {
   $query = "SELECT transaksi_usulan.* 
-  FROM usulan_kegiatan 
-  JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
-  WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
   $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $id]);
 
@@ -208,24 +243,22 @@ function getJumlahTransaksiTerkumpul($id)
 
 function getJumlahProyekTerkumpul($id)
 {
-  $query = "SELECT laporan.* 
-  FROM usulan_kegiatan 
-  JOIN laporan ON usulan_kegiatan.id = laporan.id_usulan_kegiatan 
-  WHERE usulan_kegiatan.id = :idUsulanKegiatan";
+  $query = "SELECT transaksi_usulan.* 
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
-  $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id]);
+  $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $id]);
 
-  $anggaranTerkumpul = 0;
-  $penerimaManfaat = 0;
 
-  foreach ($dataLaporan as $item) {
-    $anggaranTerkumpul += $item->anggaran;
-    $penerimaManfaat += $item->target_sasaran;
+  $sasaran = 0;
+
+  foreach ($dataTransaksi as $item) {
+    $sasaran += $item->target_sasaran;
   }
 
   return [
-    'anggaranTerkumpul' => $anggaranTerkumpul,
-    'penerimaManfaat' => $penerimaManfaat,
+    'sasaran' => $sasaran,
   ];
 }
 
@@ -237,4 +270,149 @@ function hitungPersentase($angka, $total)
   } else {
     return 0;
   }
+}
+
+
+function validatePassword($password)
+{
+  $minLength = 8;
+  $status = 'kuat';
+  $message = "Password kuat!";
+
+  if (strlen($password) < $minLength) {
+    $status = 'lemah';
+    $message = "Password terlalu pendek. Minimal $minLength karakter.";
+  } else {
+    if (!preg_match('/[A-Z]/', $password)) {
+      $status = 'lemah';
+      $message = "Password harus mengandung minimal satu huruf besar.";
+    }
+
+    if (!preg_match('/[a-z]/', $password)) {
+      $status = 'lemah';
+      $message = "Password harus mengandung minimal satu huruf kecil.";
+    }
+
+    if (!preg_match('/[0-9]/', $password)) {
+      $status = 'sedang';
+      $message = "Password harus mengandung minimal satu angka.";
+    }
+
+    if (!preg_match('/[!@#$%^&*()\-_=+{};:,<.>ยง~]/', $password)) {
+      $status = 'sedang';
+      $message = "Password harus mengandung minimal satu karakter khusus.";
+    }
+  }
+
+  return [
+    'status' => $status,
+    'message' => $message
+  ];
+}
+
+function cekLaporan($id)
+{
+  $data = LaporanModel::where('id_transaksi', $id)->get()->first();
+
+  if ($data) {
+    return $data;
+  } else {
+    return null;
+  }
+}
+
+function createdLog($level, $idakun, $subject, $url)
+{
+  LogActivities::create([
+    'level' => $level,
+    'id_akun' => $idakun,
+    'url' => $url,
+    'subject' => $subject,
+    'ip' => $_SERVER['REMOTE_ADDR'],
+    'agent' => $_SERVER['HTTP_USER_AGENT']
+  ]);
+}
+
+function convertSatuanTargetSasaran($char, $count)
+{
+  switch (strtolower($char)) {
+    case 't':
+      return $count . ' Ton';
+    case 'g':
+      return $count . ' Gram';
+    case 'kg':
+      return $count . ' Kg';
+    case 'rupiah':
+      return 'Rp.' . $count;
+    case 'buah':
+      return $count . ' Buah';
+    case 'paket':
+      return $count . ' Paket';
+    default:
+      return 'Satuan tidak valid';
+  }
+}
+
+function convertSatuanTargetSasaran2($char)
+{
+  switch (strtolower($char)) {
+    case 't':
+      return  ' Ton';
+    case 'g':
+      return  ' Gram';
+    case 'kg':
+      return  ' Kg';
+    case 'rupiah':
+      return 'Rupiah';
+    case 'buah':
+      return  ' Buah';
+    case 'paket':
+      return  ' Paket';
+    default:
+      return 'Satuan tidak valid';
+  }
+}
+
+function customFormatDateString($format, $tgl)
+{
+  if ($tgl === null) {
+    return null;
+  }
+
+  try {
+    $tglInggris = str_replace(
+      ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+      ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      $tgl
+    );
+
+    $tanggal = Carbon::createFromFormat('d F Y', $tglInggris);
+
+    if (!$tanggal) {
+      throw new \Exception("Format tanggal tidak sesuai");
+    }
+
+    return $tanggal->format($format);
+  } catch (\Exception $e) {
+    return null;
+  }
+}
+
+function getUserBylevelAndId($level,$id)
+{
+  $data = null;
+  switch ($level) {
+    case 'admin':
+      $data = AdminModel::find($id);
+      break;
+    case 'user':
+      $data = MemberModel::find($id);
+      break;
+
+    default:
+      $data = $id;
+      break;
+  }
+
+  return $data;
 }

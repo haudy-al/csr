@@ -17,7 +17,8 @@ class LoginAdmin extends Component
 
     public $password;
     public $username;
-    public $recaptcha;
+    // public $recaptcha;
+    public $captcha;
 
     public $ipAddress;
     public $userAgent;
@@ -51,7 +52,8 @@ class LoginAdmin extends Component
         $this->validate([
             'username' => 'required',
             'password' => 'required',
-            'recaptcha' => 'required|captcha'
+            // 'recaptcha' => 'required|captcha',
+            'captcha' => 'required|captcha',
         ]);
 
         $r = uniqid() . date('ymdhis');
@@ -76,6 +78,14 @@ class LoginAdmin extends Component
     
                 session(['token' => $token]);
                 session()->regenerate();
+
+                $dLog = [
+                    'level'=>'admin',
+                    'idAkun'=>$user->id,
+                    'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+                    'subject'=>'Login Admin'
+                ];
+                createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
     
                 $this->dispatch('LoginBerhasil');
             } else {

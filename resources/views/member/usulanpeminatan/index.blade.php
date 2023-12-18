@@ -37,7 +37,11 @@
                                     <td>{{ $item->nama_kegiatan }}</td>
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
-                                    <td>{!! $item->bentuk_kegiatan !!}</td>
+                                    <td>
+                                        <div style="max-height: 300px; overflow: auto">
+                                            {!! $item->bentuk_kegiatan !!}
+                                        </div>
+                                    </td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
                                     <td>{{ $item->kelurahan->nama ?? '-' }}</td>
                                     <td>
@@ -68,6 +72,11 @@
                                                     onclick="return confirm('Yakin Ingin Menghapus ?');"><span
                                                         class="mdi mdi-delete"></span> Hapus</button>
                                             </form>
+                                        @endif
+
+                                        @if (getTaransaksi($item->id)->status == 'diterima')
+                                            <a href="/member/laporan/tambah/{{ getTaransaksi($item->id)->id }}?usulan={{ $item->id }}" class="btn btn-success badge mb-1" ><span
+                                                    class="mdi mdi-plus"></span> Buat Laporan</a>
                                         @endif
                                     </td>
 

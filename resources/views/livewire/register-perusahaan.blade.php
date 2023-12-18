@@ -1,12 +1,20 @@
 <div>
+    <style nonce="{{ csp_nonce() }}">
+        .h-map {
+            height: 200px;
+        }
 
+        .text-danger {
+            color: red
+        }
+    </style>
     <section class="section section-sm bg-default">
         <div class="container">
 
             <div wire:loading>
 
                 <h3>Mohon Tunggu...</h3>
-        
+
             </div>
 
 
@@ -17,12 +25,13 @@
                 <div id="lengkapi-data" class="content" role="tabpanel" aria-labelledby="lengkapi-data-trigger">
 
                     <div class="row mt-5" style="text-align: left">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
 
                                     <div class="mb-3">
-                                        <label for="" class="float-left mb-2">Nama Perusahaan :</label>
+                                        <label for="" class="float-left mb-2">Nama Perusahaan<span
+                                                class="text-danger">*</span> :</label>
                                         <input type="text" id="nama_perusahaan" wire:model="nama_perusahaan"
                                             name="nama_perusahaan" class="form-control-custom" required>
                                         @error('nama_perusahaan')
@@ -33,7 +42,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="" class="float-left mb-2">Email Perusahaan :</label>
+                                        <label for="" class="float-left mb-2">Email Perusahaan<span
+                                                class="text-danger">*</span> :</label>
                                         <input type="email" id="email_perusahaan" wire:model="email_perusahaan"
                                             name="email_perusahaan" class="form-control-custom" required>
                                         @error('email_perusahaan')
@@ -44,8 +54,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="" class="float-left mb-2">Nama Kontak Person
-                                            :</label>
+                                        <label for="" class="float-left mb-2">Nama Narahubung
+                                            <span class="text-danger">*</span> :</label>
                                         <input type="text" id="nama_kontak_person" name="nama_kontak_person"
                                             wire:model="nama_kontak_person" class="form-control-custom" required>
                                         @error('nama_kontak_person')
@@ -56,8 +66,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="" class="float-left mb-2">Nomor Telepon Person
-                                            :</label>
+                                        <label for="" class="float-left mb-2">Nomor Telepon Narahubung
+                                            <span class="text-danger">*</span> :</label>
                                         <input type="number" id="no_telepon_person" name="no_telepon_person"
                                             class="form-control-custom" required wire:model="no_telepon_person">
                                         @error('no_telepon_person')
@@ -69,7 +79,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="" class="float-left mb-2">Nomor Telepon Perusahaan
-                                            :</label>
+                                            <span class="text-danger">*</span> :</label>
                                         <input type="number" id="no_telepon_perusahaan" name="no_telepon_perusahaan"
                                             class="form-control-custom" required wire:model="no_telepon_perusahaan">
                                         @error('no_telepon_perusahaan')
@@ -81,7 +91,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="" class="float-left mb-2">Kategori Perusahaan
-                                            :</label>
+                                            <span class="text-danger">*</span> :</label>
 
                                         <select name="" id="kategori_perusahaan" class="form-control-custom"
                                             wire:model="kategori_perusahaan">
@@ -89,6 +99,8 @@
                                             @foreach (getKategoriPerusahaan() as $item)
                                                 <option value="{{ $item->id }}">{{ $item->nama }}</option>
                                             @endforeach
+                                            <span class="text-danger">
+                                                *</span>
 
                                         </select>
                                         @error('kategori_perusahaan')
@@ -97,10 +109,57 @@
                                         @enderror
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="" class="float-left mb-2">Kecamatan
+                                            <span class="text-danger">*</span> :</label>
+
+                                        <select name="" id="kecamatan" class="form-control-custom"
+                                            wire:model.live="kecamatan">
+                                            <option value="">Pilih Kecamatan</option>
+                                            @foreach ($dataKecamatan as $item)
+                                                <option value="{{ $item->id_kecamatan }}">{{ $item->nama }}</option>
+                                            @endforeach
+                                            <span class="text-danger">
+                                                *</span>
+
+                                        </select>
+                                        @error('kecamatan')
+                                            <span class="text-danger"
+                                                style="color: red; font-size: 12px;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                @if ($kecamatan)
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="" class="float-left mb-2">Kelurahan
+                                                <span class="text-danger">*</span> :</label>
+
+                                            <select name="" id="kelurahan" class="form-control-custom"
+                                                wire:model="kelurahan">
+                                                <option value="">Pilih Kelurahan</option>
+                                                @foreach ($dataKelurahan as $item)
+                                                    <option value="{{ $item->id_kelurahan }}">{{ $item->nama }}
+                                                    </option>
+                                                @endforeach
+                                                <span class="text-danger">*</span>
+
+                                            </select>
+                                            @error('kelurahan')
+                                                <span class="text-danger"
+                                                    style="color: red; font-size: 12px;">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="" class="float-left mb-2">Alamat Perusahaan
-                                            :</label>
+                                            <span class="text-danger">*</span> :</label>
                                         <textarea name="" id="alamat_perusahaan" wire:model="alamat_perusahaan" name="alamat_perusahaan"
                                             class="form-control-custom" cols="30" rows="5" required></textarea>
                                         @error('alamat_perusahaan')
@@ -113,9 +172,9 @@
 
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div wire:ignore id="map" style="height: 200px;"></div>
-
+                        {{-- <div class="col-md-6">
+                            <div wire:ignore id="map" class="h-map" ></div>
+                            
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -141,10 +200,10 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-md-12">
+                                <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="" class="float-left mb-2">Kelurahan
-                                            :</label>
+                                           <span class="text-danger">*</span> :</label>
                                         <select name="" wire:model="kelurahan" id="kelurahan"
                                             class="form-control-custom">
                                             <option value="">Pilih Kelurahan</option>
@@ -158,9 +217,9 @@
                                                 style="color: red; font-size: 12px;">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-6">
                             <div class="mb-3">
@@ -192,9 +251,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="">
+                        <input type="checkbox" id="terms-checkbox" wire:model="terms" name="terms" required>
+                        Saya setuju dengan syarat dan ketentuan
+                    </div>
 
-                    <a class="button button-primary button-pipaluk" href="#"
-                        wire:click="RegisterAkun">Kirim <i class="fa-solid fa-arrow-right"></i></a>
+                    <a class="button button-primary button-pipaluk" href="#" wire:click="RegisterAkun">Kirim <i
+                            class="fa-solid fa-arrow-right"></i></a>
 
                 </div>
 
@@ -204,7 +267,7 @@
         </div>
     </section>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         window.addEventListener('TambahBerhasil', () => {
             toastr.success(`Akun Berhasil Terkirim Ke Email...`, 'success');
 
@@ -216,7 +279,7 @@
     </script>
 
 
-    <script>
+    {{-- <script nonce="{{ csp_nonce() }}">
         document.addEventListener("DOMContentLoaded", function() {
             let mapOptions = {
                 center: [-6.595018, 106.816635],
@@ -304,5 +367,5 @@
                 }
             }
         });
-    </script>
+    </script> --}}
 </div>

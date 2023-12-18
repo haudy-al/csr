@@ -39,6 +39,14 @@ class dataUsulanPeminatanCtl extends Controller
         
         $filePath = 'generated-pdf.pdf';
         $pdf->save(storage_path('app/public/' . $filePath));
+
+        $dLog = [
+            'level'=>'user',
+            'idAkun'=>getDataMember()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Download Surat Minat'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
     
         
         return response()->download(storage_path('app/public/' . $filePath))->deleteFileAfterSend(true);
@@ -51,6 +59,14 @@ class dataUsulanPeminatanCtl extends Controller
             return abort('404');
         }
         $cek->delete();
+
+        $dLog = [
+            'level'=>'user',
+            'idAkun'=>getDataMember()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Hapus Usulan Peminatan member'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
         
         return redirect()->back()->with(session()->flash('error', 'Delete Berhasil'));
     }

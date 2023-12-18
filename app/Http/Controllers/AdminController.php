@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\AdminModel;
 use App\Models\BeritaModel;
 use App\Models\CounterViewModel;
+use App\Models\LogActivities;
 use App\Models\LoginLogModel;
 use App\Models\MemberModel;
+use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -31,12 +35,15 @@ class AdminController extends Controller
         $jumlahMember = MemberModel::count();
         $jumlahView = CounterViewModel::count();
 
+        $logAktivites = LogActivities::orderBy('created_at','DESC')->get();
+
 
         return view('admin.dashboard',[
             'usulanKegiatan'=>$usulanKegiatan,
             'jumlahBerita'=>$jumlahBerita,
             'jumlahMember'=>$jumlahMember,
             'jumlahPengunjung'=>$jumlahView,
+            'logAktivites'=>$logAktivites,
         ]);
     }
 
@@ -60,6 +67,15 @@ class AdminController extends Controller
         $user->update(['token' => 0]);
         $user->save();
         session()->forget('token');
+
+        $dLog = [
+            'level'=>'admin',
+            'idAkun'=>$user->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Logout Admin'
+        ];
+        
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
 
         return redirect('/admin/login')->with(session()->flash('success', 'Logout Berhasil'));
     }
@@ -86,5 +102,35 @@ class AdminController extends Controller
     function viewProfile()
     {
         return view('admin.profile');
+    }
+
+    public function getDataTransaksi()
+    {
+        $currentYear = Carbon::now()->year;
+
+        $data = TransaksiUsulan::whereYear('created_at', $currentYear)
+            ->select(
+                DB::raw("DATE_FORMAT(created_at, '%M') as month"),
+                DB::raw("SUM(CASE WHEN status = 'proses' THEN 1 ELSE 0 END) as bantuan_proses"),
+                DB::raw("SUM(CASE WHEN status = 'diterima' THEN 1 ELSE 0 END) as diterima"),
+                DB::raw("SUM(CASE WHEN status = 'ditolak' THEN 1 ELSE 0 END) as ditolak")
+            )
+            ->groupBy('month')
+            ->get();
+
+        if (count($data) > 0) {
+            return response()->json($data);
+        } else {
+            return response()->json([
+                '0' => [
+                    'month' => '0',
+                    'bantuan_proses' => '0',
+                ],
+            ]);
+        }
+    }
+
+    function viewLupaPassword() {
+        return view('admin.reset-password');
     }
 }

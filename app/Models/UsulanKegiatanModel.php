@@ -18,6 +18,11 @@ class UsulanKegiatanModel extends Model
         return $this->hasOne(BidangModel::class, 'id', 'id_bidang');
     }
 
+    public function bidang2()
+    {
+        return $this->belongsTo(BidangModel::class, 'id_bidang');
+    }
+
     public function kelurahan()
     {
         return $this->hasOne(KelurahanModel::class, 'id_kelurahan', 'id_kelurahan');

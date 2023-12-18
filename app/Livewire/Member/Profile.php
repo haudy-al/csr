@@ -3,6 +3,7 @@
 namespace App\Livewire\Member;
 
 use App\Models\MemberModel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -27,6 +28,10 @@ class Profile extends Component
 
     public $username;
     public $password;
+    public $passwordSekarang;
+    public $statusPassword = '';
+    public $messagePassword = '';
+
     public $email_perusahaan;
 
     public $ubah = false;
@@ -52,6 +57,12 @@ class Profile extends Component
     }
     public function render()
     {
+
+        if ($this->password) {
+            $this->statusPassword = validatePassword($this->password)['status'];
+            $this->messagePassword = validatePassword($this->password)['message'];
+        }
+
         return view('livewire.member.profile');
     }
 
@@ -69,18 +80,46 @@ class Profile extends Component
     {
         $this->validate([
             'password' => 'required',
+            'passwordSekarang'=>'required'
         ]);
+
+        if (!Auth::guard('member')->attempt(['username' => getDataMember()->username, 'password' => $this->passwordSekarang])) {
+            $this->dispatch('PasswordLemah',message: 'Password Saat ini Salah');
+            return false;
+        }
+
+        if ($this->statusPassword != 'kuat') {
+            $this->dispatch('PasswordLemah',message: $this->messagePassword);
+            return false;
+        }
+
+        $expirePass = date('Y-m-d', strtotime('+1 year'));
+
         MemberModel::where('id', $this->id)->update([
             'password' => Hash::make($this->password),
+            'password_expire'=>$expirePass,
         ]);
 
         $this->password = "";
         $this->ubah = false;
+
+        $dLog = [
+            'level'=>'user',
+            'idAkun'=>getDataMember()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Reset Password member'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
+
         $this->dispatch('UbahPasswordSuccess');
     }
 
     function SimpanProfile()
     {
+
+        $this->validate([
+            'email_perusahaan'=>'required|email|unique:member,email_perusahaan,' . $this->id,
+        ]);
 
         $namaGambar = $this->gambar_perusahaan_lama;
         if ($this->gambar_perusahaan) {
@@ -111,6 +150,14 @@ class Profile extends Component
             'gambar_perusahaan' => $namaGambar,
 
         ]);
+
+        $dLog = [
+            'level'=>'user',
+            'idAkun'=>getDataMember()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Update Profile member'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
 
         $this->dispatch('TambahBerhasil');
     }

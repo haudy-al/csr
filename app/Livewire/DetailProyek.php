@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\LaporanModel;
 use App\Models\MemberModel;
+use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -25,17 +26,14 @@ class DetailProyek extends Component
         $this->id = _get('i');
         $this->data = getDataUsulan($this->id);
 
-        $query = "SELECT laporan.* 
-          FROM usulan_kegiatan 
-          JOIN laporan ON usulan_kegiatan.id = laporan.id_usulan_kegiatan 
-          WHERE usulan_kegiatan.id = :idUsulanKegiatan";
+        $query = "SELECT transaksi_usulan.* 
+                    FROM usulan_kegiatan 
+                    JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
-        $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $this->data->id]);
+        $dataTransaksi = DB::select($query, ['idUsulanKegiatan' => $this->data->id]);
 
-        
-
-        foreach ($dataLaporan as $item) {
-            $this->anggaranTersedia += $item->anggaran;
+        foreach ($dataTransaksi as $item) {
             $this->penerimaManfaat += $item->target_sasaran;
         }
 
@@ -55,31 +53,27 @@ class DetailProyek extends Component
         $pdfPath = storage_path('app/pdf/' . $cek->proposal);
         $imagePath = storage_path('app/public/pdf-image/' . $cek->id . '_page_'); // Nama file akan ditambahi dengan nomor halaman
 
-        if (!file_exists($pdfPath)) {
-            abort(404, 'File not found');
-        }
-
-        $pdf = new Pdf($pdfPath);
-        $totalPages = $pdf->getNumberOfPages();
-
-
         $imageUrl = [];
-
-
-        for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
-            $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
-            $imageUrl[] = $cek->id . '_page_' . $pageNumberString . '.png';
-            $imageFilePath = $imagePath . $pageNumberString . '.png';
-            if (!file_exists($imageFilePath)) {
-                $pdf->setPage($pageNumber)->saveImage($imageFilePath);
+        
+        
+        if (file_exists($pdfPath)) {
+            $pdf = new Pdf($pdfPath);
+            $totalPages = $pdf->getNumberOfPages();
+    
+    
+            for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
+                $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
+                $imageUrl[] = $cek->id . '_page_' . $pageNumberString . '.png';
+                $imageFilePath = $imagePath . $pageNumberString . '.png';
+                if (!file_exists($imageFilePath)) {
+                    $pdf->setPage($pageNumber)->saveImage($imageFilePath);
+                }
             }
         }
 
-        $dataMemberPartisipasi = DB::table('member')
-            ->join('laporan', 'member.id', '=', 'laporan.id_member')
-            ->where('laporan.id_usulan_kegiatan', $this->id)
-            ->select('member.*', 'laporan.*') 
-            ->get();
+        
+
+        $dataMemberPartisipasi = TransaksiUsulan::where('id_usulan_kegiatan',$cek->id)->where('status','diterima')->get();
 
 
         // dd($dataMemberPartisipasi);

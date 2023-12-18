@@ -12,7 +12,7 @@
 
             <div class="card-body">
 
-                @livewire('member.tambah-laporan')
+                @livewire('member.tambah-laporan',['idT'=>$idT])
 
             </div>
         </div>

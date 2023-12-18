@@ -130,6 +130,37 @@
         </div>
     </section>
 
+     <section class="section section-sm bg-default" id="berita">
+        <div class="container">
+            <h2>BERITA KOTA BOGOR</h2>
+            <div class="row row-45">
+                @foreach ($dataBeritaKotaBogor as $key => $item)
+                    <div class="col-sm-6 col-lg-4 wow fadeInLeft" data-wow-delay=".2s">
+                        <!-- Post Modern-->
+                        <article class="post post-modern"><a class="post-modern-figure"
+                                href="/berita-kota-bogor/{{ $item->postid }}/{{ str_replace(' ','-',$item->judul) }}"><img
+                                    src="{{ $item->gambar }}" alt="" width="370"
+                                    height="307" />
+                                <div class="post-modern-time">
+                                    <time datetime="2019-07-22"><span
+                                            class="post-modern-time-month">{{ customFormatDateString('M',$item->tanggal) }}</span><span
+                                            class="post-modern-time-number">{{ customFormatDateString('d',$item->tanggal) }}</span></time>
+                                </div>
+                            </a>
+                            <h4 class="post-modern-title"><a
+                                    href="/berita-kota-bogor/{{ $item->postid }}/{{ str_replace(' ','-',$item->judul) }}">{{ $item->judul }}</a></h4>
+                           
+                        </article>
+                    </div>
+                @endforeach
+
+            </div>
+
+            <a href="/berita-kota-bogor" class="button button-primary button-pipaluk">Selengkapnya</a>
+
+        </div>
+    </section>
+
    
     <section class="section section-sm section-fluid bg-default text-center" id="galeri">
         <div class="container-fluid">
@@ -166,7 +197,7 @@
                             </div>
                             <div class="thumbnail-classic-caption">
                                 <div class="thumbnail-classic-title-wrap"><a class="icon fl-bigmug-line-zoom60"
-                                        href="images/grid-gallery-2-1200x800-original.jpg" data-lightgallery="item"><img
+                                        href="{{ asset('storage/img/' . $galeriFoto->gambar) }}" data-lightgallery="item"><img
                                             src="{{ asset('storage/img/' . $galeriFoto->gambar) }}" alt=""
                                             width="420" height="350" /></a>
                                     <h5 class="thumbnail-classic-title"><a
@@ -190,7 +221,7 @@
                             </div>
                             <div class="thumbnail-classic-caption">
                                 <div class="thumbnail-classic-title-wrap"><a class="icon fl-bigmug-line-zoom60"
-                                        href="images/grid-gallery-3-1200x800-original.jpg" data-lightgallery="item"><img
+                                        href="{{ asset('storage/img/' . $galeriVideo->gambar) }}" data-lightgallery="item"><img
                                             src="{{ asset('storage/img/' . $galeriVideo->gambar) }}" alt=""
                                             width="420" height="350" /></a>
                                     <h5 class="thumbnail-classic-title"><a href="/galeri/video/detail/{{ $galeriVideo->id }}">{{ $galeriVideo->judul }}</a>
@@ -215,7 +246,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="accordion" style="text-align: left">
+                    <div class="accordion text-left" >
                         @foreach ($Faq as $item)
                             <div class="accordion-item">
                                 <div class="accordion-header">{{ $item->judul }}</div>
@@ -234,6 +265,8 @@
     <!-- Contact information-->
     <section class="section section-sm bg-default" id="contacts">
         <div class="container">
+            <h2 class="wow fadeInLeft"><span class="text-danger">K</span>ontak</h2>
+
             <div class="row row-30 justify-content-center">
                 <div class="col-sm-8 col-md-6 col-lg-4">
                     <article class="box-contacts">
@@ -263,8 +296,8 @@
                             <div class="box-contacts-icon fl-bigmug-line-chat55"></div>
                             <div class="box-contacts-decor"></div>
                             <p class="box-contacts-link" style=""><a
-                                    href="mailto:bappedalitbang.kotabogor@gmail.com"
-                                    style="font-size: 14px">bappedalitbang.kotabogor@gmail.com</a></p>
+                                    href="mailto:bappeda@kotabogor.go.id"
+                                    style="font-size: 14px">bappeda@kotabogor.go.id</a></p>
 
                         </div>
                     </article>
@@ -334,7 +367,7 @@
     </section>
 
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const accordionHeaders = document.querySelectorAll('.accordion-header');
 
         accordionHeaders.forEach(header => {

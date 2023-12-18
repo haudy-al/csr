@@ -198,7 +198,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Kota Bogor</a>.
+                © 2023 Pemerintah Kota Bogor.</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

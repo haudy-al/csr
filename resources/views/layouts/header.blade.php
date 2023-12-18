@@ -1,3 +1,8 @@
+<style nonce="{{ csp_nonce() }}">
+    .btn-left {
+        font-size: 14px !important
+    }
+</style>
 <header class="section page-header">
     <!-- RD Navbar-->
     <div class="rd-navbar-wrap">
@@ -25,43 +30,36 @@
                     </div>
                     <div class="rd-navbar-main-element">
                         <div class="rd-navbar-nav-wrap">
-                            
+
                             <!-- RD Navbar Share-->
                             <div class="rd-navbar-share fl-bigmug-line-user144"
                                 data-rd-navbar-toggle=".rd-navbar-share-list">
                                 <ul class="list-inline rd-navbar-share-list">
                                     @if (getDataMember() != null)
-                                        <li class="rd-navbar-share-list-item"><a class="" onclick="memberArea()"
-                                                href="#" style="font-size: 14px !important">Member Area</a></li>
+                                        <li class="rd-navbar-share-list-item"><a id="brn-to-member" class="btn-left"
+                                                href="#">Member Area</a></li>
                                     @else
-                                        <li class="rd-navbar-share-list-item"><a class="" onclick="login()"
-                                                href="#" style="font-size: 14px !important">Login</a></li>
-                                        <li class="rd-navbar-share-list-item"><a class="" onclick="reg()"
-                                                href="#" style="font-size: 14px !important">Daftar</a></li>
+                                        <li class="rd-navbar-share-list-item"><a class="btn-left" href="#"
+                                                id="loginButton">Login</a></li>
+                                        <li class="rd-navbar-share-list-item"><a class="btn-left" id="registerButton"
+                                                href="#">Daftar</a></li>
                                     @endif
-                                    
 
-                                   
                                 </ul>
                             </div>
-                            <script>
-                                function memberArea() {
-                                    setTimeout(function() {
-                                        window.location.href = "/member";
-                                    }, 1500);
-                                }
+                            <script nonce="{{ csp_nonce() }}">
+                                document.getElementById('brn-to-member').addEventListener('click', function() {
+                                    window.location.href = "/member";
+                                });
+                            </script>
+                            <script nonce="{{ csp_nonce() }}">
+                                document.getElementById('loginButton').addEventListener('click', function() {
+                                    window.location.href = "/login";
+                                });
 
-                                function reg() {
-                                    setTimeout(function() {
-                                        window.location.href = "/register";
-                                    }, 1500);
-                                }
-
-                                function login() {
-                                    setTimeout(function() {
-                                        window.location.href = "/login";
-                                    }, 1500);
-                                }
+                                document.getElementById('registerButton').addEventListener('click', function() {
+                                    window.location.href = "/register";
+                                });
                             </script>
                             <ul class="rd-navbar-nav">
                                 <li class="rd-nav-item active"><a class="rd-nav-link" href="#home">Beranda</a></li>
