@@ -254,6 +254,11 @@
                     <div class="">
                         <input type="checkbox" id="terms-checkbox" wire:model="terms" name="terms" required>
                         Saya setuju dengan syarat dan ketentuan
+
+                        @error('terms')
+                            <span class="text-danger"
+                                                style="color: red; font-size: 12px;">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <a class="button button-primary button-pipaluk" href="#" wire:click="RegisterAkun">Kirim <i

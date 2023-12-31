@@ -65,9 +65,11 @@ class RegisterPerusahaan extends Component
             'kelurahan' => 'required',
             'gambar_perusahaan' => 'required',
             'terms' => 'required',
+        ],[
+            'terms.required'=>'Wajib'
         ]);
 
-
+        
 
         $namaGambar = 'member-' . uniqid() . date('ymdhis') . '.' . $this->gambar_perusahaan->getClientOriginalExtension();
         $this->password = str_pad(rand(0, 9999999999), 5, '0', STR_PAD_LEFT);
