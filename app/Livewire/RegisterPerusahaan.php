@@ -69,7 +69,7 @@ class RegisterPerusahaan extends Component
             'terms.required'=>'Wajib'
         ]);
 
-
+        
 
         $namaGambar = 'member-' . uniqid() . date('ymdhis') . '.' . $this->gambar_perusahaan->getClientOriginalExtension();
         $this->password = str_pad(rand(0, 9999999999), 5, '0', STR_PAD_LEFT);
