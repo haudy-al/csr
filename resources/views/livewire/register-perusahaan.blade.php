@@ -253,7 +253,7 @@
                     </div>
                     <div class="">
                         <input type="checkbox" id="terms-checkbox" wire:model="terms" name="terms" required>
-                        Saya setuju dengan syarat dan ketentuan
+                        Data yang dimasukkan sudah sesuai dan benar
 
                         @error('terms')
                             <span class="text-danger"

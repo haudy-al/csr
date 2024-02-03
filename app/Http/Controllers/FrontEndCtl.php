@@ -34,7 +34,8 @@ class FrontEndCtl extends Controller
         $Faq = FaqModel::get();
         $activities = Activity::all();
         // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
-        $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'} ?? [], 0, 3) ;
+        // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'} ?? [], 0, 3);
+        $dataBeritaKotaBogor = [];
 
         // dd($dataBeritaKotaBogor);      
         
