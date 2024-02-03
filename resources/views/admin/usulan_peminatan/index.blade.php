@@ -32,33 +32,47 @@
                             @foreach ($dataTransaksi as $key => $item)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>{{ $item->member2->nama_perusahaan }}</td>
-                                    <td>{{ $item->usulanKegiatan->nama_kegiatan }}</td>
-                                    <td>{{ $item->usulanKegiatan->bidang->nama }}</td>
-                                    <td>{{ $item->usulanKegiatan->penerima_manfaat }}</td>
+                                    <td>{{ $item->member2->nama_perusahaan ?? '-' }}</td>
+                                    <td>{{ $item->usulanKegiatan->nama_kegiatan ?? '-' }}</td>
+                                    <td>{{ $item->usulanKegiatan->bidang->nama ?? '-' }}</td>
+                                    <td>{{ $item->usulanKegiatan->penerima_manfaat ?? '-' }}</td>
                                     <td>
                                         <div style="max-height: 300px; overflow: auto">
-                                            {!! $item->usulanKegiatan->bentuk_kegiatan !!}
+                                            {!! $item->usulanKegiatan->bentuk_kegiatan ?? '-' !!}
 
                                         </div>
                                     </td>
-                                    <td>{{ $item->usulanKegiatan->lokasi_kegiatan }}</td>
+                                    <td>{{ $item->usulanKegiatan->lokasi_kegiatan ?? '-' }}</td>
                                     <td>{{ $item->usulanKegiatan->kelurahan->nama ?? '-' }}</td>
                                     <td>
-                                        <form action="/admin/data-usulan/pdf/{{ $item->usulanKegiatan->id }}" method="POST">
+                                        <form action="/admin/data-usulan/pdf/{{ $item->usulanKegiatan->id ?? '-' }}"
+                                            method="POST">
                                             @csrf
                                             <button type="submit" class="btn"><span class="mdi mdi-eye"></span></button>
                                         </form>
                                     </td>
                                     <td><span
-                                            style="text-transform: capitalize">{{ $item->usulanKegiatan->kategori_manfaat }}</span>
+                                            style="text-transform: capitalize">{{ $item->usulanKegiatan->kategori_manfaat ?? '-' }}</span>
                                         : {{ getTaransaksiAdmin($item->id)->target_sasaran }}</td>
                                     <td><span
-                                            class="status-{{ getTaransaksiAdmin($item->id)->status }}">{{ getTaransaksiAdmin($item->id)->status }}</span>
+                                            class="status-{{ getTaransaksiAdmin($item->id)->status ?? '-' }}">{{ getTaransaksiAdmin($item->id)->status ?? '-' }}</span>
                                     </td>
                                     <td>
                                         @php
-                                            $persen = hitungPersentase(getJumlahTransaksiTerkumpul($item->usulanKegiatan->id), getTargetSasaran($item->usulanKegiatan->id)->jumlah_penerima_manfaat);
+                                            // $persen = hitungPersentase(getJumlahTransaksiTerkumpul($item->usulanKegiatan->id), getTargetSasaran($item->usulanKegiatan->id)->jumlah_penerima_manfaat);
+
+                                            $usulanKegiatan = $item->usulanKegiatan ?? null;
+                                            // dd($usulanKegiatan);
+                                            if ($usulanKegiatan !== null) {
+                                                $jumlahTransaksi = getJumlahTransaksiTerkumpul($usulanKegiatan->id);
+                                                $targetSasaran = getTargetSasaran($usulanKegiatan->id)->jumlah_penerima_manfaat;
+
+                                                $persen = hitungPersentase($jumlahTransaksi, $targetSasaran);
+                                            } else {
+                                                // Nilai default jika $item->usulanKegiatan adalah null
+                                                $persen = '0';
+                                            }
+
                                         @endphp
 
 

@@ -18,7 +18,7 @@ class EditBerita extends Component
 
     public function mount()
     {
-        $berita = BeritaModel::find(_get('user'));
+        $berita = BeritaModel::find(_get('i'));
 
         $this->idBerita = $berita->id;
         $this->judul = $berita->judul;

@@ -90,7 +90,6 @@ class dataUsulanMemberCtl extends Controller
     function ProsesHapus($id)
     {
 
-
         $cek = UsulanKegiatanModel::find($id);
 
         if ($cek) {
@@ -111,6 +110,12 @@ class dataUsulanMemberCtl extends Controller
                     Storage::delete('app/public/pdf-image/' . $file);
                     unlink($direktori . '/' . $file);
                 }
+            }
+
+            $cekTransaksi = TransaksiUsulan::where('id_usulan_kegiatan',$id)->get();
+
+            if ($cekTransaksi->isNotEmpty()) {
+                TransaksiUsulan::where('id_usulan_kegiatan', $id)->delete();
             }
 
             $cek->delete();

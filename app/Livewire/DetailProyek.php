@@ -56,20 +56,20 @@ class DetailProyek extends Component
         $imageUrl = [];
         
         
-        if (file_exists($pdfPath)) {
-            $pdf = new Pdf($pdfPath);
-            $totalPages = $pdf->getNumberOfPages();
+        // if (file_exists($pdfPath)) {
+        //     $pdf = new Pdf($pdfPath);
+        //     $totalPages = $pdf->getNumberOfPages();
     
     
-            for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
-                $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
-                $imageUrl[] = $cek->id . '_page_' . $pageNumberString . '.png';
-                $imageFilePath = $imagePath . $pageNumberString . '.png';
-                if (!file_exists($imageFilePath)) {
-                    $pdf->setPage($pageNumber)->saveImage($imageFilePath);
-                }
-            }
-        }
+        //     for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
+        //         $pageNumberString = str_pad($pageNumber, 3, '0', STR_PAD_LEFT);
+        //         $imageUrl[] = $cek->id . '_page_' . $pageNumberString . '.png';
+        //         $imageFilePath = $imagePath . $pageNumberString . '.png';
+        //         if (!file_exists($imageFilePath)) {
+        //             $pdf->setPage($pageNumber)->saveImage($imageFilePath);
+        //         }
+        //     }
+        // }
 
         
 

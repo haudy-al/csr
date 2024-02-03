@@ -205,3 +205,12 @@ Route::get('/link', function () {
     $link = $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($target, $link);
 });
+
+use Illuminate\Support\Facades\DB;
+
+
+Route::get('/kosongkan-table-usulan-peminatan', function () {
+    DB::table('transaksi_usulan')->truncate();
+
+    return 'Tabel berhasil dikosongkan!';
+});

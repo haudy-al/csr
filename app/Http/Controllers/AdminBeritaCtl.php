@@ -27,15 +27,19 @@ class AdminBeritaCtl extends Controller
     }
 
     function viewEdit() {
-        if (!$dataGet = _get('i')) {
-            
-            // $data = BeritaModel::find($dataGet);
-           
-            return redirect('/member')->with(session()->flash('error', 'Terjadi Kesalahan'));
-        
+        if (!$dataGet = _get('i')) {           
+            abort('404');
         }
+
+        $data = BeritaModel::find($dataGet);
+
+        if (!$data) {
+            abort('404');
+        }
+
+        // dd($data);
          
-        return view('member.datausulan.edit');
+        return view('admin.berita.edit',['data'=>$data]);
         
     }
 }
