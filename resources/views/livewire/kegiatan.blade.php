@@ -26,7 +26,6 @@
                             <th>No</th>
                             <th>Nama Kegiatan</th>
                             <th>Pengusul</th>
-                            <th>Anggaran</th>
                             <th>Progres</th>
                             <th>Aksi</th>
                         </tr>
@@ -37,11 +36,9 @@
                                 <td>{{ ($dataKegiatan->currentPage() - 1) * $dataKegiatan->perPage() + $key + 1 }}</td>
                                 <td>{{ $item->nama_kegiatan }}</td>
                                 <td>{{ $item->member->nama_perusahaan }}</td>
+                                
                                 <td>
-                                    Rp. {{ getJumlahProyekTerkumpul($item->id)['anggaranTerkumpul'] }} / Rp. {{ $item->anggaran }}
-                                </td>
-                                <td>
-                                    {{ hitungPersentase(getJumlahProyekTerkumpul($item->id)['anggaranTerkumpul'],$item->anggaran) }} %
+                                    {{ hitungPersentase(getJumlahProyekTerkumpul($item->id)['sasaran'],$item->jumlah_penerima_manfaat) }} %
                                 </td>
                                 <td>
                                     <a href="/proyek-csr/kegiatan/detail?i={{ $item->id }}" class="btn btn-sm btn-primary">Lihat</a>

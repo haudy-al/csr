@@ -86,6 +86,14 @@ class TambahUsulanKegiatan extends Component
 
         $this->clearInput();
 
+        $dLog = [
+            'level'=>'admin',
+            'idAkun'=>getDataAdmin()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Tambah Usulan Kegiatan oleh (admin)'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
+
         $this->dispatch('TambahBerhasil');
     }
 

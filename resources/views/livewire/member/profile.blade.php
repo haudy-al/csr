@@ -142,30 +142,57 @@
 
 
                         <div class="col-md-12">
-                            <div class="mb-3 ">
-                                <div class="input-group">
+                            @if ($ubah == true)
+                                <div class="card">
+                                    <div class="card-body border border-2">
+                                        <div class="mb-3 ">
 
-                                    @if ($ubah == true)
-                                        
-                                        <input type="text" class="form-control" name="password" id="password"
-                                             wire:model.live="password" placeholder="Masukan Password Baru Anda...">
+                                            <input type="password" class="form-control" name="password"
+                                                id="password" wire:model.live="passwordSekarang"
+                                                placeholder="Password Anda Saat ini...">
+                                            <br>
+
+                                            @error('passwordSekarang')
+                                                <span class="text-danger"
+                                                    style="color: red; font-size: 12px;">{{ $message }}</span>
+                                            @enderror
+
+                                        </div>
+
+                                        <div class="mb-3 ">
+
+                                            <input type="password" class="form-control" name="password"
+                                                id="password" wire:model.live="password"
+                                                placeholder="Masukan Password Baru Anda...">
+                                            <br>
+                                            @if ($password)
+                                                <span
+                                                    class="badge rounded-pill password-{{ $statusPassword }}">{{ $statusPassword }}</span>
+                                            @endif
+
+
+                                            @error('password')
+                                                <span class="text-danger"
+                                                    style="color: red; font-size: 12px;">{{ $message }}</span>
+                                            @enderror
+
+                                        </div>
+
+                                        <div class="mb-3">
                                             <button type="button" class="btn btn-danger text-light btn-sm"
-                                            wire:click="Batal">Batal</button>
-                                        <button type="button" class="btn btn-success text-light btn-sm"
-                                            wire:click="SimpanPassword">Simpan</button>
-                                    @else
-                                        <button type="button" class="btn btn-secondary btn-sm"
-                                            wire:click="ubahPass">Ubah Password</button>
-                                    @endif
+                                                wire:click="Batal">Batal</button>
+                                            <button type="button" class="btn btn-success text-light btn-sm"
+                                                wire:click="SimpanPassword">Simpan</button>
+                                        </div>
+                                    </div>
                                 </div>
+                            @else
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        wire:click="ubahPass">Ubah Password</button>
 
-
-                                @error('password')
-                                    <span class="text-danger"
-                                        style="color: red; font-size: 12px;">{{ $message }}</span>
-                                @enderror
-
-                            </div>
+                                </div>
+                            @endif
                         </div>
 
 
@@ -228,7 +255,11 @@
 
         window.addEventListener('UbahPasswordSuccess', () => {
             toastr.success(`Ubah Password Berhasil`, 'success');
-           
+
+        })
+
+        window.addEventListener('PasswordLemah', ($message) => {
+            toastr.error(`${$message.detail.message}`, 'error');
         })
     </script>
 

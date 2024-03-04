@@ -11,6 +11,7 @@
     <meta name="description"
         content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>TJSLP</title>
 
     <!-- Favicon icon -->
@@ -198,7 +199,7 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-                All Rights Reserved by Kota Bogor</a>.
+                © 2023 Pemerintah Kota Bogor.</a>.
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

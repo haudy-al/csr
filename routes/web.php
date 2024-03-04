@@ -17,7 +17,6 @@ use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\member\dataUsulanMemberCtl;
 use App\Http\Controllers\member\LaporanMemberCtl;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\ThrottleLogin;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +30,8 @@ use App\Http\Middleware\ThrottleLogin;
 */
 
 Route::get('/', [FrontEndCtl::class, 'index']);
+// Route::get('/', [FrontEndCtl::class, 'index'])->middleware(Spatie\Csp\AddCspHeaders::class,\Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class);
+
 Route::get('/agenda-kegiatan', [FrontEndCtl::class, 'viewAgendaKegiatan']);
 
 Route::get('/proyek-csr', [FrontEndCtl::class, 'viewProyekCsr']);
@@ -50,6 +51,9 @@ Route::get('/dokumen/detail/{id}', [FrontEndCtl::class, 'viewDokumenDetail']);
 
 
 Route::get('/berita', [FrontEndCtl::class, 'viewBerita']);
+Route::get('/berita-kota-bogor', [FrontEndCtl::class, 'viewBeritaKotaBogor']);
+Route::get('/berita-kota-bogor/{id}/{title}', [FrontEndCtl::class, 'detailBeritaKotaBogor']);
+
 Route::get('/berita/detail/{id}', [FrontEndCtl::class, 'detailBerita']);
 Route::get('/galeri', [FrontEndCtl::class, 'viewGaleri']);
 Route::get('/galeri/foto/detail/{id}', [FrontEndCtl::class, 'detailGaleriFoto']);
@@ -59,15 +63,20 @@ Route::get('/mitra-csr/detail', [FrontEndCtl::class, 'viewDetailMitraCsr']);
 
 Route::get('/register', [UserAuthController::class, 'register']);
 Route::get('/login', [UserAuthController::class, 'viewLogin']);
+Route::post('/member/login/reset', [UserAuthController::class, 'resetLogin']);
 
 Route::get('/logout', [UserAuthController::class, 'Logout']);
 Route::get('/lupa-password', [UserAuthController::class, 'LupaPassword']);
 
 Route::middleware(['member.auth'])->group(function () {
     Route::get('/member', [MemberCtl::class, 'index']);
+    Route::get('/member/json/data-transaksi', [MemberCtl::class, 'getDataTransaksi']);
+    
+    Route::get('/member/reset-password', [MemberCtl::class, 'viewRisetPassword']);
     Route::get('/member/profile', [MemberCtl::class, 'viewProfile']);
     Route::get('/member/data-usulan', [dataUsulanMemberCtl::class, 'index']);
     Route::get('/member/data-usulan/tambah', [dataUsulanMemberCtl::class, 'viewTambah']);
+    Route::get('/member/data-usulan/tambah/{type}', [dataUsulanMemberCtl::class, 'viewTambah']);
     Route::post('/member/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/data-usulan/edit', [dataUsulanMemberCtl::class, 'viewEdit']);
@@ -77,7 +86,7 @@ Route::middleware(['member.auth'])->group(function () {
     Route::post('/member/data-usulan/pemerintah/bantu/{id}', [dataUsulanMemberCtl::class, 'BantuUsulan']);
 
     Route::get('/member/laporan', [LaporanMemberCtl::class, 'index']);
-    Route::get('/member/laporan/tambah', [LaporanMemberCtl::class, 'viewTambah']);
+    Route::get('/member/laporan/tambah/{id}', [LaporanMemberCtl::class, 'viewTambah']);
     Route::post('/member/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
     Route::delete('/member/laporan/hapus/{id}', [LaporanMemberCtl::class, 'ProsesHapus']);
     Route::get('/membar/laporan/edit', [LaporanMemberCtl::class, 'viewEdit']);
@@ -95,10 +104,14 @@ Route::middleware(['member.auth'])->group(function () {
 Route::post('/admin/login/reset', [AdminController::class, 'resetLogin']);
 Route::get('/admin/login', [AdminController::class, 'viewLogin']);
 Route::get('/admin/logout', [AdminController::class, 'logout']);
+Route::get('/admin/lupa-password', [AdminController::class, 'viewLupaPassword']);
+
+
 
 
 Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard']);
+    Route::get('/admin/json/data-transaksi', [AdminController::class, 'getDataTransaksi']);
     Route::get('/admin/berita', [AdminController::class, 'viewBerita']);
     Route::get('/admin/berita/tambah', [AdminBeritaCtl::class, 'viewTambah']);
     Route::get('/admin/berita/edit', [AdminBeritaCtl::class, 'viewEdit']);
@@ -153,8 +166,11 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::delete('/admin/data-usulan/hapus/{id}', [dataUsulanMemberCtl::class, 'ProsesHapus']);
     Route::get('/admin/data-usulan/edit', [AdminDataUsulanCtl::class, 'viewEdit']);
     Route::post('/admin/data-usulan/pdf/{id}', [dataUsulanMemberCtl::class, 'DownloadPdf']);
+    Route::get('/admin/data-usulan/export/pdf/{id}', [AdminDataUsulanCtl::class, 'ExportPdf']);
     Route::post('/admin/data-usulan/word/surat-pernyataan/{id}', [dataUsulanMemberCtl::class, 'DownloadWordSuratUsulan']);
     Route::get('/admin/data-usulan/word/{id}', [AdminDataUsulanCtl::class, 'exportWord']);
+    Route::post('/admin/data-usulan/excel', [AdminDataUsulanCtl::class, 'exportExcel']);
+    
 
     Route::get('/admin/master/dokumen', [AdminDokumenCtl::class, 'index']);
     Route::get('/admin/master/dokumen/tambah', [AdminDokumenCtl::class, 'viewTambah']);
@@ -168,6 +184,7 @@ Route::middleware(['admin.auth'])->group(function () {
     Route::get('/admin/laporan/edit', [AdminLaaporanCtl::class, 'viewEdit']);
     Route::get('/admin/laporan/word/{id}', [AdminLaaporanCtl::class, 'exportWord']);
     Route::post('/admin/laporan/pdf/{id}', [LaporanMemberCtl::class, 'DownloadPdf']);
+    Route::get('/admin/laporan/export/pdf/{id}', [AdminLaaporanCtl::class, 'exportPDF']);
 
     Route::get('/admin/data-usulan-peminatan', [AdminUsulanPermintaan::class, 'index']);
     Route::post('/admin/data-usulan-peminatan/status/{id}', [AdminUsulanPermintaan::class, 'UpdateStatus']);
@@ -187,4 +204,13 @@ Route::get('/link', function () {
     $target = storage_path('app/public/');
     $link = $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($target, $link);
+});
+
+use Illuminate\Support\Facades\DB;
+
+
+Route::get('/kosongkan-table-usulan-peminatan', function () {
+    DB::table('transaksi_usulan')->truncate();
+
+    return 'Tabel berhasil dikosongkan!';
 });

@@ -46,10 +46,15 @@ class dataUsulanMemberCtl extends Controller
         ]);
     }
 
-    function viewTambah()
+    function viewTambah($type = null)
     {
+        if (getDataMember()->level == 'pd') {
+            return view('member.datausulan.tambah');  
+        }
 
-        return view('member.datausulan.tambah');
+        return view('member.datausulan.cp.tambah', [
+            'type' => $type
+        ]);
     }
 
     function DownloadPdf($id)
@@ -84,6 +89,7 @@ class dataUsulanMemberCtl extends Controller
 
     function ProsesHapus($id)
     {
+
         $cek = UsulanKegiatanModel::find($id);
 
         if ($cek) {
@@ -92,12 +98,6 @@ class dataUsulanMemberCtl extends Controller
 
             if (file_exists($path)) {
                 unlink($path);
-            }
-
-            $path2 = storage_path('app/word/' . $cek->surat_pernyataan);
-
-            if (file_exists($path2)) {
-                unlink($path2);
             }
 
             $awalan_nama = $cek->id;
@@ -112,7 +112,35 @@ class dataUsulanMemberCtl extends Controller
                 }
             }
 
+            $cekTransaksi = TransaksiUsulan::where('id_usulan_kegiatan',$id)->get();
+
+            if ($cekTransaksi->isNotEmpty()) {
+                TransaksiUsulan::where('id_usulan_kegiatan', $id)->delete();
+            }
+
             $cek->delete();
+
+            $level = '';
+            $idAkun = '';
+
+            if (cekUrlAdmin()) {
+                $level = 'admin';
+                $idAkun = getDataAdmin()->id;
+                $sub = 'Hapus Usulan Kegiatan (admin)';
+            } else {
+                $level = 'user';
+                $idAkun = getDataMember()->id;
+                $sub = 'Hapus Usulan Kegiatan ';
+            }
+
+            $dLog = [
+                'level' => $level,
+                'idAkun' => $idAkun,
+                'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+                'subject' => $sub
+            ];
+
+            createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
 
             return redirect()->back()->with(session()->flash('error', 'Delete Berhasil'));
         } else {
@@ -134,7 +162,7 @@ class dataUsulanMemberCtl extends Controller
         $data = $req->all();
 
         $rules = [
-            'target_sasaran' => 'required',
+            'target_sasaran' => 'required|numeric|min:0',
         ];
 
         $customMessages = [
@@ -150,7 +178,7 @@ class dataUsulanMemberCtl extends Controller
         $query = "SELECT transaksi_usulan.* 
                     FROM usulan_kegiatan 
                     JOIN transaksi_usulan ON usulan_kegiatan.id = transaksi_usulan.id_usulan_kegiatan 
-                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status != 'ditolak'";
+                    WHERE usulan_kegiatan.id = :idUsulanKegiatan AND transaksi_usulan.status = 'diterima'";
 
 
         $dataLaporan = DB::select($query, ['idUsulanKegiatan' => $id]);
@@ -182,6 +210,14 @@ class dataUsulanMemberCtl extends Controller
             'target_sasaran' => $req->target_sasaran,
             'status' => 'proses',
         ]);
+
+        $dLog = [
+            'level' => 'user',
+            'idAkun' => getDataMember()->id,
+            'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+            'subject' => 'Tambah Usulan Peminatan member'
+        ];
+        createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
 
         // return redirect('/member/laporan/tambah?usulan=' . $id);
         return redirect('/member/data-usulan-peminatan');

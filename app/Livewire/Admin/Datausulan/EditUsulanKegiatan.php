@@ -128,6 +128,14 @@ class EditUsulanKegiatan extends Component
 
         $cek->save();
 
+        $dLog = [
+            'level'=>'admin',
+            'idAkun'=>getDataAdmin()->id,
+            'url'=>$_SERVER['HTTP_HOST'].'/'.getUrlSaatIni(),
+            'subject'=>'Edit Usulan Kegiatan oleh (admin)'
+        ];
+        createdLog($dLog['level'],$dLog['idAkun'],$dLog['subject'],$dLog['url']);
+
         $this->dispatch('TambahBerhasil');
     }
 }

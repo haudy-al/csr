@@ -49,22 +49,58 @@
 
                                 </div>
                             </div>
+
+                            <div class="col-lg-12 mt-5">
+                                <div class="flot-chart">
+                                    <div class="table-responsive">
+                                        <div id="columnchart_values_minat"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 ">
+                                <div class="card">
+                                    <h3 class="mb-3">Log Aktivitas</h3>
+                                    <div class="table-responsive">
+                                        <table id="zero_config" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Username</th>
+                                                    <th>Ip</th>
+                                                    <th>Agent</th>
+                                                    <th>Subject</th>
+                                                    <th>Waktu</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($logAktivites as $key => $item)
+                                                    <tr>
+                                                        <td>{{ ++$key }}</td>
+                                                        <td>{{ getUserBylevelAndId($item->level,$item->id_akun)->username }}</td>
+                                                        <td>{{ $item->ip }}</td>
+                                                        <td>{{ $item->agent }}</td>
+                                                        <td>{{ $item->subject }}</td>
+                                                        <td>{{ $item->created_at }}</td>
+
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <!-- column -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- Sales chart -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Recent comment and chats -->
-        <!-- ============================================================== -->
 
-        <!-- ============================================================== -->
-        <!-- Recent comment and chats -->
-        <!-- ============================================================== -->
     </div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -74,6 +110,7 @@
         });
 
         google.charts.setOnLoadCallback(drawChartUsulan);
+        google.charts.setOnLoadCallback(drawChart);
 
         function drawChartUsulan() {
             var data = new google.visualization.DataTable();
@@ -105,6 +142,42 @@
             );
             chart.draw(data, options);
         }
+
+        function drawChart() {
+            fetch('/admin/json/data-transaksi')
+                .then(response => response.json())
+                .then(data => {
+                    var chartData = [
+                        ['Bulan', 'Bantuan Proses', 'Diterima', 'Ditolak']
+                    ];
+                    data.forEach(item => {
+                        chartData.push([item.month, parseInt(item.bantuan_proses), parseInt(item.diterima),
+                            parseInt(item.ditolak)
+                        ]);
+                    });
+
+                    var data = google.visualization.arrayToDataTable(chartData);
+
+                    var currentYear = new Date().getFullYear();
+
+                    var options = {
+                        title: 'Data Usulan Peminatan ' + currentYear,
+                        curveType: 'function',
+                        legend: {
+                            position: 'bottom'
+                        },
+                        colors: ['yellow', 'green', 'red'],
+                        pointSize: 7
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('columnchart_values_minat'));
+
+                    chart.draw(data, options);
+                });
+        }
+    </script>
+    <script>
+        $('#zero_config').DataTable();
     </script>
 @endsection
 

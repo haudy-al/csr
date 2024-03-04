@@ -11,10 +11,12 @@ use App\Models\GaleriFotoModel;
 use App\Models\GaleriVideoModel;
 use App\Models\MemberModel;
 use App\Models\UsulanKegiatanModel;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Svg\Surface\SurfacePDFLib;
 use Spatie\PdfToImage\Pdf;
+use Illuminate\Support\Facades\Cache;
 
 
 class FrontEndCtl extends Controller
@@ -31,14 +33,19 @@ class FrontEndCtl extends Controller
         $dataBerita = BeritaModel::take(3)->get();
         $Faq = FaqModel::get();
         $activities = Activity::all();
-        
+        // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor(), 0, 3);
+        // $dataBeritaKotaBogor = array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'} ?? [], 0, 3);
+        $dataBeritaKotaBogor = [];
+
+        // dd($dataBeritaKotaBogor);      
         
         return view('home', [
             'dataGaleriVideo' => $dataGaleriVideo,
             'dataGaleriFoto' => $dataGaleriFoto,
             'dataBerita' => $dataBerita,
             'Faq' => $Faq,
-            'activities'=>$activities
+            'activities'=>$activities,
+            'dataBeritaKotaBogor'=>$dataBeritaKotaBogor
         ]);
     }
 
@@ -258,4 +265,72 @@ class FrontEndCtl extends Controller
             'activities'=>$activities
         ]);
     }
+
+    public function getApiBeritaKotaBogor(){
+        try {
+            $cachedData = Cache::get('api_berita_kota_bogor');
+            if ($cachedData) {
+                return $cachedData;
+            }
+
+            $clientId = env('OAUTH_CLIENT_ID');
+            $clientSecret = env('OAUTH_CLIENT_SECRET');
+            $tokenUrl = env('OAUTH_TOKEN_URL');
+
+            $client = new Client();
+            
+            $response = $client->post($tokenUrl, [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $clientId,
+                    'client_secret' => $clientSecret,
+                ],
+            ]);
+
+            $token = json_decode($response->getBody()->getContents())->access_token;
+
+            $apiUrl = 'https://api-splp.layanan.go.id/t/kotabogor.go.id/KotaBogor/1.0/berita?key=b3r1t4b0g0r';
+            $response = $client->get($apiUrl, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                ],
+            ]);
+
+            $data = json_decode($response->getBody()->getContents());
+
+            Cache::put('api_berita_kota_bogor', $data, now()->addHours(1));
+
+            return $data;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+
+    public function viewBeritaKotaBogor()
+    {
+        $dataBerita = $this->getApiBeritaKotaBogor()->{'Berita Bogor'} ?? [];
+        return view('berita-kota-bogor',[
+            'dataBerita'=>$dataBerita
+        ]);
+    }
+
+     public function detailBeritaKotaBogor($post_id)
+        {
+            try {
+                $cachedData = Cache::get('api_berita_kota_bogor')->{'Berita Bogor'} ?? $this->getApiBeritaKotaBogor()->{'Berita Bogor'};
+
+                $detailBerita = collect($cachedData)->firstWhere('postid', $post_id);
+
+                if ($detailBerita) {
+                    
+                    return view('detail-berita-kota-bogor', ['data' => $detailBerita,'beritaLain'=>array_slice($this->getApiBeritaKotaBogor()->{'Berita Bogor'}, 0, 5)]);
+                }
+
+                return abort(404);
+            } catch (\Exception $e) {
+                return abort(404);
+            }
+        }
+
 }

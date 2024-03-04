@@ -41,7 +41,7 @@
                                             <button onclick="return confirm('Yakin Ingin Mengapus ?')" type="submit" class="btn btn-sm btn-danger text-light"><span
                                                     class="mdi mdi-delete"></span> Hapus</button>
                                         </form>
-                                        <a class="btn btn-warning btn-sm" href="/admin/berita/edit?user={{ $item->id }}">
+                                        <a class="btn btn-warning btn-sm" href="/admin/berita/edit?i={{ $item->id }}">
                                             <span class="mdi mdi-file"></span> Ubah
                                         </a>
                                     </td>

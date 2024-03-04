@@ -1,70 +1,89 @@
 <div>
-    <div class="row mt-5">
-        <div class="col-md-7">
-            <div class="card">
-                <div class="card-body">
-                    <p>Penerima Manfaat : {{ $data->penerima_manfaat }}</p>
-                    <p>Jumlah Penerima Manfaat : {{ $penerimaManfaat }} / {{ $data->jumlah_penerima_manfaat }}</p>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Detail Kegiatan</h4>
+                        <hr>
 
-                    <p>Anggaran : Rp. {{ $anggaranTersedia }} / Rp.{{ $data->anggaran }}</p>
+                        <p class="card-text">
+                            <strong>Nama Kegiatan:</strong> {{ $data->nama_kegiatan }}
+                        </p>
 
-                    <p>
-                        Bentuk Kegiatan :
-                        <br>
-                        {!! $data->bentuk_kegiatan !!}
+                        <p class="card-text">
+                            <strong>Kategori Manfaat:</strong> {{ $data->bidang->nama }}
+                        </p>
 
-                    </p>
-                </div>
-            </div>
+                        <p class="card-text">
+                            <strong>Penerima Manfaat:</strong> {{ $data->penerima_manfaat }}
+                        </p>
 
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5>Yang berpartisipasi dalam proyek ini</h5>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nama Perusahaan</th>
-                                <th>Target Sasaran</th>
-                                <th>Anggaran</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($dataMemberPartisipasi as $item)
-                                <tr>
-                                    <td>{{ $item->username }}</td>
-                                    <td>{{ $kategori_manfaat }} : {{ $item->target_sasaran }}</td>
-                                    <td>Rp. {{ $item->anggaran }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    @if (count($dataMemberPartisipasi) < 1)
-                    <div style="width: 100%; display: flex; justify-content: center">
+                        <p class="card-text">
+                            <strong>Bentuk Manfaat:</strong> ({{ convertSatuanTargetSasaran2($data->kategori_manfaat) }})
+                        </p>
 
-                        <img src="{{ asset('img/datakosong.png') }}" width="400px" alt="">
-                    </div>
-                        
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="col-md-5">
-            <div class="card">
-                <div class="card-body" style="max-height: 400px; overflow: auto">
-                    <h4 class="mb-3">Proposal kegiatan</h4>
+                        <p class="card-text">
+                            <strong>Lokasi Kegiatan:</strong> {{ $data->lokasi_kegiatan }}
+                        </p>
 
-                    {{-- <img src="{{ route('pdf.image', ['id' => $data->id]) }}" alt="None"> --}}
-                    <div>
+                        <p class="card-text">
+                            <strong>Jumlah Penerima Manfaat:</strong> {{ $penerimaManfaat }} /
+                            {{ $data->jumlah_penerima_manfaat }}
+                        </p>
 
-                        @foreach ($imageUrl as $imagePath)
-                            <img src="{{ asset('storage/pdf-image/' . $imagePath) }}" alt="Page Image">
-                        @endforeach
+                        <div class="card mt-3"
+                            style="background: rgb(133, 182, 255); border: 2px solid #0741ff; color: #ffffff">
+
+                            <div class="card-body">
+                                <p class="card-text ">
+                                    <strong>Bentuk Kegiatan:</strong>
+                                    <br>
+                                    {!! $data->bentuk_kegiatan !!}
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Partisipan Proyek</h4>
+                    </div>
+                    <div class="card-body">
+                        @if (count($dataMemberPartisipasi) > 0)
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Nama Perusahaan</th>
+                                        <th>Target Sasaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataMemberPartisipasi as $item)
+                                        <tr>
+                                            <td>{{ $item->member2->nama_perusahaan }}</td>
+                                            <td>
+                                                {{ convertSatuanTargetSasaran($kategori_manfaat,$item->target_sasaran) }}
+                                                
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="text-center">
+                                <img src="{{ asset('img/datakosong.png') }}" class="img-fluid" alt="Data Kosong">
+                                <p class="mt-3">Tidak ada data yang tersedia.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>

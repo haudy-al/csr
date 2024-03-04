@@ -4,7 +4,7 @@ namespace App\Http\Controllers\member;
 
 use App\Http\Controllers\Controller;
 use App\Models\LaporanModel;
-use App\Models\UsulanKegiatanModel;
+use App\Models\TransaksiUsulan;
 use Illuminate\Http\Request;
 
 class LaporanMemberCtl extends Controller
@@ -16,24 +16,21 @@ class LaporanMemberCtl extends Controller
 
         $dataLaporan = LaporanModel::where('id_member', $user_id)->get();
 
-        $dataUsulanKegiatan = UsulanKegiatanModel::whereHas('transaksiUsulan', function ($query) use ($user_id) {
-            $query->whereIn('id_usulan_kegiatan', function ($subquery) use ($user_id) {
-                $subquery->select('id_usulan_kegiatan')
-                    ->from('transaksi_usulan')
-                    ->where('id_member', $user_id);
-            });
-        })->get();
+        $dataTransaksi = TransaksiUsulan::where('id_member',$user_id)->where('status','diterima')->get();
 
 
         return view('member.laporan.index', [
             'dataLaporan' => $dataLaporan,
-            'dataUsulanKegiatan' => $dataUsulanKegiatan,
+            'dataTransaksi' => $dataTransaksi,
         ]);
     }
 
-    function viewTambah()
+    function viewTambah($id)
     {
-        return view('member.laporan.tambah', []);
+       
+        return view('member.laporan.tambah', [
+            'idT'=>$id,
+        ]);
     }
 
     function DownloadPdf($id)
@@ -64,6 +61,25 @@ class LaporanMemberCtl extends Controller
             }
 
             $cek->delete();
+
+            if (cekUrlAdmin()) {
+                $level = 'admin';
+                $idAkun = getDataAdmin()->id;
+                $sub = 'Hapus Laporan (admin)';
+            } else {
+                $level = 'user';
+                $idAkun = getDataMember()->id;
+                $sub = 'Hapus Laporan ';
+            }
+
+            $dLog = [
+                'level' => $level,
+                'idAkun' => $idAkun,
+                'url' => $_SERVER['HTTP_HOST'] . '/' . getUrlSaatIni(),
+                'subject' => $sub
+            ];
+            createdLog($dLog['level'], $dLog['idAkun'], $dLog['subject'], $dLog['url']);
+
 
             return redirect()->back()->with(session()->flash('error', 'Delete Berhasil'));
         } else {

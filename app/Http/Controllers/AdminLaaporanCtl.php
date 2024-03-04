@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\LaporanModel;
+use App\Models\TransaksiUsulan;
 use App\Models\UsulanKegiatanModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
+
+
 
 class AdminLaaporanCtl extends Controller
 {
@@ -25,7 +29,7 @@ class AdminLaaporanCtl extends Controller
 
     function exportWord($id)
     {
-        $data = LaporanModel::where('id',$id)->get()->first();
+        $data = LaporanModel::where('id', $id)->get()->first();
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
 
@@ -33,7 +37,7 @@ class AdminLaaporanCtl extends Controller
         $imagePath = public_path('img/logo.png');
         $imageOptions = array(
             'width' => 100,
-            
+
             'ratio' => true,
         );
         $header = $section->addHeader();
@@ -68,15 +72,41 @@ class AdminLaaporanCtl extends Controller
 
         $textrun->addText('Keterangan : ', ['bold' => true]);
         $textrun = $section->addTextRun();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section,$data->keterangan);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $data->keterangan);
         $textrun = $section->addTextRun();
 
 
-        $filename = str_replace(' ','-','laporan').'.docx';
+        $filename = str_replace(' ', '-', 'laporan') . '.docx';
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save(storage_path($filename));
 
         return response()->download(storage_path($filename))->deleteFileAfterSend(true);
+    }
+
+    function exportPDF($id)
+    {
+
+        $dataLaporan = LaporanModel::find($id);
+
+        $dataUsulanKegiatan = UsulanKegiatanModel::where('id', $dataLaporan->id_usulan_kegiatan)->first();
+
+        $transaksi = TransaksiUsulan::where('id_usulan_kegiatan', $dataLaporan->id_usulan_kegiatan)->where('id_member', $dataLaporan->id_member)->first();
+
+        // dd($dataUsulanKegiatan);
+
+        $pdfDokumanLaporan = storage_path('app/pdf/'. $dataLaporan->dokumen);
+
+        $pdf = PDF::loadView('admin.laporan.pdf', [
+            'dataTransaksi' => $transaksi,
+            'dataKegiatan' => $dataUsulanKegiatan
+        ]);
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream('dokumen.pdf');
+    }
+
+    function gabungPdf() {
+        $pdf = new \Clegginabox\PDFMerger\PDFMerger;
     }
 }

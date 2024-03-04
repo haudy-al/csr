@@ -1,11 +1,16 @@
 <div>
-    
 
-    <style>
+
+    <style nonce="{{ csp_nonce() }}">
         .btn-login {
             background-color: rgb(82, 52, 250) !important;
             width: 100%;
             color: #ffff;
+        }
+
+        .line {
+            max-height: 100vh;
+            overflow: auto
         }
     </style>
 
@@ -15,7 +20,7 @@
     <section class="vh-100">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 text-black" style="max-height: 100vh; overflow: auto">
+                <div class="col-sm-6 text-black line" style="">
 
                     <div class="px-5 ms-xl-4">
                         <i class="fas fa-crowa fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
@@ -42,7 +47,7 @@
                                 </div>
                                 <br>
 
-                                <script>
+                                <script nonce="{{ csp_nonce() }}">
                                     var targetTime = new Date("{{ $waktu_login }}").getTime();
 
                                     function updateCountdown() {
@@ -64,7 +69,6 @@
                                     }
 
                                     var countdownInterval = setInterval(updateCountdown, 1000);
-                                    
                                 </script>
                             @endif
 
@@ -82,7 +86,7 @@
 
                             <div class="form-outline mb-4">
 
-                                <input type="text" id="loginName" wire:model.live="username"
+                                <input type="text" id="loginName" wire:model="username"
                                     class="form-control form-control-lg" />
 
                                 <label class="form-label" for="form2Example18">Username</label>
@@ -90,26 +94,35 @@
 
                             <div class="form-outline mb-3">
 
-                                <input type="password" wire:model.live="password" id="password"
+                                <input type="password" wire:model="password" id="password"
                                     class="form-control form-control-lg" />
 
                                 <label class="form-label" for="form2Example28">Password</label>
                             </div>
 
-                            <div class="form-outline mb-4">
+                            <div class="form-outline mb-3">
                                 <input type="checkbox" id="showPassword" /> <label for="showPassword">Tampilkan
                                     Password</label>
                             </div>
 
-                            <div class="mb-3" wire:ignore>
+                            <div class="form-outline mb-4">
+                                <a class="text-danger" href="/admin/lupa-password">Lupa Password ?</a>
+                            </div>
+
+                            {{-- <div class="mb-3" wire:ignore>
                                 {!! NoCaptcha::renderJs() !!}
                                 {!! NoCaptcha::display(['data-callback' => 'onCallback', 'data-theme' => 'light']) !!}
                                 <button type="button" class="btn badge btn-outline-secondary text-dark"
                                     id="refresh-captcha"><i class="fa-solid fa-arrows-rotate"></i></button>
+                            </div> --}}
+
+                            <div class="input-group mb-3 ">
+                                <img class="" src="{{ captcha_src('math') }}" alt="CAPTCHA">
+                                <input class="w-25 form-control" type="text" id="captcha" wire:model='captcha' name="captcha">
                             </div>
 
                             <div class="pt-1 mb-3">
-                                <button type="submit" class="btn btn-login rounded-0 btn-lg btn-block"
+                                <button type="submit" class="btn btn-primary w-100 rounded-0 btn-lg btn-block"
                                     type="button">Login</button>
                             </div>
 
@@ -131,28 +144,27 @@
         </div>
     </section>
 
-    <script>
-        
-        var onCallback = function() {
-            @this.set('recaptcha', grecaptcha.getResponse());
-        }
+    <script nonce="{{ csp_nonce() }}">
+        // var onCallback = function() {
+        //     @this.set('recaptcha', grecaptcha.getResponse());
+        // }
 
         window.addEventListener('LoginGagal', () => {
 
             toastr.error(`Username Atau Password Salah`, 'error');
-            refreshCaptcha();
+            // refreshCaptcha();
 
         })
 
         window.addEventListener('LoginTunggu', () => {
 
             toastr.error(`Silahkan Login Kembali Setelah Beberapa Menit`, 'error');
-            refreshCaptcha();
+            // refreshCaptcha();
 
             setTimeout(function() {
                 window.location.href = "/admin/login";
             }, 1000);
-          
+
 
         })
 
@@ -175,7 +187,7 @@
         });
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         const passwordInput = document.getElementById("password");
         const showPasswordCheckbox = document.getElementById("showPassword");
 
@@ -191,7 +203,7 @@
         });
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         function ClearJmlLogin(ip) {
             var formData = new FormData();
             formData.append('_methode', 'POST');
@@ -215,7 +227,7 @@
         // ClearJmlLogin('1212')
     </script>
 
-    <script>
+    <script nonce="{{ csp_nonce() }}">
         // Ambil elemen countdown-timer dan pesan dari respons JSON
         const countdownTimer = document.getElementById('countdown-timer');
 

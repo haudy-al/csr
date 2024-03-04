@@ -37,7 +37,12 @@
                                     <td>{{ $item->nama_kegiatan }}</td>
                                     <td>{{ $item->bidang->nama }}</td>
                                     <td>{{ $item->penerima_manfaat }}</td>
-                                    <td>{!! $item->bentuk_kegiatan !!}</td>
+                                    <td>
+                                       
+                                        <div style="max-height: 300px; overflow: auto">
+                                            {!! $item->bentuk_kegiatan !!}
+                                        </div>
+                                    </td>
                                     <td>{{ $item->lokasi_kegiatan }}</td>
                                     <td>{{ $item->kelurahan->nama ?? '-' }}</td>
                                     <td>
@@ -52,12 +57,16 @@
                                         @endphp
 
 
-                                        <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
-                                            aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                            <div class="progress-bar bg-info"
-                                                style="height: 25px; width: {{ $persen }}%;">{{ $persen }}%
+                                        @if ($persen != '0')
+                                            <div class="progress bg-secondary" role="progressbar" style="height: 25px; "
+                                                aria-label="" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar bg-info"
+                                                    style="height: 25px; width: {{ $persen }}%;">{{ $persen }}%
+                                                </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            0%
+                                        @endif
 
 
                                     </td>
@@ -134,7 +143,7 @@
                                         @endif
 
 
-                                     
+
 
                                         <a class="btn btn-secondary badge m-1 "
                                             href="/membar/data-usulan/detail?i={{ $item->id }}">

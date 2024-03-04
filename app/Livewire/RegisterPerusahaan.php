@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Mail\RegistrasiAkun;
+use App\Models\KecamatanModel;
+use App\Models\KelurahanModel;
 use App\Models\MemberModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -24,17 +26,25 @@ class RegisterPerusahaan extends Component
     public $alamat_perusahaan;
     public $latitude = '0';
     public $longitude = '0';
+    public $kecamatan;
     public $kelurahan;
     public $gambar_perusahaan;
 
     public $username;
     public $password;
 
+    public $terms;
 
 
     public function render()
     {
-        return view('livewire.register-perusahaan');
+        $dataKecamatan = KecamatanModel::all();
+        $dataKelurahan = KelurahanModel::where('id_kecamatan',$this->kecamatan)->get();
+       
+        return view('livewire.register-perusahaan',[
+            'dataKecamatan'=>$dataKecamatan,
+            'dataKelurahan'=>$dataKelurahan,
+        ]);
     }
 
     function RegisterAkun()
@@ -50,11 +60,16 @@ class RegisterPerusahaan extends Component
             'alamat_perusahaan' => 'required',
             'latitude' => '',
             'longitude' => '',
-            // 'kelurahan' => 'required',
+            'kecamatan' => 'required',
+
+            'kelurahan' => 'required',
             'gambar_perusahaan' => 'required',
+            'terms' => 'required',
+        ],[
+            'terms.required'=>'Wajib'
         ]);
 
-
+        
 
         $namaGambar = 'member-' . uniqid() . date('ymdhis') . '.' . $this->gambar_perusahaan->getClientOriginalExtension();
         $this->password = str_pad(rand(0, 9999999999), 5, '0', STR_PAD_LEFT);
@@ -70,7 +85,7 @@ class RegisterPerusahaan extends Component
             'alamat_perusahaan' => $this->alamat_perusahaan,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            // 'id_kelurahan' => $this->kelurahan,
+            'id_kelurahan' => $this->kelurahan,
             'gambar_perusahaan' => $namaGambar,
             'username' => $this->username,
             'password' => Hash::make($this->password),

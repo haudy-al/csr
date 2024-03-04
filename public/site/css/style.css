@@ -20291,3 +20291,8 @@ disabled look for disabled choices in the results dropdown
     padding: 10px;
     display: none;
 }
+
+.bg-detail{
+	background-color: rgb(106, 185, 255);
+	color: #fff;
+}

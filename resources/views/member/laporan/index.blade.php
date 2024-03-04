@@ -18,20 +18,35 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="/member/laporan/tambah">
+                                <form action="/member/laporan/tambah/{id}" method="get">
 
-                                    <select name="usulan" class="form-control"
-                                        onchange="$(event.target).parents('form').submit()">
+                                    <select class="form-control" onchange="updateForm(this)">
                                         <option value="">Pilih</option>
-
-                                        @foreach ($dataUsulanKegiatan as $item)
-                                            <option value="{{ $item->id }}" {!! _get('usulan') == '{{ $item->id }}' ? 'selected' : '' !!}>
-                                                {{ $item->nama_kegiatan }}</option>
+                                
+                                        @foreach ($dataTransaksi as $item)
+                                            <option  data-idT="{{ $item->id ?? '' }}" data-usulan="{{ $item->usulanKegiatan->id ?? '' }}" {{ (cekLaporan($item->id)) ? 'disabled' : '' }} >
+                                                {{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan dihapus' }}
+                                            </option>
                                         @endforeach
-
-
                                     </select>
+                                
                                 </form>
+                                
+                                <script>
+                                    function updateForm(selectElement) {
+                                        var selectedOption = selectElement.options[selectElement.selectedIndex];
+                                        
+                                        var url = `/member/laporan/tambah/${selectedOption.dataset.idt}`;
+                                
+                                        url += `?usulan=${selectedOption.dataset.usulan}`;
+                                
+                                        history.replaceState({}, '', url);
+                                
+                                        document.location=url;
+                                    }
+                                </script>
+                                
+                                
                             </div>
 
                         </div>
@@ -49,7 +64,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Kegiatan</th>
-                                <th>Anggaran</th>
+                               
                                 <th>Target Sasaran</th>
                                 <th>Keterangan</th>
                                 <th>Dokumen Laporan</th>
@@ -65,8 +80,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan Telah Dihapus...' }}</td>
-                                    <td>{{ $item->anggaran }}</td>
-                                    <td>{{ $item->target_sasaran }}</td>
+                                    <td><span class="text-capitalize">{{ $item->usulanKegiatan->kategori_manfaat ?? '' }}</span> : {{ $item->transaksi->target_sasaran ?? 'Data Transaksi Dihapus' }}</td>
                                     <td>{!! $item->keterangan !!}</td>
 
                                     <td>

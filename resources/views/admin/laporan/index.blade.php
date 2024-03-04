@@ -20,7 +20,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Kegiatan</th>
-                                <th>Anggaran</th>
                                 <th>Keterangan</th>
                                 <th>Dokumen Laporan</th>
                                 <th>Foto Kegiatan</th>
@@ -34,7 +33,6 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan Telah Dihapus...' }}</td>
-                                    <td>{{ $item->anggaran }}</td>
                                     <td>{!! $item->keterangan !!}</td>
 
                                     <td>
@@ -55,8 +53,8 @@
                                     <td>{{ cekLevelUsulanByMemberId($item->id_member) }}</td>
 
 
-                                    <td class="d-inline">
-                                        <form class="" action="/admin/laporan/hapus/{{ $item->id }}"
+                                    <td class="">
+                                        <form class="d-inline" action="/admin/laporan/hapus/{{ $item->id }}"
                                             method="POST">
                                             @csrf
                                             @method('delete')
@@ -68,7 +66,9 @@
                                             <span class="mdi mdi-file"></span> Ubah
                                         </a> --}}
 
-                                        <a href="/admin/laporan/word/{{ $item->id }}" class="btn btn-sm btn-info"><span class="mdi mdi-file-word"></span> Word</a>
+                                        {{-- <a href="/admin/laporan/word/{{ $item->id }}" class="btn btn-sm btn-info"><span class="mdi mdi-file-word"></span> Word</a> --}}
+                                        <a href="/admin/laporan/export/pdf/{{ $item->id }}" class=" btn btn-sm btn-secondary text-light"><span class="mdi mdi-file-pdf"></span> PDF</a>
+                                       
 
                                     </td>
 
