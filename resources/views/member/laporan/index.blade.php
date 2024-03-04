@@ -80,7 +80,7 @@
                                 <tr>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $item->usulanKegiatan->nama_kegiatan ?? 'Kegiatan Telah Dihapus...' }}</td>
-                                    <td><span class="text-capitalize">{{ $item->usulanKegiatan->kategori_manfaat }}</span> : {{ $item->transaksi->target_sasaran }}</td>
+                                    <td><span class="text-capitalize">{{ $item->usulanKegiatan->kategori_manfaat ?? '' }}</span> : {{ $item->transaksi->target_sasaran ?? 'Data Transaksi Dihapus' }}</td>
                                     <td>{!! $item->keterangan !!}</td>
 
                                     <td>
